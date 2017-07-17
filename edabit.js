@@ -4,7 +4,8 @@ Examples
 "Hello World!" => "HHeelllloo  WWoorrlldd!!"
 "1234!_ " => "11223344!!__  "
 Gotchas
-No gotchas. All test cases contain valid strings. Don't worry about spaces, special characters or numbers. All are considered valid characters.*/
+No gotchas. All test cases contain valid strings. Don't worry about spaces, special characters or numbers.
+All are considered valid characters.*/
 
 function doubleChar(str) {
   var endStr = '';
