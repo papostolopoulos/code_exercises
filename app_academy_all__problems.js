@@ -480,8 +480,24 @@ function sumOfPairs(array) {
 sumOfPairs([1, 3, 5, -3]);
 sumOfPairs([1, 3, 5]);
 
-// 8. Write a method that takes a string in and returns true if the letter "z" appears within three letters **after** an "a".
+// 8. Write a method that takes a string in and returns true if the letter "z"
+//appears within three letters **after** an "a".
 // You may assume that the string contains only lowercase letters.
+
+
+//MORE ELEGANT SOLUTION AS OF JULY 17TH 2017
+function aTozDistance(string) {
+  for (var i = 0; i < string.length; i++) {
+    return string[i] === 'a' && string[i+1] === 'z' || string[i+2] === 'z' || string[i+3] === 'z'
+  }
+}
+
+aTozDistance("A zuper sided dog");
+aTozDistance("abcz");
+aTozDistance("abz");
+aTozDistance("baz");
+aTozDistance("a");
+aTozDistance("za");
 
 
 //MORE ELEGANT SOLUTION AS OF APRIL 05 2017
@@ -518,6 +534,14 @@ aTozDistance("za");
 // 7. Write a method that takes a string and returns true if it is a palindrome.
 // A palindrome is a string that is the same whether written backward or forward.
 // Assume that there are no spaces; only lowercase letters will be given.
+
+
+//MORE ELEGANT SOLUTION ON JULY 7 2017
+function palindromeString(string) {
+  return string === string.split('').reverse().join('');
+}
+
+palindromeString('aba');
 
 //MORE ELEGANT SOLUTION ON APRIL 5 2017
 function palindromeString(string) {
