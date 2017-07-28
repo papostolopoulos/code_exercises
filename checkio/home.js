@@ -466,3 +466,20 @@ mostWanted("Oops!") == "o"
 mostWanted("AAaooo!!!!") == "a"
 mostWanted("abe") == "a"
 */
+
+function mostWanted(string) {
+  let str = string.toLowerCase();
+  let evalObj = {};
+  let finalLetter = "";
+  let counter = - Infinity
+  let alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+
+  for (let value of str) {
+    alphabet.indexOf(value) === -1 || evalObj[value] === undefined ? evalObj[value] = 1 : evalObj[value] += 1
+  }
+
+  for (let key in evalObj) {
+    evalObj[key] > counter ? (finalLetter = key, counter = evalObj[key]) : null;
+  }
+  return finalLetter;
+}
