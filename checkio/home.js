@@ -471,15 +471,17 @@ function mostWanted(string) {
   let str = string.toLowerCase();
   let evalObj = {};
   let finalLetter = "";
-  let counter = - Infinity
+  let counter = -Infinity
   let alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
   for (let value of str) {
-    alphabet.indexOf(value) === -1 || evalObj[value] === undefined ? evalObj[value] = 1 : evalObj[value] += 1
+    alphabet.indexOf(value) !== -1 ? (evalObj[value] === undefined ? evalObj[value] = 1 : evalObj[value] += 1) : null;
   }
+  console.log(evalObj);
 
   for (let key in evalObj) {
     evalObj[key] > counter ? (finalLetter = key, counter = evalObj[key]) : null;
+    evalObj[key] === counter && alphabet.indexOf(finalLetter) > alphabet.indexOf(key) ? finalLetter = key : null;
   }
   return finalLetter;
 }
