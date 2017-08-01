@@ -1,5 +1,5 @@
 /*
-Non-unique Elements
+Non-unique Elements https://js.checkio.org/mission/non-unique-elements/
 You are given a non-empty list of integers (X). For this task, you should return
 a list consisting of only the non-unique elements in this list. To do so you will
 need to remove all unique elements (elements which are contained in a given list
@@ -59,7 +59,7 @@ nonUniqueElements([1, 2, 3, 1, 3])
 
 
 /*
-MEDIAN
+MEDIAN https://js.checkio.org/mission/median/
 A median is a numerical value separating the upper half of a sorted array of numbers
 from the lower half. In a list where there are an odd number of entities, the median
 is the number found in the middle of the array. If the array contains an even number
@@ -114,7 +114,7 @@ function median(array) {
 
 
 /*
-COUNT NEIGHBOURS
+COUNT NEIGHBOURS https://js.checkio.org/mission/count-neighbours/
 You are given a state for a rectangular board game grid with chips in a binary matrix,
 where 1 is a cell with a chip and 0 is an empty cell. You are also given the coordinates
 for a cell in the form of row and column numbers (starting from 0).
@@ -277,7 +277,7 @@ function countNeighbours(array, lat, lon) {
 
 
 /* 20170719
-WEAK POINT
+WEAK POINT https://js.checkio.org/mission/weak-point/
 
 While traveling, the spaceship endures quite a lot of stress. As a result,
 an important part of the maintenance is to check the outer hull.
@@ -482,4 +482,177 @@ function mostWanted(string) {
     evalObj[key] > counter ? (finalLetter = key, counter = evalObj[key]) : null;
   }
   return finalLetter;
+}
+
+/*20170729
+ROMAN NUMERALS https://js.checkio.org/mission/roman-numerals/
+Roman numerals come from the ancient Roman numbering system. They are based on specific letters of the alphabet which are combined to signify the sum (or, in some cases, the difference) of their values. The first ten Roman numerals are:
+
+I, II, III, IV, V, VI, VII, VIII, IX, and X.
+
+The Roman numeral system is decimal based but not directly positional and does not include a zero. Roman numerals are based on combinations of these seven symbols:
+
+Numeral	Value
+I	1 (unus)
+V	5 (quinque)
+X	10 (decem)
+L	50 (quinquaginta)
+C	100 (centum)
+D	500 (quingenti)
+M	1,000 (mille)
+More additional information about roman numerals can be found on the Wikipedia article.
+
+For this task, you should return a roman numeral using the specified integer value ranging from 1 to 3999.
+
+Input: A number as an integer.
+
+Output: The Roman numeral as a string.
+
+Example:
+
+romanNumerals(6) == 'VI'
+romanNumerals(76) == 'LXXVI'
+romanNumerals(13) == 'XIII'
+romanNumerals(44) == 'XLIV'
+romanNumerals(3999) == 'MMMCMXCIX'
+1
+2
+3
+4
+5
+How it is used: This is an educational task that allows you to explore different numbering systems. Since roman numerals are often used in the typography, it can alternatively be used for text generation. The year of construction on building faces and cornerstones is most often written by Roman numerals. These numerals have many other uses in the modern world and you read about it here... Or maybe you will have a customer from Ancient Rome ;-)
+
+Precondition: 0 < number < 4000
+*/
+
+function romanNumerals(number) {
+  var romanNumbersObj = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1,
+  }
+  var finalRoman = "";
+
+  while (number > 0) {
+    for (var key in romanNumbersObj) {
+      if (number >= romanNumbersObj[key]) {
+        finalRoman += key;
+        number = number - romanNumbersObj[key];
+        break;
+      }
+    }
+  }
+  return finalRoman;
+}
+
+/*20170731
+FIZZ BUZZ https://js.checkio.org/mission/fizz-buzz/
+"Fizz buzz" is a word game we will use to teach the robots about division. Let's learn computers.
+
+You should write a function that will receive a positive integer and return:
+"Fizz Buzz" if the number is divisible by 3 and by 5;
+"Fizz" if the number is divisible by 3;
+"Buzz" if the number is divisible by 5;
+The number as a string for other cases.
+Input: A number as an integer.
+
+Output: The answer as a string.
+
+Example:
+
+fizzBuzz(15) == "Fizz Buzz"
+fizzBuzz(6) == "Fizz"
+fizzBuzz(5) == "Buzz"
+fizzBuzz(7) == "7"
+*/
+
+function fizzBuzz(num) {
+  let result = num % 3 === 0 && num % 5 === 0 ? "Fizz Buzz" : num % 3 === 0 ? "Fizz" : num % 5 === 0 ? "Buzz" : num.toString();
+  return result;
+}
+
+/*20170731
+EVEN THE LAST https://js.checkio.org/mission/even-last/
+You are given an array of integers. You should find the sum of the elements with even indexes
+(0th, 2nd, 4th...) then multiply this summed number and the final element of the array together.
+Don't forget that the first element has an index of 0.
+
+For an empty array, the result will always be 0 (zero).
+
+Input: A list of integers.
+
+Output: The number as an integer.
+
+Example:
+
+evenLast([0, 1, 2, 3, 4, 5]) == 30
+evenLast([1, 3, 5]) == 30
+evenLast([6]) == 36
+evenLast([]) == 0 */
+
+function evenLast(array) {
+  if (array.length === 0) return 0;
+
+  let sumOfEvenIndexes = 0;
+  for (var i = 0; i < array.length; i++) {
+    i % 2 === 0 ? sumOfEvenIndexes += array[i] : null;
+  }
+  return sumOfEvenIndexes * array[array.length - 1];
+}
+
+//solution from the internet
+function evenLast(data) {
+    return data.filter((item, i) => i % 2 == 0).reduce((prev, cur) => prev + cur, 0) * data[data.length - 1] || 0;
+}
+
+/*20170731
+SECRET MESSAGE https://js.checkio.org/mission/secret-message/
+"Where does a wise man hide a leaf? In the forest.
+But what does he do if there is no forest? ... He grows a forest to hide it in."
+-- Gilbert Keith Chesterton
+
+Ever tried to send a secret message to someone without using the postal service?
+You could use newspapers to tell your secret. Even if someone finds your message,
+it's easy to brush them off and that its paranoia and a bogus conspiracy theory.
+One of the simplest ways to hide a secret message is to use capital letters.
+Let's find some of these secret messages.
+
+You are given a chunk of text. Gather all capital letters in one word in the order
+that they appear in the text.
+
+For example: text = "How are you? Eh, ok. Low or Lower? Ohhh.",
+if we collect all of the capital letters, we get the message "HELLO".
+
+Input: A text as a string (unicode).
+
+Output: The secret message as a string or an empty string.
+
+Example:
+
+findMessage("How are you? Eh, ok. Low or Lower? Ohhh.") == "HELLO"
+findMessage("hello world!") == ""
+*/
+
+function findMessage(string) {
+  let secretMessage = "";
+  let alphabetCapitals = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  for (let value of string) {
+    alphabetCapitals.indexOf(value) !== -1 ? secretMessage += value : null;
+  }
+  return secretMessage;
+}
+
+//solution from the internet
+function findMessage(data) {
+    return data.replace(/[^A-Z]/g, '');
 }
