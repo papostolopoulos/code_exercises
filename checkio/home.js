@@ -658,3 +658,43 @@ function findMessage(string) {
 function findMessage(data) {
     return data.replace(/[^A-Z]/g, '');
 }
+
+/*20170801
+THREE WORDS https://js.checkio.org/mission/three-words/
+
+Let's teach the Robots to distinguish words and numbers.
+
+You are given a string with words and numbers separated by whitespaces (one space).
+The words contains only letters. You should check if the string contains
+three words in succession.
+For example, the string "start 5 one two three 7 end" contains three words in succession.
+
+Input: A string with words.
+
+Output: The answer as a boolean.
+
+Example:
+
+threeWords("Hello World hello") == True
+threeWords("He is 123 man") == False
+threeWords("1 2 3 4") == False
+threeWords("bla bla bla bla") == True
+threeWords("Hi") == False
+*/
+
+function threeWords(string) {
+  let splitString = string.toLowerCase().split(' ');
+  let alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+  let counter = 0;
+
+  for (let value of splitString) {
+    alphabet.indexOf(value.slice(0,1)) !== -1 ? counter += 1 : counter = 0;
+    if (counter >= 3) return true;
+  }
+  return false;
+}
+
+//online solution
+function threeWords(data) {
+    return /\D+\s\D+\s\D+/.test(data);
+}
