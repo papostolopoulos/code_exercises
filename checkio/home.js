@@ -698,3 +698,82 @@ function threeWords(string) {
 function threeWords(data) {
     return /\D+\s\D+\s\D+/.test(data);
 }
+
+/* 20170801
+INDEX POWER https://js.checkio.org/mission/index-power/
+You are given an array with positive numbers and a number N.
+You should find the N-th power of the element in the array with the index N.
+If N is outside of the array, then return -1. Don't forget that the first element has the index 0.
+
+Let's look at a few examples:
+- array = [1, 2, 3, 4] and N = 2, then the result is 32 == 9;
+- array = [1, 2, 3] and N = 3, but N is outside of the array, so the result is -1.
+
+Input: Two arguments. An array as a list of integers and a number as a integer.
+
+Output: The result as an integer.
+
+Example:
+
+indexPower([1, 2, 3, 4], 2) == 9
+indexPower([1, 3, 10, 100], 3) == 1000000
+indexPower([0, 1], 0) == 1
+indexPower([1, 2], 3) == -1
+
+*/
+
+function indexPower(arr, num) {
+  if (num > arr.length - 1) return -1;
+  return Math.pow(arr[num], num);
+}
+
+function indexPower(arr, num) {
+  return num > arr.length - 1 ? -1 : Math.pow(arr[num], num);
+}
+
+//from the internet
+function indexPower(array, n){
+    return Math.pow(array[n],n) || -1;
+}
+
+/*20170802
+THE MOST NUMBERS https://js.checkio.org/mission/most-numbers/
+Let's work with numbers.
+
+You are given an array of numbers (floats).
+You should find the difference between the maximum and minimum element.
+Your function should be able to handle an undefined amount of arguments.
+For an empty argument list, the function should return 0.
+
+Floating-point numbers are represented in computer hardware as base 2 (binary) fractions.
+So we should check the result with ±0.001 precision.
+Think about how to work with an arbitrary number of arguments.
+
+Input: An arbitrary number of arguments as numbers (int, float).
+
+Output: The difference between maximum and minimum as a number (int, float).
+
+Example:
+
+mostNumbers(1, 2, 3) == 2
+mostNumbers(5, -5) == 10
+mostNumbers(10.2, -2.2, 0, 1.1, 0.5) == 12.4
+mostNumbers() == 0
+*/
+
+function mostNumbers(args) {
+  let max = -Infinity;
+  let min = +Infinity;
+  if (arguments.length === 0) return 0;
+  for (var i = 0; i < arguments.length; i++) {
+    if (min > arguments[i]) min = arguments[i];
+    if (max < arguments[i]) max = arguments[i];
+  }
+  return max - min;
+}
+
+function mostNumbers(args) {
+  return arguments.length === 0 ? 0 : Math.max(...arguments) - Math.min(...arguments);
+}
+
+/*201780802*/
