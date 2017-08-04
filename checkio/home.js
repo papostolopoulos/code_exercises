@@ -776,4 +776,107 @@ function mostNumbers(args) {
   return arguments.length === 0 ? 0 : Math.max(...arguments) - Math.min(...arguments);
 }
 
-/*201780802*/
+/*20170803
+DIGITS MULTIPLICATION https://js.checkio.org/mission/digits-multiplication/
+You are given a positive integer. Your function should calculate the product of the digits excluding any zeroes.
+For example: The number given is 123405. The result will be 1*2*3*4*5=120 (don't forget to exclude zeroes).
+
+Input: A positive integer.
+
+Output: The product of the digits as an integer.
+
+digitsMultip(123405) == 120
+digitsMultip(999) == 729
+digitsMultip(1000) == 1
+digitsMultip(1111) == 1
+
+*/
+function digitsMultip(num) {
+  let numToArr = num.toString().split('');
+  console.log(numToArr);
+  return numToArr
+  .filter((ele) => {
+    return Number(ele) !== 0
+  })
+  .reduce((product, value) => {
+    return product * Number(value);
+  }, 1);
+}
+
+function digitsMultip(num) {
+  let numToArr = num.toString().split('');
+  let result = 1;
+
+  for (let value of numToArr) {
+    if (Number(value) !== 0) result *= value;
+  }
+  return result;
+}
+
+
+/*20170803
+COUNT INVERSION https://js.checkio.org/mission/count-inversions/
+In computer science and discrete mathematics, an inversion is a pair of places in a sequence where the elements in these places are out of their natural order. So, if we use ascending order for a group of numbers, then an inversion is when larger numbers appear before lower number in a sequence.
+
+Check out this example sequence: (1, 2, 5, 3, 4, 7, 6) and we can see here three inversions
+- 5 and 3; - 5 and 4; - 7 and 6.
+
+You are given a sequence of unique numbers and you should count the number of inversions in this sequence.
+
+Input: A sequence as a tuple of integers.
+
+Output: The inversion number as an integer.
+
+Example:
+
+countInversion([1, 2, 5, 3, 4, 7, 6]) == 3
+countInversion([0, 1, 2, 3]) == 0
+*/
+
+function countInversion(array) {
+  let counter = 0;
+  while (array.length > 1) {
+    let compare = array.shift();
+    for (let value of array) {
+      if (value < compare) counter += 1;
+    }
+  }
+  return counter;
+}
+
+/*20170803
+COMMON WORDS https://js.checkio.org/mission/common-words/
+Let's continue examining words. You are given two string with words separated by commas.
+Try to find what is common between these strings.
+The words are not repeated in the same string.
+
+Your function should find all of the words that appear in both strings.
+The result must be represented as a string of words separated by commas in alphabetic order.
+
+Input: Two arguments as strings.
+
+Output: The common words as a string.
+
+Example:
+
+commonWords("hello,world", "hello,earth") == "hello"
+commonWords("one,two,three", "four,five,six") == ""
+commonWords("one,two,three", "four,five,one,two,six,three") == "one,three,two"
+*/
+
+function commonWords(str1, str2) {
+  let str1Arr = str1.split(',');
+  let str2Arr = str2.split(',');
+  let result = [];
+  for (let value of str1Arr){
+    if (str2Arr.indexOf(value) !== -1) result.push(value);
+  }
+  return result.sort().join(',');
+}
+
+//solution from the internet
+function commonWords(first, second) {
+    return first.split(","). filter(x => second.split(",").includes(x)).sort().join(",");
+}
+
+//see if you can do this with filter
