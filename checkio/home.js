@@ -775,4 +775,208 @@ function mostNumbers(args) {
 function mostNumbers(args) {
   return arguments.length === 0 ? 0 : Math.max(...arguments) - Math.min(...arguments);
 }
-ß
+
+/*20170803
+DIGITS MULTIPLICATION https://js.checkio.org/mission/digits-multiplication/
+You are given a positive integer. Your function should calculate the product of the digits excluding any zeroes.
+For example: The number given is 123405. The result will be 1*2*3*4*5=120 (don't forget to exclude zeroes).
+
+Input: A positive integer.
+
+Output: The product of the digits as an integer.
+
+digitsMultip(123405) == 120
+digitsMultip(999) == 729
+digitsMultip(1000) == 1
+digitsMultip(1111) == 1
+
+*/
+function digitsMultip(num) {
+  let numToArr = num.toString().split('');
+  console.log(numToArr);
+  return numToArr
+  .filter((ele) => {
+    return Number(ele) !== 0
+  })
+  .reduce((product, value) => {
+    return product * Number(value);
+  }, 1);
+}
+
+function digitsMultip(num) {
+  let numToArr = num.toString().split('');
+  let result = 1;
+
+  for (let value of numToArr) {
+    if (Number(value) !== 0) result *= value;
+  }
+  return result;
+}
+
+
+/*20170803
+COUNT INVERSION https://js.checkio.org/mission/count-inversions/
+In computer science and discrete mathematics, an inversion is a pair of places in a sequence where the elements in these places are out of their natural order. So, if we use ascending order for a group of numbers, then an inversion is when larger numbers appear before lower number in a sequence.
+
+Check out this example sequence: (1, 2, 5, 3, 4, 7, 6) and we can see here three inversions
+- 5 and 3; - 5 and 4; - 7 and 6.
+
+You are given a sequence of unique numbers and you should count the number of inversions in this sequence.
+
+Input: A sequence as a tuple of integers.
+
+Output: The inversion number as an integer.
+
+Example:
+
+countInversion([1, 2, 5, 3, 4, 7, 6]) == 3
+countInversion([0, 1, 2, 3]) == 0
+*/
+
+function countInversion(array) {
+  let counter = 0;
+  while (array.length > 1) {
+    let compare = array.shift();
+    for (let value of array) {
+      if (value < compare) counter += 1;
+    }
+  }
+  return counter;
+}
+
+/*20170803
+COMMON WORDS https://js.checkio.org/mission/common-words/
+Let's continue examining words. You are given two string with words separated by commas.
+Try to find what is common between these strings.
+The words are not repeated in the same string.
+
+Your function should find all of the words that appear in both strings.
+The result must be represented as a string of words separated by commas in alphabetic order.
+
+Input: Two arguments as strings.
+
+Output: The common words as a string.
+
+Example:
+
+commonWords("hello,world", "hello,earth") == "hello"
+commonWords("one,two,three", "four,five,six") == ""
+commonWords("one,two,three", "four,five,one,two,six,three") == "one,three,two"
+*/
+
+function commonWords(str1, str2) {
+  let str1Arr = str1.split(',');
+  let str2Arr = str2.split(',');
+  let result = [];
+  for (let value of str1Arr){
+    if (str2Arr.indexOf(value) !== -1) result.push(value);
+  }
+  return result.sort().join(',');
+}
+
+function commonWords(str1, str2) {
+  let str1Arr = str1.split(',');
+  let str2Arr = str2.split(',');
+  let result = [];
+  for (let value of str1Arr){
+    if (str2Arr.includes(value)) result.push(value);
+  }
+  return result.sort().join(',');
+}
+
+
+//solution from the internet
+function commonWords(first, second) {
+    return first.split(","). filter(x => second.split(",").includes(x)).sort().join(",");
+}
+
+
+/*20170807
+ABSOLUTE SORTING https://js.checkio.org/mission/absolute-sorting/
+Let's try some sorting. Here is an array with the specific rules.
+
+The array has various numbers.
+You should sort it, but sort it by absolute value in ascending order.
+For example, the sequence (-20, -5, 10, 15) will be sorted like so: (-5, 10, 15, -20).
+Your function should return the sorted list .
+
+Precondition: The numbers in the array are unique by their absolute values.
+
+Input: An array of numbers .
+
+Output: The list or tuple (but not a generator) sorted by absolute values in ascending order.
+
+Addition: The results of your function will be shown as a list in the tests explanation panel.
+
+Example:
+
+
+Note from Paris: These examples are typed like the arrays are for Java and not Javascript.
+Instead of absoluteSorting((-20, -5, 10, 15)) it should be absoluteSorting([-20, -5, 10, 15])
+absoluteSorting((-20, -5, 10, 15)) == [-5, 10, 15, -20] # or (-5, 10, 15, -20)
+absoluteSorting((1, 2, 3, 0)) == [0, 1, 2, 3]
+absoluteSorting((-1, -2, -3, 0)) == [0, -1, -2, -3]
+*/
+
+function absoluteSorting(array) {
+  return array.sort((a, b) =>  Math.abs(a) - Math.abs(b));
+}
+
+/*20170807
+NUMBER BASE https://js.checkio.org/mission/number-radix/
+Do you remember the radix and Numeral systems from math class? Let's practice with it.
+
+You are given a positive number as a string along with the radix for it.
+Your function should convert it into decimal form.
+The radix is less than 37 and greater than 1.
+The task uses digits and the letters A-Z for the strings.
+
+Watch out for cases when the number cannot be converted.
+For example: "1A" cannot be converted with radix 9.
+For these cases your function should return -1.
+
+Input: Two arguments. A number as string and a radix as an integer.
+
+Output: The converted number as an integer.
+
+Example:
+
+numberRadix("AF", 16) == 175
+numberRadix("101", 2) == 5
+numberRadix("101", 5) == 26
+numberRadix("Z", 36) == 35
+numberRadix("AB", 10) == -1
+
+Precondition:
+re.match("\A[A-Z0-9]\Z", str_number)
+0 < len(str_number) ≤ 10
+2 ≤ radix ≤ 36
+*/
+
+//Incomplete solution
+function numberRadix(str, num) {
+  return isNaN(parseInt(str, num)) ? -1 : parseInt(str, num);
+}
+
+
+/*
+The following solution is working after I added the if statement based on the following paragraph from MDN (for parseInt()):
+If parseInt encounters a character that is not a numeral in the specified radix,
+it ignores it and all succeeding characters and returns the integer value
+parsed up to that point.
+parseInt truncates numbers to integer values. Leading and trailing spaces are allowed.
+*/
+function numberRadix(str, num) {
+  for (var i = 0; i < str.length; i++) {
+    if (isNaN(parseInt(str[i], num))) return -1;
+  }
+  return isNaN(parseInt(str, num)) ? -1 : parseInt(str, num);
+}
+
+//online solution
+function numberRadix(str_number, radix){
+    const ps_int = parseInt(str_number, radix);
+    const ts_int = ps_int.toString(radix);
+​
+    return ps_int && str_number.toLowerCase() === ts_int ? ps_int : -1;
+}
