@@ -921,3 +921,51 @@ absoluteSorting((-1, -2, -3, 0)) == [0, -1, -2, -3]
 function absoluteSorting(array) {
   return array.sort((a, b) =>  Math.abs(a) - Math.abs(b));
 }
+
+/*20170807
+NUMBER BASE https://js.checkio.org/mission/number-radix/
+Do you remember the radix and Numeral systems from math class? Let's practice with it.
+
+You are given a positive number as a string along with the radix for it.
+Your function should convert it into decimal form.
+The radix is less than 37 and greater than 1.
+The task uses digits and the letters A-Z for the strings.
+
+Watch out for cases when the number cannot be converted.
+For example: "1A" cannot be converted with radix 9.
+For these cases your function should return -1.
+
+Input: Two arguments. A number as string and a radix as an integer.
+
+Output: The converted number as an integer.
+
+Example:
+
+numberRadix("AF", 16) == 175
+numberRadix("101", 2) == 5
+numberRadix("101", 5) == 26
+numberRadix("Z", 36) == 35
+numberRadix("AB", 10) == -1
+
+Precondition:
+re.match("\A[A-Z0-9]\Z", str_number)
+0 < len(str_number) ≤ 10
+2 ≤ radix ≤ 36
+*/
+
+function numberRadix(str, num) {
+  return isNaN(parseInt(str, num)) ? -1 : parseInt(str, num);
+}
+/*
+The following solution is working after I added the if statement based on the following paragraph from MDN:
+If parseInt encounters a character that is not a numeral in the specified radix,
+it ignores it and all succeeding characters and returns the integer value
+parsed up to that point.
+parseInt truncates numbers to integer values. Leading and trailing spaces are allowed. 
+*/
+function numberRadix(str, num) {
+  for (var i = 0; i < str.length; i++) {
+    if (isNaN(parseInt(str[i], num))) return -1;
+  }
+  return isNaN(parseInt(str, num)) ? -1 : parseInt(str, num);
+}
