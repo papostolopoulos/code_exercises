@@ -973,10 +973,80 @@ function numberRadix(str, num) {
   return isNaN(parseInt(str, num)) ? -1 : parseInt(str, num);
 }
 
-//online solution
+//online solution - In the return line, the guy returns the ps_int result IF
+// ps_int === true (if NaN it will return false) and
+// if the first parameter (str_number) equals the result of ps_int inverter to
+// a string ps_int.toString(radix)
+
 function numberRadix(str_number, radix){
     const ps_int = parseInt(str_number, radix);
     const ts_int = ps_int.toString(radix);
 ​
     return ps_int && str_number.toLowerCase() === ts_int ? ps_int : -1;
 }
+
+
+/*20170810
+THE HUMMING DISTANCE https://js.checkio.org/mission/hamming-distance/
+The Hamming distance between two binary integers is the number of bit positions
+that differs (read more about the Hamming distance on Wikipedia). For example:
+
+    117 = 0 1 1 1 0 1 0 1
+     17 = 0 0 0 1 0 0 0 1
+      H = 0+1+1+0+0+1+0+0 = 3
+
+You are given two positive numbers (N, M) in decimal form.
+You should calculate the Hamming distance between these two numbers in binary form.
+
+Input: Two arguments as integers.
+
+Output: The Hamming distance as an integer.
+
+Example:
+
+hammingDistance(117, 17) == 3
+hammingDistance(1, 2) == 2
+hammingDistance(16, 15) == 5
+
+*/
+function returnBinary(num){
+  var result = [];
+  while(num > 0) {
+    result.unshift(num % 2);
+    num = Math.floor(num/2);
+  }
+  return result;
+}
+
+function hammingDistance(num1, num2) {
+  let result = 0;
+  const largeNum = num1 > num2 ?  num1 : num2;
+  const smallNum = num1 > num2 ? num2 : num1;
+  const binaryLarge = returnBinary(largeNum);
+  const binarySmall = returnBinary(smallNum);
+  const lengthDiff = binaryLarge.length - binarySmall.length;
+  for (let i = 0; i < lengthDiff; i++) {
+    binarySmall.unshift(0);
+  }
+  console.log(binaryLarge);
+  console.log(binarySmall);
+  for (let j = 0; j < binaryLarge.length; j++) {
+    if(binaryLarge[j] !== binarySmall[j]) result += 1;
+  }
+  return result;
+}
+
+//online solution
+//based on the bitwise operators
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
+function hammingDistance([n, m]){
+    return ((n ^ m).toString(2).replace(/0/g,'').length);
+}
+
+/*The XOR ( exclusive-OR ) gate acts in the same way as the logical "either/or."
+The output is "true" if either, but not both, of the inputs are "true."
+The output is "false" if both inputs are "false" or if both inputs are "true."
+Another way of looking at this circuit is to observe that the output is 1
+if the inputs are different, but 0 if the inputs are the same.
+http://whatis.techtarget.com/definition/logic-gate-AND-OR-XOR-NOT-NAND-NOR-and-XNOR
+*/
