@@ -1036,8 +1036,8 @@ function hammingDistance(num1, num2) {
   return result;
 }
 
-//online solution
-//based on the bitwise operators
+// online solution
+// based on the bitwise operators
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
 function hammingDistance([n, m]){
     return ((n ^ m).toString(2).replace(/0/g,'').length);
