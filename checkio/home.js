@@ -1050,3 +1050,75 @@ Another way of looking at this circuit is to observe that the output is 1
 if the inputs are different, but 0 if the inputs are the same.
 http://whatis.techtarget.com/definition/logic-gate-AND-OR-XOR-NOT-NAND-NOR-and-XNOR
 */
+
+/*20170815
+BRACKETS https://js.checkio.org/mission/brackets/
+You are given an expression with numbers, brackets and operators. For this task only the brackets matter. Brackets come in three flavors: "{}" "()" or "[]". Brackets are used to determine scope or to restrict some expression. If a bracket is open, then it must be closed with a closing bracket of the same type. The scope of a bracket must not intersected by another bracket. In this task you should make a decision, whether to correct an expression or not based on the brackets. Do not worry about operators and operands.
+
+Input: An expression with different of types brackets as a string (unicode).
+
+Output: A verdict on the correctness of the expression in boolean (True or False).
+
+Example:
+
+brackets("((5+3)*2+1)") == true
+brackets("{[(3+1)+2]+}") == true
+brackets("(3+{1-1)}") == false
+brackets("[1+1]+(2*2)-{3/3}") == true
+brackets("(({[(((1)-2)+3)-3]/3}-3)") == false
+brackets("2+3") == True
+
+//USE REPLACE TO REMOVE NUMBERS AND ARITHMETIC SYMBOLS
+COMPARE FIRST AND LAST CHARACTER OF STRING AND SEE IF LENGTH IS 0
+OR you might want to compare with Regex the first character of the string before
+the arithmetic charater and if the closing brace is matching
+*/
+
+function brackets(str) {
+  str = str.replace(/[0-9+-/*]/g, '')
+  for (var i = 0; i < str.length; i++) {
+    if ((str[i] === "[" && str[i + 1] === "]") || (str[i] === "(" && str[i + 1] === ")") || (str[i] === "{" && str[i + 1] === "}")) (str = str.replace(str[i]+str[i + 1], ''), i = -1);
+  }
+  return str.length === 0;
+}
+
+function brackets(str) {
+  let numbersSymbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '/', '*'];
+  for (let i = 0; i < str.length; i++) {
+    if (numbersSymbols.indexOf(str[i]) !== -1) {
+      str = str.replace(str[i], '');
+      //str.split('').splice(i, 1).join(); - Alternative to .replace()
+      i--;
+    }
+  }
+  for (var i = 0; i < str.length; i++) {
+    if (str[i] === "[" && str[i + 1] === "]") {
+      str = str.replace(str[i]+str[i + 1], '');
+      i = -1;
+    }
+    if (str[i] === "(" && str[i + 1] === ")") {
+      str = str.replace(str[i]+str[i + 1], '');
+      i = -1;
+    }
+    if (str[i] === "{" && str[i + 1] === "}") {
+      str = str.replace(str[i]+str[i + 1], '');
+      i = -1;
+    }
+  }
+  return str.length === 0;
+}
+
+//solution from the internet
+function brackets(expression){
+    let exp = expression.replace(/\d|[+\-*/]/g, ''),
+        prev = '';
+
+    while ( exp.length !== prev.length ) {
+           prev = exp;
+           exp = exp.replace('()', '')
+                    .replace('{}', '')
+                    .replace('[]', '');
+    }
+
+    return exp.length === 0;
+}
