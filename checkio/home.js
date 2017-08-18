@@ -1171,15 +1171,22 @@ The new city plants become the actual plants and the process starts over with th
 city - plant as the plant value minus one?
 
 powerSupply([['c0', 'c1'], ['c1', 'p1'], ['c1', 'c3'], ['p1', 'c4']], {'p1': 1}) == ['c0', 'c3']
+powerSupply([["c0","p1"],["p1","c2"]],{"p1":0})
 
 function powerSupply(networkArr, plantObj) {
   let result = [];
+  for (let i = 0; i < networkArr.length; i++) {
+    result.push(networkArr[i][0];
+    result.push(networkArr[i][0];
+  }
   let newPlants = {};
   for (let key in plantObj) {  // key is p1 = 1
     for (let i = 0; i < networkArr.length; i++) {
       var connection = networkArr[i]; //[c1, p1]
       if (connection[0] === key && plantObj[key] !== 0) newPlants[connection[1]] = plantObj[key] - 1, networkArr.splice(i, 1);
       if (connection[1] === key && plantObj[key] !== 0) newPlants[connection[0]] = plantObj[key] - 1, networkArr.splice(i, 1);
+      if (connection[0] === key && plantObj[key] === 0) result.push(connection[1]);
+      if (connection[1] === key && plantObj[key] === 0) result.push(connection[0]);
 
     }
   }
