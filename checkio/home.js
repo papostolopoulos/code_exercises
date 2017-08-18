@@ -1170,30 +1170,31 @@ Otherwise:
 The new city plants become the actual plants and the process starts over with the value of the
 city - plant as the plant value minus one?
 
+powerSupply([['c0', 'c1'], ['c1', 'p1'], ['c1', 'c3'], ['p1', 'c4']], {'p1': 1}) == ['c0', 'c3']
+
 function powerSupply(networkArr, plantObj) {
   let result = [];
   let newPlants = {};
-  for (let key in plantObj) {
+  for (let key in plantObj) {  // key is p1 = 1
     for (let i = 0; i < networkArr.length; i++) {
-      var connection = networkArr[i];
-      if (connection[0] === key) newPlants[connection[1]] = plantObj[key] - 1, networkArr.splice(i, 1);
-      if (connection[1] === key) newPlants[connection[0]] = plantObj[key] - 1, networkArr.splice(i, 1);
+      var connection = networkArr[i]; //[c1, p1]
+      if (connection[0] === key && plantObj[key] !== 0) newPlants[connection[1]] = plantObj[key] - 1, networkArr.splice(i, 1);
+      if (connection[1] === key && plantObj[key] !== 0) newPlants[connection[0]] = plantObj[key] - 1, networkArr.splice(i, 1);
+
+    }
+  }
+
+  for (let i = 0; i < networkArr.length; i++) {
+    var cities = networkArr[i];
+    for (var city of cities) {
+      if (newPlants[city] === undefined) {
+        result.push(city);
+      }
     }
   }
   console.log('newPlants', newPlants);
   console.log('networkArr', networkArr);
   console.log('result', result);
-
-  for (let key in newPlants) {
-    for (let i = 0; i < networkArr.length; i++){
-      if (newPlants[key] === 0 && networkArr[i][0] === key) {
-        result.push(networkArr[i][1])
-      }
-      if (newPlants[key] === 0 && networkArr[i][1] === key) {
-        result.push(networkArr[i][0])
-      }
-    }
-  }
 
   return newPlants[Object.keys(newPlants)[0]] === 0 ? result : powerSupply(networkArr, newPlants);
 
