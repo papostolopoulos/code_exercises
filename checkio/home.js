@@ -1122,3 +1122,79 @@ function brackets(expression){
 
     return exp.length === 0;
 }
+
+/* 20170817
+POWER SUPPLY https://js.checkio.org/mission/power-supply/
+Several power plants in this area exploded last night. We don’t know why yet.
+Our engineering team is still trying to figure it out.
+I think it was some kind of a bug.
+I told them not to release anything only 5 minutes before leaving for the day.
+
+Anyway…
+
+For emergencies, we have a couple of mobile power stations.
+Help us to figure out which cities blacked out so we can send them there as soon as possible.
+
+Fortunately, we still have the original plan of the electricity grid and already
+removed the blown up power plants from it.
+The updated plan now shows the remaining power plants,
+their supply range as well as their connections to the power grid.
+This should be enough for you to figure out which cities are not getting power.
+
+You are given the power grid and power-plant's information (plant-number and supply-range).
+You should find out which cities blacked out.
+A power plant can supply itself and connected cities with power, but the range is limited.
+
+
+
+Input: Two arguments. The first one is the network, represented as a list of connections.
+Each connection is a list of two nodes that are connected.
+A city or power plant can be a node. Each city or power plant is a unique string.
+The second argument is a dict where keys are power plants and values are the power plant's range.
+
+Output: A list of strings Each string is the name of a blacked out city.
+
+Example:
+
+​
+powerSupply([['p1', 'c1'], ['c1', 'c2']], {'p1': 1}) == ['с2']
+powerSupply([['c0', 'c1'], ['c1', 'p1'], ['c1', 'c3'], ['p1', 'c4']], {'p1': 1}) == ['c0', 'c3']
+powerSupply([['p1', 'c1'], ['c1', 'c2'], ['c2', 'c3']], {'p1': 3}) == []
+*/
+
+If the city is directly connected to the plant, then it becomes a plant.
+If the city - plant is not connected to another city, then it is removed by New obj.
+If number of keys is equal to the value of initial plant,
+then all other cities are not connected so they need to be added in the end array.
+Otherwise:
+The new city plants become the actual plants and the process starts over with the value of the
+city - plant as the plant value minus one?
+
+function powerSupply(networkArr, plantObj) {
+  let result = [];
+  let newPlants = {};
+  for (let key in plantObj) {
+    for (let i = 0; i < networkArr.length; i++) {
+      var connection = networkArr[i];
+      if (connection[0] === key) newPlants[connection[1]] = plantObj[key] - 1, networkArr.splice(i, 1);
+      if (connection[1] === key) newPlants[connection[0]] = plantObj[key] - 1, networkArr.splice(i, 1);
+    }
+  }
+  console.log('newPlants', newPlants);
+  console.log('networkArr', networkArr);
+  console.log('result', result);
+
+  for (let key in newPlants) {
+    for (let i = 0; i < networkArr.length; i++){
+      if (newPlants[key] === 0 && networkArr[i][0] === key) {
+        result.push(networkArr[i][1])
+      }
+      if (newPlants[key] === 0 && networkArr[i][1] === key) {
+        result.push(networkArr[i][0])
+      }
+    }
+  }
+
+  return newPlants[Object.keys(newPlants)[0]] === 0 ? result : powerSupply(networkArr, newPlants);
+
+}
