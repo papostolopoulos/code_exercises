@@ -192,26 +192,26 @@ powerSupply([["p0","c1"],["p0","c2"],["p0","c3"],["p0","c4"],["c4","c9"],["c4","
 
 function powerSupply(networkArr, plantObj) {
   let result = [];
-  for (let key in plantObj) {
-    // while (plantObj[key] > -1) { //p0:1
-      for (let i = 0; i < networkArr.length; i++) {
-        let nodeEl = networkArr[i];
+  while (Object.keys(plantObj).length > 0) {
+    let testObj = {plant: -1}, testPlant = ""
+    for (let key in plantObj) {
+      if (testObj.plant < plantObj[key]) testObj.plant = plantObj[key], testPlant = key;
+    }
+    console.log('testObj.plant', testObj.plant);
+    console.log("testPlant:", testPlant);
 
-        if (key === nodeEl[0]) {
-          // result.push(nodeEl[1]);
-          plantObj[nodeEl[1]] = plantObj[key] - 1;
-        }
+    for (let i = 0; i < networkArr.length; i++) {
+      let nodeEl = networkArr[i];
+      if (testPlant === nodeEl[0] && plantObj[nodeEl[1]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[1]] = plantObj[testPlant] - 1;
+      if (testPlant === nodeEl[1] && plantObj[nodeEl[1]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[0]] = plantObj[testPlant] - 1;
+      if (testPlant === nodeEl[0] && plantObj[testPlant]  === 0) result.push(nodeEl[1]);
+      if (testPlant === nodeEl[1] && plantObj[testPlant]  === 0) result.push(nodeEl[0]);
+    }
 
-        if (key === nodeEl[1]) {
-          // result.push(nodeEl[0]);
-          plantObj[nodeEl[0]] = plantObj[key] - 1;
-        }
-      }
+    delete plantObj[testPlant];
+    console.log(plantObj);
+  }
 
-
-    // } //end of while loop
-  } //End of for key in obj loop
-  console.log(plantObj);
   return result;
 }
 
