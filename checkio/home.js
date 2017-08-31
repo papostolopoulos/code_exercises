@@ -1175,13 +1175,15 @@ powerSupply([["c0","p1"],["p1","c2"]],{"p1":0})
 powerSupply([["p0","c1"],["p0","c2"],["c2","c3"],["c3","p4"],["p4","c5"]],{"p0":1,"p4":1}) == []
 
 function powerSupply(networkArr, plantObj) {
-  // console.log("starting recursion");
+  console.log("starting recursion");
   let result = [];
   for (let i = 0; i < networkArr.length; i++) {
-    if (!plantObj.hasOwnProperty(networkArr[i][0]) && !result.includes(networkArr[i][0])) result.push(networkArr[i][0]);
-    if (!plantObj.hasOwnProperty(networkArr[i][1]) && !result.includes(networkArr[i][1])) result.push(networkArr[i][1]);
+    console.log('networkArr[i][0]: ', networkArr[i][0], !plantObj.hasOwnProperty(networkArr[i][0]));
+    console.log('networkArr[i][1]: ', networkArr[i][1], !plantObj.hasOwnProperty(networkArr[i][1]));
+    if (!plantObj.hasOwnProperty(networkArr[i][0]) && result.indexOf(networkArr[i][0]) === -1) result.push(networkArr[i][0]);
+    if (!plantObj.hasOwnProperty(networkArr[i][1]) && result.indexOf(networkArr[i][1]) === -1) result.push(networkArr[i][1]);
   }
-
+  console.log(result);
   // if (plantObj[Object.keys(plantObj)[0]] === 0) {
   //   return result;
   // }
