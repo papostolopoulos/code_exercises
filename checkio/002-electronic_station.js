@@ -167,63 +167,82 @@ The second argument is a dict where keys are power plants and values are the pow
 Output: A list of strings Each string is the name of a blacked out city.
 
 Example:
-
-​
 powerSupply([['p1', 'c1'], ['c1', 'c2']], {'p1': 1}) == ['с2']
 powerSupply([['c0', 'c1'], ['c1', 'p1'], ['c1', 'c3'], ['p1', 'c4']], {'p1': 1}) == ['c0', 'c3']
 powerSupply([['p1', 'c1'], ['c1', 'c2'], ['c2', 'c3']], {'p1': 3}) == []
-*/
-
-If the city is directly connected to the plant, then it becomes a plant.
-If the city - plant is not connected to another city, then it is removed by New obj.
-If number of keys is equal to the value of initial plant,
-then all other cities are not connected so they need to be added in the end array.
-Otherwise:
-The new city plants become the actual plants and the process starts over with the value of the
-city - plant as the plant value minus one?
-
-powerSupply([['p1', 'c1'], ['c1', 'c2']], {'p1': 1}) == ['с2']
-powerSupply([['c0', 'c1'], ['c1', 'p1'], ['c1', 'c3'], ['p1', 'c4']], {'p1': 1}) == ['c0', 'c3']
-powerSupply([['p1', 'c1'], ['c1', 'c2'], ['c2', 'c3']], {'p1': 3}) == []
-powerSupply([['c0', 'c1'], ['c1', 'p1'], ['c1', 'c3'], ['p1', 'c4']], {'p1': 1}) == ['c0', 'c3']
 powerSupply([["c0","p1"],["p1","c2"]],{"p1":0}) == ['c0', 'c2']
 powerSupply([["p0","c1"],["p0","c2"],["c2","c3"],["c3","p4"],["p4","c5"]],{"p0":1,"p4":1}) == []
 powerSupply([["p0","c1"],["p0","c2"],["p0","c3"],["p0","c4"],["c4","c9"],["c4","c10"],["c10","c11"],["c11","p12"],["c2","c5"],["c2","c6"],["c5","c7"],["c5","p8"]],{"p0":1,"p12":4,"p8":1}) == ['c6', 'c7']
+*/
 
+//Working solution - done on August 31
 function powerSupply(networkArr, plantObj) {
   let result = [];
+  let donePlants = [];
+
+  if (Object.keys(plantObj).length === 0) {
+    for (let i = 0; i < networkArr.length; i++) {
+      let nodeEl = networkArr[i];
+      if (!result.includes(nodeEl[0])) result.push(nodeEl[0]);
+      if (!result.includes(nodeEl[1])) result.push(nodeEl[1]);
+    }
+    return result;
+  }
+
   while (Object.keys(plantObj).length > 0) {
     let testObj = {plant: -1}, testPlant = ""
     for (let key in plantObj) {
       if (testObj.plant < plantObj[key]) testObj.plant = plantObj[key], testPlant = key;
     }
-    console.log('testObj.plant', testObj.plant);
-    console.log("testPlant:", testPlant);
 
     for (let i = 0; i < networkArr.length; i++) {
       let nodeEl = networkArr[i];
-      if (testPlant === nodeEl[0] && plantObj[nodeEl[1]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[1]] = plantObj[testPlant] - 1;
-      if (testPlant === nodeEl[1] && plantObj[nodeEl[1]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[0]] = plantObj[testPlant] - 1;
-      if (testPlant === nodeEl[0] && plantObj[testPlant]  === 0) result.push(nodeEl[1]);
-      if (testPlant === nodeEl[1] && plantObj[testPlant]  === 0) result.push(nodeEl[0]);
+      if (testPlant === nodeEl[0] && !donePlants.includes(nodeEl[1]) && plantObj[nodeEl[1]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[1]] = plantObj[testPlant] - 1;
+      if (testPlant === nodeEl[1] && !donePlants.includes(nodeEl[0]) && plantObj[nodeEl[0]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[0]] = plantObj[testPlant] - 1;
+      if (testPlant === nodeEl[0] && plantObj[testPlant]  === 0 && !donePlants.includes(nodeEl[1]) && plantObj[nodeEl[1]] === undefined) result.push(nodeEl[1]);
+      if (testPlant === nodeEl[1] && plantObj[testPlant]  === 0 && !donePlants.includes(nodeEl[0]) && plantObj[nodeEl[0]] === undefined) result.push(nodeEl[0]);
     }
 
     delete plantObj[testPlant];
-    console.log(plantObj);
+    donePlants.push(testPlant);
   }
 
   return result;
 }
 
 
-
+//Recursive method. Working but does not pass all the tests
 function powerSupply(networkArr, plantObj) {
   let result = [];
-  let newPlants = {};
-  let newNetwork = [];
+  let donePlants = [];
+
+  if (Object.keys(plantObj).length === 0) {
+    for (let i = 0; i < networkArr.length; i++) {
+      let nodeEl = networkArr[i];
+      if (!result.includes(nodeEl[0])) result.push(nodeEl[0]);
+      if (!result.includes(nodeEl[1])) result.push(nodeEl[1]);
+    }
+    return result;
+  }
 
   console.log('##########################');
   console.log("starting loop");
+
+  let testObj = {plant: -1}, testPlant = ""
+  for (let key in plantObj) {
+    if (testObj.plant < plantObj[key]) testObj.plant = plantObj[key], testPlant = key;
+  }
+
+  for (let i = 0; i < networkArr.length; i++) {
+    let nodeEl = networkArr[i];
+    if (testPlant === nodeEl[0] && !donePlants.includes(nodeEl[1]) && plantObj[nodeEl[1]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[1]] = plantObj[testPlant] - 1;
+    if (testPlant === nodeEl[1] && !donePlants.includes(nodeEl[0]) && plantObj[nodeEl[0]] === undefined && plantObj[testPlant]  > 0) plantObj[nodeEl[0]] = plantObj[testPlant] - 1;
+    if (testPlant === nodeEl[0] && plantObj[testPlant]  === 0 && !donePlants.includes(nodeEl[1]) && plantObj[nodeEl[1]] === undefined) result.push(nodeEl[1]);
+    if (testPlant === nodeEl[1] && plantObj[testPlant]  === 0 && !donePlants.includes(nodeEl[0]) && plantObj[nodeEl[0]] === undefined) result.push(nodeEl[0]);
+  }
+
+  delete plantObj[testPlant];
+  donePlants.push(testPlant);
 
   for (let i = 0; i < networkArr.length; i++) { //
     let nodeEl = networkArr[i] //["p0","c1"]
@@ -293,53 +312,5 @@ else return the result
 */
 
 return Object.keys(newPlants).length === 0 ? result : powerSupply(newNetwork, newPlants);
-
-}
-
-
-
-
-
-
-
-
-
-function powerSupply(networkArr, plantObj) {
-  console.log('##########################');
-  console.log("starting loop");
-  let newPlants = {};
-  let result = [];
-  let newNetwork = [];
-
-  for (let i = 0; i < networkArr.length; i++) {
-    /*
-    1. If element is member of object and element is larger than 0
-    2. If element is member of object and element is zero
-    3. if element is not member of object
-    */
-    if (!plantObj.hasOwnProperty(networkArr[i][0]) && !result.includes(networkArr[i][0])) result.push(networkArr[i][0]);
-    if (!plantObj.hasOwnProperty(networkArr[i][1]) && !result.includes(networkArr[i][1])) result.push(networkArr[i][1]);
-    if (plantObj.hasOwnProperty(networkArr[i][0]) && plantObj[networkArr[i][0]] > 0) newPlants[networkArr[i][1]] = plantObj[networkArr[i][0]] - 1;
-    if (plantObj.hasOwnProperty(networkArr[i][1]) && plantObj[networkArr[i][1]] > 0) newPlants[networkArr[i][0]] = plantObj[networkArr[i][1]] - 1;
-    if (!plantObj.hasOwnProperty(networkArr[i][0]) && !plantObj.hasOwnProperty(networkArr[i][1])) newNetwork.push(networkArr[i])
-  }
-
-  console.log('plantObj', plantObj);
-  console.log('newPlants', newPlants);
-  console.log('networkArr', networkArr);
-  console.log('result', result);
-  console.log();
-
-  for (let i = 0; i < result.length; i++) {
-    if (newPlants.hasOwnProperty(result[i])) result.splice(i, 1), i--
-  }
-  console.log('result after for', result);
-  console.log('------------------------------');
-  console.log('------------------------------');
-  // for (let key in plantObj) {
-  //   if (plantObj[key] !== 0) return powerSupply(newNetwork, newPlants);
-  // }
-  // return result;
-  return plantObj[Object.keys(plantObj)[0]] === 0 ? result : powerSupply(newNetwork, newPlants);
 
 }
