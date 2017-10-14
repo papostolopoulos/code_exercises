@@ -499,13 +499,200 @@ capture([[0, 1, 1],
          [1, 1, 9]]) == 9
 */
 
-function capture(array) {
+function capture(array){
+  //if the hitCounter is different, then the security should be equal to hitCounter?
   for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < array[i].length; j++) {
-      if (array[i][j] === array[i][j]) {
-        console.log("i is: ", i , "and j is: ", j);
-        console.log(array[i][j], array[i][j]);
+    if (array[i][i] === 0) {
+      let previousSecurity;
+      for (let j = 0; j < array[i].length; j++) {
+        if (j !== i && array[i][j] === 1) previousSecurity = array[j][j];
       }
+
+      for (let k = 0; k < array[i].length; k++) {
+        if (k !== i && array[i][k] === 1) array[k][k] -= 1;
+      }
+
+
+    }
+
+  }
+}
+
+function capture(array){
+  let securityObj = {}
+  let time = 0;
+  for (let i = 1; i < array.length; i++) {
+    securityObj["computer " + i] = array[i][i];
+  }
+  while(Object.keys(securityObj).length > 0) {
+    time += 1;
+    for(let key in securityObj){
+        securityObj[key] -= 1;
+        if (securityObj[key] === 0) {
+          delete securityObj[key];
+        }
     }
   }
+  return time;
+
+}
+
+function capture(array) {
+  let time = 0;
+  let securityObj = {};
+  for (let k = 1; k < array.length; k++) {
+    securityObj["computer " + k + "security"] = array[k][k];
+
+  }
+  console.log("before the for loop the security obj is ", securityObj);
+  while(Object.values(securityObj).reduce(function(sum, value){
+    return sum + value;
+  }, 0) !== 0) {
+    console.log('-----------------------------------------------------------');
+    console.log("in while loop. Object keys are:", Object.keys(securityObj));
+    for (let i = 0; i < array.length; i++) {
+      for (let j = 0; j < array[i].length; j++) {
+        console.log("i:", i, "- j:", j);
+        if (array[i][j] === 1 && array[i][i] === 0 && array[j][j] !== 0) {
+          console.log("in the if statement for array[i][j]", array[i][j], "and array[i][i]", array[i][i]);
+          array[j][j] -= 1;
+
+        }
+
+        if (array[j][j] === 0) {
+          securityObj["computer " + j] = 0;
+        }
+
+      }
+    }
+    time += 1;
+  }
+
+
+  return time;
+}
+
+function capture(array){
+  let securityArr = [];
+  for (let i = 0; i < array.length; i++) {
+    securityArr.push({
+      computer: i,
+      security: array[i][i],
+      previousSecurity: array[i][i],
+      connections: []
+    });
+  }
+
+  console.log(securityArr);
+  console.log("--------------");
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array[i].length; j++) {
+      if (array[i][j] === 1 && j !== i) securityArr[i].connections.push(j);
+    }
+  }
+  console.log(securityArr);
+
+  let timer = 0;
+  let securitiesTotal = 1;
+
+
+  while (securitiesTotal > 0) {
+    securitiesTotal = 0
+    for (let i = 0; i < securityArr.length; i++) {
+      let connections = securityArr[i].connections;
+      if (securityArr[i].security === 0) {
+        for (let j = 0; j < connections.length; j++) {
+          if (securityArr[connections[j]].security > 0) securityArr[connections[j]].security -=1;
+        }
+      } //if (securityArr[i].security === 0)
+    }
+
+    for (let k = 0; k < securityArr.length; k++) {
+      console.log("COMPUTER:", k, "security is ", securityArr[k].security, "and previous security is", securityArr[k].previousSecurity);
+      if (securityArr[k].previousSecurity > securityArr[k].security && securityArr[k].previousSecurity >= 0) {
+        console.log("in the if statement for k --> ", k);
+
+        securityArr[k].security = securityArr[k].previousSecurity - 1;
+        securityArr[k].previousSecurity = securityArr[k].security;
+        console.log("AFTER CHANGE AND FOR COMPUTER:", k, "security is ", securityArr[k].security, "and previous security is", securityArr[k].previousSecurity);
+
+      }
+      securitiesTotal += securityArr[k].security;
+    }
+
+    timer += 1;
+
+  }//while loop
+
+  console.log(timer);
+  return securityArr;
+}
+
+
+
+
+
+/*20170915
+DOUBLE SUBSTRING https://js.checkio.org/mission/double-substring/
+There are four substring missions that were born all in one day
+and you shouldn’t be needed more than one day to solve them.
+All of those mission can be simply solved by brute force,
+but is it always the best way to go?
+(you might not have access to all of those missions yet,
+but they are going to be available with more opened islands on the map).
+
+This is the third mission of the series,
+and it’s the only one where you have to return not a substring but a substring length.
+You need to find a substring that repeats more than once in a given string.
+This reiteration shouldn't have overlaps.
+For example, in a string "abcab" the longest substring that repeats
+more than once is "ab", so the answer should be 2 (length of "ab")
+
+Input: String.
+
+Output: Int.
+
+Example:
+
+doubleSubstring('aaaa') == 2
+doubleSubstring('abc') == 0
+doubleSubstring('aghtfghkofgh') == 3 # fgh
+*/
+
+function doubleSubstring(string) {
+  let iterator = Math.floor(string.length/2);
+  while (iterator >= 0) {
+
+    for (let i = 0; i < string.length; i++) {
+      let compareString = string.slice(i, iterator + i);
+      let compareRegEx = new RegExp(compareString)
+      if (compareRegEx.test(string.slice(iterator + i))) return compareString.length;
+    }
+
+    iterator--
+  }
+  return 0;
+}
+
+//From the internet. I have no idea what the dude is doing
+function doubleSubstring(line) {
+    // length of the longest substring that non-overlapping repeats more than once.
+
+    line = [].concat(line.match(/(.+)(?=.+?\1)/g))
+             .concat(line.match(/(.+)(?=.+)?(?=\1)/g))
+             .filter(el => el != null)
+             .map(el => el.length);
+    if (line.length == 0) return 0;
+    return Math.max(...line);
+}
+
+//From the Internet. Nice solution
+function doubleSubstring(line) {
+    const n = line.length;
+    for(let m = n >> 1; m > 0; m--){
+        for(let i = 0; i <= n - m * 2; i++){
+            if(line.substring(i+m).includes(line.substring(i, i+m))) return m;
+        }
+    }
+    return 0;
 }
