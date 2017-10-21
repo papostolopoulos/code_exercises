@@ -518,13 +518,150 @@ capture([[0, 1, 1],
          [1, 1, 9]]) == 9
 */
 
-function capture(array) {
+//This one was solved on Oct 13th 2017. Took me more than a month to find the solution.
+//Took me more than 1.5 months to even understand what the problem was about
+function capture(array){
+  //Create array with object elements for each computer
+  let securityArr = [];
+  for (let i = 0; i < array.length; i++) {
+    securityArr.push({
+      computer: i,
+      security: array[i][i],
+      previousSecurity: array[i][i],
+      connections: []
+    });
+  }
+
+//Iterate through the object elements to add the connections between computers
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
-      if (array[i][j] === array[i][j]) {
-        console.log("i is: ", i , "and j is: ", j);
-        console.log(array[i][j], array[i][j]);
-      }
+      if (array[i][j] === 1 && j !== i) securityArr[i].connections.push(j);
     }
   }
+
+  let timer = 0;
+  let securitiesTotal = 1;
+
+//keep the while loop for as long as the total of the level of security for all computers is larger than 0
+  while (securitiesTotal > 0) {
+    securitiesTotal = 0
+
+    //Decrease the level of security every time a connected computer attacks
+    for (let i = 0; i < securityArr.length; i++) {
+      let connections = securityArr[i].connections;
+      if (securityArr[i].previousSecurity === 0) {
+        for (let j = 0; j < connections.length; j++) {
+          if (securityArr[connections[j]].security > 0) securityArr[connections[j]].security -=1;
+        }
+      }
+    }
+
+    //Adjust the level of security to reflect a decrease by one at the time and not by the number of computers attacking
+    for (let k = 0; k < securityArr.length; k++) {
+
+      if (securityArr[k].previousSecurity > securityArr[k].security && securityArr[k].previousSecurity >= 0) {
+        securityArr[k].security = securityArr[k].previousSecurity - 1;
+        securityArr[k].previousSecurity = securityArr[k].security;
+      }
+      securitiesTotal += securityArr[k].security;
+    }
+    //Add to the timer
+    timer += 1;
+  }
+
+  return timer;
+}
+
+//From the internet
+function capture(data) {
+    n = data.length
+    q = [[0,0]]
+    tmin = []
+
+    while(q.length){
+        q.sort((a, b) => a[0] - b[0])
+        time = q[0][0]
+        node = q[0][1]
+        q.shift()
+        if(tmin[node] != undefined) continue
+        tmin[node] = time
+        for(i = 0; i < n; i++){
+            connect = data[node][i]
+            if(i != node && connect != 0 && tmin[i] == undefined){
+                q.push([time + data[i][i], i])
+            }
+        }
+    }
+
+    max = 0
+    for(v of tmin){
+        if(v > max) max = v
+    }
+    return max
+}
+
+
+/*20170915
+DOUBLE SUBSTRING https://js.checkio.org/mission/double-substring/
+There are four substring missions that were born all in one day
+and you shouldn’t be needed more than one day to solve them.
+All of those mission can be simply solved by brute force,
+but is it always the best way to go?
+(you might not have access to all of those missions yet,
+but they are going to be available with more opened islands on the map).
+
+This is the third mission of the series,
+and it’s the only one where you have to return not a substring but a substring length.
+You need to find a substring that repeats more than once in a given string.
+This reiteration shouldn't have overlaps.
+For example, in a string "abcab" the longest substring that repeats
+more than once is "ab", so the answer should be 2 (length of "ab")
+
+Input: String.
+
+Output: Int.
+
+Example:
+
+doubleSubstring('aaaa') == 2
+doubleSubstring('abc') == 0
+doubleSubstring('aghtfghkofgh') == 3 # fgh
+*/
+
+function doubleSubstring(string) {
+  let iterator = Math.floor(string.length/2);
+  while (iterator >= 0) {
+
+    for (let i = 0; i < string.length; i++) {
+      let compareString = string.slice(i, iterator + i);
+      let compareRegEx = new RegExp(compareString)
+      if (compareRegEx.test(string.slice(iterator + i))) return compareString.length;
+    }
+
+    iterator--
+  }
+  return 0;
+}
+
+//From the internet. I have no idea what the dude is doing
+function doubleSubstring(line) {
+    // length of the longest substring that non-overlapping repeats more than once.
+
+    line = [].concat(line.match(/(.+)(?=.+?\1)/g))
+             .concat(line.match(/(.+)(?=.+)?(?=\1)/g))
+             .filter(el => el != null)
+             .map(el => el.length);
+    if (line.length == 0) return 0;
+    return Math.max(...line);
+}
+
+//From the Internet. Nice solution
+function doubleSubstring(line) {
+    const n = line.length;
+    for(let m = n >> 1; m > 0; m--){
+        for(let i = 0; i <= n - m * 2; i++){
+            if(line.substring(i+m).includes(line.substring(i, i+m))) return m;
+        }
+    }
+    return 0;
 }
