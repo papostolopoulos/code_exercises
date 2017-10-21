@@ -430,21 +430,40 @@ createIntervals([1, 2, 3, 6, 7, 8, 4, 5]) == [[1, 8]]
 */
 
 function createIntervals(array) {
+  let sortArr = array.sort((a, b) =>  a - b
+  });
+  let result = [];
+
+  while (sortArr.length > 0) {
+    let inputArr = [sortArr[0]]
+    while (sortArr[1] - sortArr[0] === 1) {
+      sortArr.shift();
+    }
+
+    inputArr.push(sortArr[0]);
+    result.push(inputArr);
+    sortArr.shift();
+  }
+
+  return result;
+}
+
+function createIntervals(array) {
   let sortArr = array.sort(function (a, b) {
     return a - b
   });
   let result = [];
-  console.log(sortArr);
-  // while (sortArr.length > 0) {
+
+  while (sortArr.length > 0) {
     let inputArr = [sortArr[0]]
-    while (shortArr[1] - shortArr[0] === 1) {
+    while (sortArr[1] - sortArr[0] === 1) {
       sortArr.shift();
     }
 
-    inputArr.push(shortArr[0]);
+    inputArr.push(sortArr[0]);
     result.push(inputArr);
-    shortArr.shift();
-  // }
+    sortArr.shift();
+  }
 
   return result;
 }
