@@ -316,7 +316,7 @@ return Object.keys(newPlants).length === 0 ? result : powerSupply(newNetwork, ne
 }
 
 
-/*20170906
+/*20171208
 COUNTING TILES https://js.checkio.org/mission/counting-tiles/
 Stephan needs some help building a circular landing zone using the ice square tiles for their new Ice Base.
 Before he converts the area to a construction place,
@@ -342,17 +342,28 @@ countingTiles(2.5) == [12, 20]
 
 */
 
+
 function countingTiles(r) {
-  //Α = π * (r * r)
-  let circleDiameter = r * 2;
-  let circleArea = Math.PI * Math.pow(r, 2);
-  let squaresTotalArea = Math.pow(circleDiameter, 2);
-  console.log('circleDiameter:', circleDiameter);
-  console.log('circleArea:', circleArea);
-  console.log('squaresTotalArea is the total amount of tiles which is ', squaresTotalArea);
+  let tileSideLength = 1
+  let quarterSquareSide = Math.floor(Math.ceil(r / tileSideLength));
+  let completeTiles = 0;
+  let incompleteTiles = 0;
 
+  for (let i = 0; i < quarterSquareSide; i++) {
+    for (let j = 0; j < quarterSquareSide; j++) {
+      let intersectLength = Math.pow(Math.pow(i * tileSideLength, 2) + Math.pow(j * tileSideLength, 2), 0.5);
+      let upperIntersectLength = Math.pow(Math.pow((i + 1) * tileSideLength, 2) + Math.pow((j + 1) * tileSideLength, 2), 0.5);
+
+      if (intersectLength < r && upperIntersectLength < r) {
+        completeTiles += 1;
+      }
+      else if (intersectLength < r && upperIntersectLength > r) {
+        incompleteTiles += 1;
+      }
+    }
+  }
+  return [completeTiles * 4, incompleteTiles * 4];
 }
-
 
 /*20170906
 CUT SENTENCE - https://js.checkio.org/mission/cut-sentence/
