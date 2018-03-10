@@ -138,6 +138,11 @@ function isValidEmail(email) {
   return true;
 }
 
+//Solution as of 20180308
+function isValidEmail(email) {
+  return /^[A-Za-z0-9\._,]+@[A-Za-z]+\.[A-Za-z]+$/.test(email);
+}
+
 /* peakFinder
 
 Write a function peakFinder(array) that takes in an array of numbers.
