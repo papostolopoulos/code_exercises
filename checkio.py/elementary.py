@@ -2,7 +2,8 @@
 
 # 20171116
 # SAY HI https://py.checkio.org/mission/say-history/ (NOT IN THE LIST OF JS EXERCISES)
-# In this mission you should write a function that introduce a percone with a given parameters in attributes.
+# In this mission you should write a function that introduce a percone with
+# a given parameters in attributes.
 #
 # Input: Two arguments. String and positive integer.
 # Output: String.
@@ -36,7 +37,8 @@ def say_hi(name, int):
 # 20171116
 # CORRECT SENTENCE https://py.checkio.org/mission/correct-sentence/
 # For the input of your function will be given one sentence.
-# You have to return its fixed copy in a way so it’s always starts with a capital letter and ends with a dot.
+# You have to return its fixed copy in a way so it’s always starts with
+# a capital letter and ends with a dot.
 #
 # Pay attention to the fact that not all of the fixes is necessary.
 # If a sentence already ends with a dot then adding another one will be a mistake.
@@ -93,6 +95,20 @@ import re
 
 def first_word(text: str) -> str:
     return re.search("[a-zA-Z']+", text).group()
+
+
+# solution as of 20180309
+def first_word(str):
+    punctuations = "., "
+    final = ""
+    while str[0] in punctuations:
+        str = str[1:]
+
+    while str[0] not in punctuations:
+        final += str[0]
+        str = str[1:]
+
+    return final
 
 # 20171128
 # SECOND INDEX https://py.checkio.org/mission/second-index/
