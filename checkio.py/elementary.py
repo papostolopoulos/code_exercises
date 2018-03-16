@@ -172,6 +172,18 @@ def between_markers(str, init, final):
     return endStr[- 1]
 
 
+# Solution from 20180315
+def between_markers(str, m1, m2):
+    if m1 in str and m2 in str:
+        return str[str.index(m1) + 1: str.index(m2)]
+    elif m1 in str:
+        return str[str.index(m1) + 1:]
+    elif m2 in str:
+        return str[: str.index(m2)]
+    else:
+        return str
+
+
 # 20171114
 # FIZZ BUZZ https://py.checkio.org/mission/fizz-buzz/
 # "Fizz buzz" is a word game we will use to teach the robots about division. Let's learn computers.

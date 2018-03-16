@@ -21,3 +21,19 @@
 #
 # How it is used: for parsing texts
 # Precondition: can't be more than one marker
+
+def between_markers(str, m1, m2):
+    if m1 in str and m2 in str:
+        return str[str.index(m1) + 1: str.index(m2)]
+    elif m1 in str:
+        return str[str.index(m1) + 1:]
+    elif m2 in str:
+        return str[: str.index(m2)]
+    else:
+        return str
+
+
+
+print(between_markers('What is >apple<', '>', '<'))
+print(between_markers('No[/b] hi', '[b]', '[/b]'))
+print(between_markers("No <hi>",">","<"))
