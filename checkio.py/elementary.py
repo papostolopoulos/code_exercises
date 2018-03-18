@@ -276,7 +276,18 @@ def find_message(str):
     return re.sub('[^A-Z]', '', str)
 
 
-# /*20170801
+# Solution on 20180317
+import re
+
+def find_message(str):
+    endStr = ""
+    for x in range(0, len(str) - 1):
+        if(re.match("[A-Z]", str[x])): endStr += str[x]
+
+    return endStr
+
+
+# /*20180317
 # THREE WORDS https://py.checkio.org/mission/three-words/
 #
 # Let's teach the Robots to distinguish words and numbers.
@@ -300,7 +311,17 @@ def find_message(str):
 # */
 #
 #
-#
+import re
+
+def threeWords(str):
+    counter = 0
+    splitStr = str.split(" ")
+    for x in range(0, len(splitStr)):
+        if (re.search("[0-9]", splitStr[x])): counter = 0
+        else: counter += 1
+        if counter >= 3: return True
+
+    return False
 #
 # /* 20170801
 # INDEX POWER https://py.checkio.org/mission/index-power/
@@ -324,6 +345,12 @@ def find_message(str):
 # indexPower([1, 2], 3) == -1
 #
 # */
+
+
+def index_power(arr, idx):
+    if len(arr) <= idx: return -1
+    return arr[idx] ** idx
+
 #
 #
 #

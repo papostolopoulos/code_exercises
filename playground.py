@@ -1,39 +1,32 @@
-# 20171119
-# BETWEEN MARKERS https://py.checkio.org/mission/between-markers/
-# You are given a string and two markers (the initial and final).
-# You have to find a substring enclosed between these two markers. But there are a few important conditions:
+# coding: utf-8
+
+# THE MOST NUMBERS https://py.checkio.org/mission/most-numbers/
+# Let's work with numbers.
 #
-# The initial and final markers are always different.
-# The text must be found only between the first instances of the marker.
-# If there is no initial marker then the beginning should be considered as the beginning of a string.
-# If there is no final marker then the ending should be considered as the ending of a string.
-# If the initial and final markers are missing then simply return the whole string.
-# If the final marker is standing in front of the initial one then return an empty string.
-# Input: Three arguments. All of them are strings. The second and third arguments are the initial and final markers.
+# You are given an array of numbers (floats).
+# You should find the difference between the maximum and minimum element.
+# Your function should be able to handle an undefined amount of arguments.
+# For an empty argument list, the function should return 0.
 #
-# Output: A string.
+# Floating-point numbers are represented in computer hardware as base 2 (binary) fractions.
+# So we should check the result with ±0.001 precision.
+# Think about how to work with an arbitrary number of arguments.
+#
+# Input: An arbitrary number of arguments as numbers (int, float).
+#
+# Output: The difference between maximum and minimum as a number (int, float).
 #
 # Example:
 #
-# between_markers('What is >apple<', '>', '<') == 'apple'
-# between_markers('No[/b] hi', '[b]', '[/b]') == 'No'
-# between_markers("No <hi>",">","<") == ""
-#
-# How it is used: for parsing texts
-# Precondition: can't be more than one marker
+# mostNumbers(1, 2, 3) == 2
+# mostNumbers(5, -5) == 10
+# mostNumbers(10.2, -2.2, 0, 1.1, 0.5) == 12.4
+# mostNumbers() == 0
+# */
 
-def between_markers(str, m1, m2):
-    if m1 in str and m2 in str:
-        return str[str.index(m1) + 1: str.index(m2)]
-    elif m1 in str:
-        return str[str.index(m1) + 1:]
-    elif m2 in str:
-        return str[: str.index(m2)]
-    else:
-        return str
+def most_numbers(*args):
+    if len(args) == 0: return 0
+    return max(args) - min(args)
 
 
-
-print(between_markers('What is >apple<', '>', '<'))
-print(between_markers('No[/b] hi', '[b]', '[/b]'))
-print(between_markers("No <hi>",">","<"))
+print(most_numbers(1, 2, 3, 8, 4))

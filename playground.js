@@ -1,3 +1,8 @@
-let testFun = () => console.log("Hello There");
+var arr = [1, 2, 3];
+arr.map(function (el) {
+  return el * 5;
+});
 
-testFun();
+arr.forEach(function (el) {
+  return el * 5;
+});
