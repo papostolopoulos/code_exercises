@@ -323,7 +323,7 @@ def threeWords(str):
 
     return False
 #
-# /* 20170801
+# /* 20180317
 # INDEX POWER https://py.checkio.org/mission/index-power/
 # You are given an array with positive numbers and a number N.
 # You should find the N-th power of the element in the array with the index N.
