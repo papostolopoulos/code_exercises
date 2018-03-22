@@ -2092,6 +2092,22 @@ function hipsterfy(sentence) {
   return splitSentence.join(" ");
 }
 
+//Solutions as per 20180320
+//ES6
+function hipsterfy(sentence){
+  return sentence.split(" ").map((el) => el.split("").reverse().join("").replace(/[aeiou]/, "").split("").reverse().join("")).join(" ");
+}
+
+
+//ES5
+function hipsterfy(sentence){
+  var sentenceArr = sentence.split(" ");
+  var newSentence = sentenceArr.map(function(el) {
+    return el.split("").reverse().join("").replace(/[aeiou]/, "").split("").reverse().join("");
+  });
+  return newSentence.join(" ");
+}
+
 hipsterfy("proper"); // => "propr"
 hipsterfy("proper tonic panther"); // => "propr tonc panthr"
 hipsterfy("towel flicker banana"); // => "towl flickr banan"

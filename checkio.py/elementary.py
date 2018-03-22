@@ -351,9 +351,7 @@ def index_power(arr, idx):
     if len(arr) <= idx: return -1
     return arr[idx] ** idx
 
-#
-#
-#
+
 #
 # /*20170802
 # THE MOST NUMBERS https://py.checkio.org/mission/most-numbers/
@@ -383,7 +381,7 @@ def index_power(arr, idx):
 #
 #
 #
-# /*20170803
+# /*20180321
 # DIGITS MULTIPLICATION https://py.checkio.org/mission/digits-multiplication/
 # You are given a positive integer. Your function should calculate the product of the digits excluding any zeroes.
 # For example: The number given is 123405. The result will be 1*2*3*4*5=120 (don't forget to exclude zeroes).
@@ -398,9 +396,13 @@ def index_power(arr, idx):
 # digitsMultip(1111) == 1
 #
 #
+def most_numbers(*args):
+    return max(args) - min(args) if len(args) > 0 else 0
+
+
 #
 #
-# /*20170803
+# /*20180321
 # COUNT INVERSION https://py.checkio.org/mission/count-inversions/
 # In computer science and discrete mathematics, an inversion is a pair of places in a sequence where the elements in these places are out of their natural order. So, if we use ascending order for a group of numbers, then an inversion is when larger numbers appear before lower number in a sequence.
 #
@@ -420,6 +422,18 @@ def index_power(arr, idx):
 # */
 #
 #
+
+#Not submitted yet as of 20180321 You need to open "Ice Base" station to solve this task
+def count_inversion(tup):
+    counter = 0
+    for x in range(0, len(tup) - 1):
+        rotator = tup[x+1]
+        if tup[x+1] - tup[x] < 0:
+            tup[x+1] = tup[x]
+            tup[x] = rotator
+            counter += 1
+
+    return counter
 #
 #
 # /*20170803
