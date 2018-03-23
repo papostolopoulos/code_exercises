@@ -184,6 +184,47 @@ def between_markers(str, m1, m2):
         return str
 
 
+# 20180323
+# BEST STOCK https://py.checkio.org/mission/best-stock/
+# You are given the current stock prices. You have to find out which stocks cost more.
+# Input: The dictionary where the market identifier code is a key and the value is a stock price.
+# Output: A string and the market identifier code.
+
+# best_stock({
+#     'CAC': 10.0,
+#     'ATX': 390.2,
+#     'WIG': 1.2
+# }) == 'ATX'
+# best_stock({
+#     'CAC': 91.1,
+#     'ATX': 1.01,
+#     'TASI': 120.9
+# }) == 'TASI'
+
+def best_stock(dct):
+    value = 0
+    result = ""
+    for key in dct:
+        if dct[key] > value:
+            value = dct[key]
+            result = key
+
+    return result
+
+
+print(best_stock({
+    'CAC': 10.0,
+    'ATX': 390.2,
+    'WIG': 1.2
+}))
+print(best_stock({
+    'CAC': 91.1,
+    'ATX': 1.01,
+    'TASI': 120.9
+}))
+
+
+
 # 20171114
 # FIZZ BUZZ https://py.checkio.org/mission/fizz-buzz/
 # "Fizz buzz" is a word game we will use to teach the robots about division. Let's learn computers.
@@ -423,7 +464,8 @@ def most_numbers(*args):
 #
 #
 
-#Not submitted yet as of 20180321 You need to open "Ice Base" station to solve this task
+#Not submitted yet as of 20180321 You need to open "Ice Base"
+# station to solve this
 def count_inversion(tup):
     counter = 0
     for x in range(0, len(tup) - 1):

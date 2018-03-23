@@ -23,18 +23,24 @@
 # countInversion([0, 1, 2, 3]) == 0
 # */
 
-def count_inversion(tup):
-    counter = 0
-    for x in range(0, len(tup) - 1):
-        rotator = tup[x+1]
-        if tup[x+1] - tup[x] < 0:
-            tup[x+1] = tup[x]
-            tup[x] = rotator
-            counter += 1
+def best_stock(dct):
+    value = 0
+    result = ""
+    for key in dct:
+        if dct[key] > value:
+            value = dct[key]
+            result = key
 
-    return counter
-
+    return result
 
 
-print(count_inversion([1, 2, 5, 3, 4, 7, 6]))
-print(count_inversion([0, 1, 2, 3]))
+print(best_stock({
+    'CAC': 10.0,
+    'ATX': 390.2,
+    'WIG': 1.2
+}))
+print(best_stock({
+    'CAC': 91.1,
+    'ATX': 1.01,
+    'TASI': 120.9
+}))
