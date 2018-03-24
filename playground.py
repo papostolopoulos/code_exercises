@@ -1,59 +1,51 @@
 # coding: utf-8
 
-# 20180323
-# BIGGER PRICE https://py.checkio.org/mission/bigger-price/
-# You have a table with all available goods in the store.
-# The data is represented as a list of dicts
-# Your mission here is to find the TOP most expensive goods.
-# The amount we are looking for will be given as a first argument and the whole data as the second one
+#20180324
+#RIGHT TO LEFT
+# "For centuries, left-handers have suffered unfair discrimination in a world designed
+# for right-handers."
+# Santrock, John W. (2008). Motor, Sensory, and Perceptual Development.
 #
-# Input: int and list of dicts. Each dicts has two keys "name" and "price"
-# Output: the same as the second Input argument.
+# "Most humans (say 70 percent to 95 percent) are right-handed, a minority
+# (say 5 percent to 30 percent) are left-handed, and an indeterminate number of
+# people are probably best described as ambidextrous."
+# Scientific American. www.scientificamerican.com
+#
+# One of the robots is charged with a simple task: to join a sequence of strings
+# into one sentence to produce instructions on how to get around the ship.
+# But this robot is left-handed and has a tendency to joke around and
+# confuse its right-handed friends.
+#
+# You are given a sequence of strings.
+# You should join these strings into chunk of text where the initial strings are
+# separated by commas. As a joke on the right handed robots, you should replace
+# all cases of the words "right" with the word "left",
+# even if it's a part of another word. All strings are given in lowercase.
+#
+# Input: A sequence of strings as a tuple of strings (unicode).
+#
+# Output: The text as a string.
 #
 # Example:
-# bigger_price(2, [
-#     {"name": "bread", "price": 100},
-#     {"name": "wine", "price": 138},
-#     {"name": "meat", "price": 15},
-#     {"name": "water", "price": 1}
-# ]) == [
-#     {"name": "wine", "price": 138},
-#     {"name": "bread", "price": 100}
-# ]
-#
-# bigger_price(1, [
-#     {"name": "pen", "price": 5},
-#     {"name": "whiteboard", "price": 170}
-# ]) == [{"name": "whiteboard", "price": 170}]
-
-def bigger_price(num, lst):
-    number_list = []
-    final_result = []
-
-    for x in range(0, len(lst)):
-        number_list.append(lst[x]["price"])
-
-    print number_list
-    number_list = sorted(number_list, reverse=True)[0:num]
-    print(number_list)
-
-    for y in number_list:
-        for z in range(0, len(lst)):
-            if lst[z]["price"] == y:
-                final_result.append(lst[z])
-                break
-
-    return final_result
+# left_join(("left", "right", "left", "stop")) == "left,left,left,stop"
+# left_join(("bright aright", "ok")) == "bleft aleft,ok"
+# left_join(("brightness wright",)) == "bleftness wleft"
+# left_join(("enough", "jokes")) == "enough,jokes"
 
 
+def left_join(tup):
+    end_list = []
+    for x in tup:
+        str = x
+        if "right" in str:
+            str = str.replace("right", "left")
 
-print(bigger_price(2, [
-    {"name": "bread", "price": 100},
-    {"name": "wine", "price": 138},
-    {"name": "meat", "price": 15},
-    {"name": "water", "price": 1}
-]))
-#     == [
-#     {"name": "wine", "price": 138},
-#     {"name": "bread", "price": 100}
-# ]
+        end_list.append(str)
+
+    return ",".join(end_list)
+
+
+print(left_join(("left", "right", "left", "stop")))
+print(left_join(("bright aright", "ok")))
+print(left_join(("brightness wright",)))
+print(left_join(("enough", "jokes")))

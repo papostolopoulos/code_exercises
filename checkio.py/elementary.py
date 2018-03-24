@@ -350,6 +350,37 @@ def fizzBuzz(num):
     return "Fizz Buzz" if num % 3 == 0 and num % 5 == 0 else "Fizz" if num % 3 == 0 else "Buzz" if num % 5 == 0 else str(num)
 
 
+#
+# /*20180317
+# THE MOST NUMBERS https://py.checkio.org/mission/most-numbers/
+# Let's work with numbers.
+#
+# You are given an array of numbers (floats).
+# You should find the difference between the maximum and minimum element.
+# Your function should be able to handle an undefined amount of arguments.
+# For an empty argument list, the function should return 0.
+#
+# Floating-point numbers are represented in computer hardware as base 2 (binary) fractions.
+# So we should check the result with ±0.001 precision.
+# Think about how to work with an arbitrary number of arguments.
+#
+# Input: An arbitrary number of arguments as numbers (int, float).
+#
+# Output: The difference between maximum and minimum as a number (int, float).
+#
+# Example:
+#
+# mostNumbers(1, 2, 3) == 2
+# mostNumbers(5, -5) == 10
+# mostNumbers(10.2, -2.2, 0, 1.1, 0.5) == 12.4
+# mostNumbers() == 0
+# */
+#
+
+def most_numbers(*args):
+    return max(args) - min(args) if len(args) > 0 else 0
+
+
 # 20171115
 # EVEN THE LAST https://py.checkio.org/mission/even-last/
 # You are given an array of integers. You should find the sum of the elements with even indexes
@@ -494,32 +525,51 @@ def index_power(arr, idx):
     return arr[idx] ** idx
 
 
+#20180324
+#RIGHT TO LEFT
+# "For centuries, left-handers have suffered unfair discrimination in a world designed
+# for right-handers."
+# Santrock, John W. (2008). Motor, Sensory, and Perceptual Development.
 #
-# /*20170802
-# THE MOST NUMBERS https://py.checkio.org/mission/most-numbers/
-# Let's work with numbers.
+# "Most humans (say 70 percent to 95 percent) are right-handed, a minority
+# (say 5 percent to 30 percent) are left-handed, and an indeterminate number of
+# people are probably best described as ambidextrous."
+# Scientific American. www.scientificamerican.com
 #
-# You are given an array of numbers (floats).
-# You should find the difference between the maximum and minimum element.
-# Your function should be able to handle an undefined amount of arguments.
-# For an empty argument list, the function should return 0.
+# One of the robots is charged with a simple task: to join a sequence of strings
+# into one sentence to produce instructions on how to get around the ship.
+# But this robot is left-handed and has a tendency to joke around and
+# confuse its right-handed friends.
 #
-# Floating-point numbers are represented in computer hardware as base 2 (binary) fractions.
-# So we should check the result with ±0.001 precision.
-# Think about how to work with an arbitrary number of arguments.
+# You are given a sequence of strings.
+# You should join these strings into chunk of text where the initial strings are
+# separated by commas. As a joke on the right handed robots, you should replace
+# all cases of the words "right" with the word "left",
+# even if it's a part of another word. All strings are given in lowercase.
 #
-# Input: An arbitrary number of arguments as numbers (int, float).
+# Input: A sequence of strings as a tuple of strings (unicode).
 #
-# Output: The difference between maximum and minimum as a number (int, float).
+# Output: The text as a string.
 #
 # Example:
-#
-# mostNumbers(1, 2, 3) == 2
-# mostNumbers(5, -5) == 10
-# mostNumbers(10.2, -2.2, 0, 1.1, 0.5) == 12.4
-# mostNumbers() == 0
-# */
-#
+# left_join(("left", "right", "left", "stop")) == "left,left,left,stop"
+# left_join(("bright aright", "ok")) == "bleft aleft,ok"
+# left_join(("brightness wright",)) == "bleftness wleft"
+# left_join(("enough", "jokes")) == "enough,jokes"
+
+
+def left_join(tup):
+    end_list = []
+    for x in tup:
+        str = x
+        if "right" in str:
+            str = str.replace("right", "left")
+
+        end_list.append(str)
+
+    return ",".join(end_list)
+
+
 #
 #
 #
@@ -538,8 +588,7 @@ def index_power(arr, idx):
 # digitsMultip(1111) == 1
 #
 #
-def most_numbers(*args):
-    return max(args) - min(args) if len(args) > 0 else 0
+
 
 
 #
