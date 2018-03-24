@@ -316,9 +316,7 @@ def bigger_price(num, lst):
     for x in range(0, len(lst)):
         number_list.append(lst[x]["price"])
 
-    print number_list
     number_list = sorted(number_list, reverse=True)[0:num]
-    print(number_list)
 
     for y in number_list:
         for z in range(0, len(lst)):
