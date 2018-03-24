@@ -223,6 +223,92 @@ print(best_stock({
     'TASI': 120.9
 }))
 
+# 20180323
+# POPULAR WORDS https://py.checkio.org/mission/popular-words/
+# In this mission your task is to determine the popularity of certain words in the text.
+# At the input of your function are given 2 arguments: the text and the array of
+# words the popularity of which you need to determine.
+#
+# When solving this task pay attention to the following points:
+#
+# The text can consist of multiple lines with punctuation.
+# The words should be sought in all registers. This means that if you need to find
+# a word "one" then words like "one", "One", "oNe", "ONE" etc. will do.
+# The search words are always indicated in the lowercase.
+# If the word wasn’t found even once, it has to be returned in the dictionary
+# with 0 (zero) value.
+# Input: The text and the search words array.
+#
+# Output: The dictionary where the search words are the keys and values are the
+# number of times when those words are occurring in a given text.
+#
+# Example:
+# popular_words('''
+# When I was One,
+# I had just begun.
+# When I was Two,
+# I was nearly new.
+# ''', ['i', 'was', 'three']) == {
+#     'i': 4,
+#     'was': 3,
+#     'three': 0
+# }
+
+def popular_words(str, list_of_words):
+    str_list = str.replace("\n", " ").lower().split(" ")
+    punctuations = [",", "."]
+    dct = {}
+    print(dct)
+
+    for z in range(0, len(list_of_words)):
+        dct[list_of_words[z]] = 0
+
+    for x in range(0, len(str_list)):
+
+        if str_list[x][-1:] in punctuations:
+            str_list[x] = str_list[x][0: -1]
+
+        if str_list[x] in list_of_words:
+            dct[str_list[x]] += 1
+
+    return dct
+
+
+print(popular_words('''
+When I was One,
+I had just begun.
+When I was Two,
+I was nearly new.
+''', ['i', 'was', 'three']))
+
+
+
+# 20180323
+# BIGGER PRICE https://py.checkio.org/mission/bigger-price/
+# You have a table with all available goods in the store.
+# The data is represented as a list of dicts
+# Your mission here is to find the TOP most expensive goods.
+# The amount we are looking for will be given as a first argument and the whole data as the second one
+#
+# Input: int and list of dicts. Each dicts has two keys "name" and "price"
+# Output: the same as the second Input argument.
+#
+# Example:
+# bigger_price(2, [
+#     {"name": "bread", "price": 100},
+#     {"name": "wine", "price": 138},
+#     {"name": "meat", "price": 15},
+#     {"name": "water", "price": 1}
+# ]) == [
+#     {"name": "wine", "price": 138},
+#     {"name": "bread", "price": 100}
+# ]
+#
+# bigger_price(1, [
+#     {"name": "pen", "price": 5},
+#     {"name": "whiteboard", "price": 170}
+# ]) == [{"name": "whiteboard", "price": 170}]
+
 
 
 # 20171114

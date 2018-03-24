@@ -1,46 +1,47 @@
 # coding: utf-8
 
-
-# /*20170803
-# COUNT INVERSION https://py.checkio.org/mission/count-inversions/
-# In computer science and discrete mathematics, an inversion is a pair of places
-# in a sequence where the elements in these places are out of their natural order.
-# So, if we use ascending order for a group of numbers, then an inversion is when
-# larger numbers appear before lower number in a sequence.
+# 20180323
+# BIGGER PRICE https://py.checkio.org/mission/bigger-price/
+# You have a table with all available goods in the store.
+# The data is represented as a list of dicts
+# Your mission here is to find the TOP most expensive goods.
+# The amount we are looking for will be given as a first argument and the whole data as the second one
 #
-# Check out this example sequence: (1, 2, 5, 3, 4, 7, 6) and we can see here three inversions
-# - 5 and 3; - 5 and 4; - 7 and 6.
-#
-# You are given a sequence of unique numbers and you should count the number of inversions in this sequence.
-#
-# Input: A sequence as a tuple of integers.
-#
-# Output: The inversion number as an integer.
+# Input: int and list of dicts. Each dicts has two keys "name" and "price"
+# Output: the same as the second Input argument.
 #
 # Example:
+# bigger_price(2, [
+#     {"name": "bread", "price": 100},
+#     {"name": "wine", "price": 138},
+#     {"name": "meat", "price": 15},
+#     {"name": "water", "price": 1}
+# ]) == [
+#     {"name": "wine", "price": 138},
+#     {"name": "bread", "price": 100}
+# ]
 #
-# countInversion([1, 2, 5, 3, 4, 7, 6]) == 3
-# countInversion([0, 1, 2, 3]) == 0
-# */
+# bigger_price(1, [
+#     {"name": "pen", "price": 5},
+#     {"name": "whiteboard", "price": 170}
+# ]) == [{"name": "whiteboard", "price": 170}]
 
-def best_stock(dct):
-    value = 0
-    result = ""
-    for key in dct:
-        if dct[key] > value:
-            value = dct[key]
-            result = key
+def bigger_price(num, lst):
+    number_list = []
+    for x in range(0, len(lst)):
+        number_list.append(lst[x]["price"])
 
-    return result
+    number_list = number_list.sort()
+    print number_list
 
 
-print(best_stock({
-    'CAC': 10.0,
-    'ATX': 390.2,
-    'WIG': 1.2
-}))
-print(best_stock({
-    'CAC': 91.1,
-    'ATX': 1.01,
-    'TASI': 120.9
-}))
+bigger_price(2, [
+    {"name": "bread", "price": 100},
+    {"name": "wine", "price": 138},
+    {"name": "meat", "price": 15},
+    {"name": "water", "price": 1}
+])
+#     == [
+#     {"name": "wine", "price": 138},
+#     {"name": "bread", "price": 100}
+# ]
