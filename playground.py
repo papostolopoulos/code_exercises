@@ -28,19 +28,31 @@
 
 def bigger_price(num, lst):
     number_list = []
+    final_result = []
+
     for x in range(0, len(lst)):
         number_list.append(lst[x]["price"])
 
-    number_list = number_list.sort()
     print number_list
+    number_list = sorted(number_list, reverse=True)[0:num]
+    print(number_list)
+
+    for y in number_list:
+        for z in range(0, len(lst)):
+            if lst[z]["price"] == y:
+                final_result.append(lst[z])
+                break
+
+    return final_result
 
 
-bigger_price(2, [
+
+print(bigger_price(2, [
     {"name": "bread", "price": 100},
     {"name": "wine", "price": 138},
     {"name": "meat", "price": 15},
     {"name": "water", "price": 1}
-])
+]))
 #     == [
 #     {"name": "wine", "price": 138},
 #     {"name": "bread", "price": 100}
