@@ -152,6 +152,17 @@ function lcm(num1, num2) {
   }
 }
 
+
+function lcm(num1, num2) {
+  if ((num1 === 2 || num2 === 2) || (num1 === 1 || num2 === 1)) return num1 * num2;
+
+  if (num1 % 2 === 0) return (num1 / 2) * num2;
+
+  if (num2 % 2 === 0) return (num2 / 2) * num1;
+
+  if (num1 % 2 !== 0 && num2 % 2 !== 0) return num1 * num2;
+}
+
 //initial solution with var lowestMultiple that was not returned
 function lcm(num1, num2) {
   var lowestMultiple;
