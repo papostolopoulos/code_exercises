@@ -602,13 +602,59 @@ print(digits_multip(999))
 print(digits_multip(1000))
 print(digits_multip(1111))
 
+# /*20170807
+# NUMBER BASE https://py.checkio.org/mission/number-radix/
+# Do you remember the radix and Numeral systems from math class? Let's practice with it.
+#
+# You are given a positive number as a string along with the radix for it.
+# Your function should convert it into decimal form.
+# The radix is less than 37 and greater than 1.
+# The task uses digits and the letters A-Z for the strings.
+#
+# Watch out for cases when the number cannot be converted.
+# For example: "1A" cannot be converted with radix 9.
+# For these cases your function should return -1.
+#
+# Input: Two arguments. A number as string and a radix as an integer.
+#
+# Output: The converted number as an integer.
+#
+# Example:
+#
+# number_radix("AF", 16) == 175
+# number_radix("101", 2) == 5
+# number_radix("101", 5) == 26
+# number_radix("Z", 36) == 35
+# number_radix("AB", 10) == -1
+#
+# Precondition:
+# re.match("\A[A-Z0-9]\Z", str_number)
+# 0 < len(str_number) ≤ 10
+# 2 ≤ radix ≤ 36
+# */
+
+def number_radix(str, num):
+    try:
+        return int(str, num)
+    except ValueError:
+        return -1
+
+print(number_radix("AF", 16)) # == 175
+print(number_radix("101", 2)) # == 5
+print(number_radix("101", 5)) # == 26
+print(number_radix("Z", 36)) # == 35
+print(number_radix("AB", 10)) # == -1
+
+
 
 #
 #
 # /*20180321
 # COUNT INVERSION https://py.checkio.org/mission/count-inversions/
-# In computer science and discrete mathematics, an inversion is a pair of places in a sequence where the elements in these places are out of their natural order. So, if we use ascending order for a group of numbers, then an inversion is when larger numbers appear before lower number in a sequence.
-#
+# In computer science and discrete mathematics, an inversion is a pair of places
+# in a sequence where the elements in these places are out of their natural order.
+# So, if we use ascending order for a group of numbers, then an inversion
+# is when larger numbers appear before lower number in a sequence.
 # Check out this example sequence: (1, 2, 5, 3, 4, 7, 6) and we can see here three inversions
 # - 5 and 3; - 5 and 4; - 7 and 6.
 #
@@ -694,33 +740,3 @@ def count_inversion(tup):
 #
 #
 #
-# /*20170807
-# NUMBER BASE https://py.checkio.org/mission/number-radix/
-# Do you remember the radix and Numeral systems from math class? Let's practice with it.
-#
-# You are given a positive number as a string along with the radix for it.
-# Your function should convert it into decimal form.
-# The radix is less than 37 and greater than 1.
-# The task uses digits and the letters A-Z for the strings.
-#
-# Watch out for cases when the number cannot be converted.
-# For example: "1A" cannot be converted with radix 9.
-# For these cases your function should return -1.
-#
-# Input: Two arguments. A number as string and a radix as an integer.
-#
-# Output: The converted number as an integer.
-#
-# Example:
-#
-# numberRadix("AF", 16) == 175
-# numberRadix("101", 2) == 5
-# numberRadix("101", 5) == 26
-# numberRadix("Z", 36) == 35
-# numberRadix("AB", 10) == -1
-#
-# Precondition:
-# re.match("\A[A-Z0-9]\Z", str_number)
-# 0 < len(str_number) ≤ 10
-# 2 ≤ radix ≤ 36
-# */
