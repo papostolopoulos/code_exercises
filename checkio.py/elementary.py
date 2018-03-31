@@ -646,8 +646,82 @@ print(number_radix("Z", 36)) # == 35
 print(number_radix("AB", 10)) # == -1
 
 
-
+# 20180329
+# ABSOLUTE SORTING https://py.checkio.org/mission/absolute-sorting/
+# Let's try some sorting. Here is an array with the specific rules.
+# The array (a tuple) has various numbers.
+# You should sort it, but sort it by absolute value in ascending order.
+# For example, the sequence (-20, -5, 10, 15) will be sorted like so: (-5, 10, 15, -20).
+# Your function should return the sorted list or tuple.
 #
+# Precondition: The numbers in the array are unique by their absolute values.
+# Input: An array of numbers , a tuple..
+# Output: The list or tuple (but not a generator) sorted by absolute values in ascending order.
+#
+# Addition: The results of your function will be shown as a list in the tests explanation panel.
+# Example:
+# checkio((-20, -5, 10, 15)) == [-5, 10, 15, -20] # or (-5, 10, 15, -20)
+# checkio((1, 2, 3, 0)) == [0, 1, 2, 3]
+# checkio((-1, -2, -3, 0)) == [0, -1, -2, -3]
+
+def sort_tup(tup):
+    dct = {}
+    dict_keys = []
+    result = []
+    for x in tup:
+        absolute = abs(x)
+        dct[absolute] = x
+
+    for x in dct.keys():
+        dict_keys.append(x)
+
+    dict_keys.sort()
+
+    for y in range(0, len(dict_keys)):
+        result.append(dct[dict_keys[y]])
+
+    return result
+
+
+print(sort_tup((-20, -5, 10, 15))) # == [-5, 10, 15, -20] # or (-5, 10, 15, -20)
+print(sort_tup((1, 2, 3, 0))) # == [0, 1, 2, 3]
+print(sort_tup((-1, -2, -3, 0))) # == [0, -1, -2, -3]
+
+
+# 20100330
+# THE MOST FREQUENT https://py.checkio.org/en/mission/the-most-frequent/
+# You have a sequence of strings, and you’d like to determine the most frequently
+# occurring string in the sequence.
+# Input: a list of strings.
+# Output: a string.
+#
+# Example:
+# most_frequent([
+#     'a', 'b', 'c',
+#     'a', 'b',
+#     'a'
+# ]) == 'a'
+# most_frequent(['a', 'a', 'bi', 'bi', 'bi']) == 'bi'
+
+def most_frequent(lst):
+    dct = {}
+    counter = 0
+    result = ""
+
+    for x in range(0, len(lst)):
+        try:
+            dct[lst[x]] += 1
+        except KeyError:
+            dct[lst[x]] = 1
+
+    for y in dct:
+        if dct[y] > counter:
+            result = y
+            counter = dct[y]
+
+    return result
+
+
 #
 # /*20180321
 # COUNT INVERSION https://py.checkio.org/mission/count-inversions/
@@ -705,37 +779,6 @@ def count_inversion(tup):
 # commonWords("one,two,three", "four,five,six") == ""
 # commonWords("one,two,three", "four,five,one,two,six,three") == "one,three,two"
 # */
-#
-#
-#
-#
-# /*20170807
-# ABSOLUTE SORTING https://py.checkio.org/mission/absolute-sorting/
-# Let's try some sorting. Here is an array with the specific rules.
-#
-# The array has various numbers.
-# You should sort it, but sort it by absolute value in ascending order.
-# For example, the sequence (-20, -5, 10, 15) will be sorted like so: (-5, 10, 15, -20).
-# Your function should return the sorted list .
-#
-# Precondition: The numbers in the array are unique by their absolute values.
-#
-# Input: An array of numbers .
-#
-# Output: The list or tuple (but not a generator) sorted by absolute values in ascending order.
-#
-# Addition: The result of your function will be shown as a list in the tests explanation panel.
-#
-# Example:
-#
-#
-# Note from Paris: These examples are typed like the arrays are for Java and not Javascript.
-# Instead of absoluteSorting((-20, -5, 10, 15)) it should be absoluteSorting([-20, -5, 10, 15])
-# absoluteSorting((-20, -5, 10, 15)) == [-5, 10, 15, -20] # or (-5, 10, 15, -20)
-# absoluteSorting((1, 2, 3, 0)) == [0, 1, 2, 3]
-# absoluteSorting((-1, -2, -3, 0)) == [0, -1, -2, -3]
-# */
-#
 #
 #
 #
