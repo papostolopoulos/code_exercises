@@ -1,8 +1,8 @@
-var arr = [1, 2, 3];
-arr.map(function (el) {
-  return el * 5;
-});
-
-arr.forEach(function (el) {
-  return el * 5;
-});
+function addTwoFewTimes(num, counter){
+  num += 2
+  counter -= 1
+  if (counter === 0) {
+    return num;
+  }
+  addTwoFewTimes(num, counter);
+}

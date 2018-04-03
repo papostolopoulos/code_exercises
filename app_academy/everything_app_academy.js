@@ -2449,6 +2449,15 @@ var lcm = function(num1, num2) {
   return multiple;
 }
 
+//Solution as of 20180402
+function lcm(num1, num2) {
+  var leastMultiple = num1 * num2;
+  while(leastMultiple % num1 === 0 && leastMultiple % num2 === 0){
+    leastMultiple /= 2;
+  }
+  return leastMultiple * 2;
+}
+
 lcm(2, 3); //6
 lcm(6, 10); //30
 lcm(24, 26); //312
