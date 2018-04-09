@@ -1,61 +1,36 @@
 # coding: utf-8
 
-# 20180406
-# THE MOST WANTED LETTER https://py.checkio.org/en/mission/most-wanted-letter/
-# You are given a text, which contains different english letters and punctuation symbols.
-# You should find the most frequent letter in the text.
-# The letter returned must be in lower case.
-# While checking for the most wanted letter, casing does not matter,
-# so for the purpose of your search, "A" == "a".
-# Make sure you do not count punctuation symbols, digits and whitespaces, only letters.
-
-# If you have two or more letters with the same frequency,
-# then return the letter which comes first in the latin alphabet.
-# For example -- "one" contains "o", "n", "e" only once for each, thus we choose "e".
+# 20180408
+# NON-UNIQUE ELEMENTS https://py.checkio.org/en/mission/non-unique-elements/
 #
-# Input: A text for analysis as a string.
-# Output: The most frequent letter in lower case as a string.
+# You are given a non-empty list of integers (X). For this task, you should
+# return a list consisting of only the non-unique elements in this list.
+# To do so you will need to remove all unique elements (elements which are
+# contained in a given list only once). When solving this task,
+# do not change the order of the list.
+# Example: [1, 2, 3, 1, 3] 1 and 3 non-unique elements and result will be [1, 3, 1, 3].
+# Input: A list of integers.
+# Output: The list of integers.
 #
 # Example:
-# checkio("Hello World!") == "l"
-# checkio("How do you do?") == "o"
-# checkio("One") == "e"
-# checkio("Oops!") == "o"
-# checkio("AAaooo!!!!") == "a"
-# checkio("abe") == "a"
+# checkio([1, 2, 3, 1, 3]) == [1, 3, 1, 3]
+# checkio([1, 2, 3, 4, 5]) == []
+# checkio([5, 5, 5, 5, 5]) == [5, 5, 5, 5, 5]
+# checkio([10, 9, 10, 10, 9, 8]) == [10, 9, 10, 10, 9]
 
-def most_wanted_letter(str):
-    letter_dct = {}
-    prevailing_letter = ' '
-    occurences = 0
+def non_unique(lst):
+    dct = {}
 
+    for x in lst:
+        try: dct[x] += 1
+        except KeyError: dct[x] = 1
 
-    def filter_punctuations(el):
-        punctuations = "!?.,:;/- 0123456789"
-        return False if el in punctuations else True
+    for y in dct:
+        if dct[y] == 1: lst.remove(int(y))
 
-    filtered_str = "".join(list(filter(filter_punctuations, str))).lower()
+    return lst
 
-    for x in filtered_str:
-        try:
-            letter_dct[x] += 1
-        except KeyError:
-            letter_dct[x] = 1
-
-    for key in letter_dct:
-        if letter_dct[key] > occurences:
-            occurences = letter_dct[key]
-            prevailing_letter = key
-
-        if letter_dct[key] == occurences and key < prevailing_letter:
-            prevailing_letter = key
-
-    return prevailing_letter
-
-
-print(most_wanted_letter("Hello World!")) # == "l"
-print(most_wanted_letter("How do you do?")) # == "o"
-print(most_wanted_letter("One")) # == "e"
-print(most_wanted_letter("Oops!")) # == "o"
-print(most_wanted_letter("AAaooo!!!!")) # == "a"
-print(most_wanted_letter("abe")) # == "a"
+print(non_unique([1, 2, 3, 1, 3])) # == [1, 3, 1, 3]
+print(non_unique([1, 2, 3, 4, 5])) # == []
+print(non_unique([5, 5, 5, 5, 5])) # == [5, 5, 5, 5, 5]
+print(non_unique([10, 9, 10, 10, 9, 8])) # == [10, 9, 10, 10, 9]
