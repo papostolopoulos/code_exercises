@@ -1,36 +1,40 @@
 # coding: utf-8
 
 # 20180408
-# NON-UNIQUE ELEMENTS https://py.checkio.org/en/mission/non-unique-elements/
+# MONKEY TYPING https://py.checkio.org/en/mission/monkey-typing/
+# Let's suppose our monkeys are typing, typing and typing,
+# and have produced a wide variety of short text segments.
+# Let's try to check them for sensible word inclusions.
 #
-# You are given a non-empty list of integers (X). For this task, you should
-# return a list consisting of only the non-unique elements in this list.
-# To do so you will need to remove all unique elements (elements which are
-# contained in a given list only once). When solving this task,
-# do not change the order of the list.
-# Example: [1, 2, 3, 1, 3] 1 and 3 non-unique elements and result will be [1, 3, 1, 3].
-# Input: A list of integers.
-# Output: The list of integers.
+# You are given some text potentially including sensible words.
+# You should count how many words are included in the given text.
+# A word should be whole and may be a part of other word.
+# Text letter case does not matter. Words are given in lowercase and don't repeat.
+# If a word appears several times in the text, it should be counted only once.
+#
+# For example, text - "How aresjfhdskfhskd you?", words - ("how", "are", "you", "hello").
+# The result will be 3.
+#
+# Input: Two arguments. A text as a string (unicode for py2)
+# and words as a set of strings (unicode for py2).
+# Output: The number of words in the text as an integer.
 #
 # Example:
-# checkio([1, 2, 3, 1, 3]) == [1, 3, 1, 3]
-# checkio([1, 2, 3, 4, 5]) == []
-# checkio([5, 5, 5, 5, 5]) == [5, 5, 5, 5, 5]
-# checkio([10, 9, 10, 10, 9, 8]) == [10, 9, 10, 10, 9]
+# count_words("How aresjfhdskfhskd you?", {"how", "are", "you", "hello"}) == 3
+# count_words("Bananas, give me bananas!!!", {"banana", "bananas"}) == 2
+# count_words("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+#             {"sum", "hamlet", "infinity", "anything"}) == 1
 
-def non_unique(lst):
-    dct = {}
+def count_words(str, set):
+    counter = 0
+    for x in set:
+        if x in str.lower():
+            counter += 1
 
-    for x in lst:
-        try: dct[x] += 1
-        except KeyError: dct[x] = 1
+    return counter
 
-    for y in dct:
-        if dct[y] == 1: lst.remove(int(y))
 
-    return lst
-
-print(non_unique([1, 2, 3, 1, 3])) # == [1, 3, 1, 3]
-print(non_unique([1, 2, 3, 4, 5])) # == []
-print(non_unique([5, 5, 5, 5, 5])) # == [5, 5, 5, 5, 5]
-print(non_unique([10, 9, 10, 10, 9, 8])) # == [10, 9, 10, 10, 9]
+print(count_words("How aresjfhdskfhskd you?", {"how", "are", "you", "hello"})) # == 3
+print(count_words("Bananas, give me bananas!!!", {"banana", "bananas"})) # == 2
+print(count_words("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+            {"sum", "hamlet", "infinity", "anything"})) # == 1
