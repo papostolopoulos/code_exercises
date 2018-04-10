@@ -170,3 +170,63 @@ print(count_words("How aresjfhdskfhskd you?", {"how", "are", "you", "hello"})) #
 print(count_words("Bananas, give me bananas!!!", {"banana", "bananas"})) # == 2
 print(count_words("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
             {"sum", "hamlet", "infinity", "anything"})) # == 1
+
+
+# 20180409
+# Xs AND Os REFEREE https://py.checkio.org/en/mission/x-o-referee/
+# Tic-Tac-Toe, sometimes also known as Xs and Os, is a game for two players
+# (X and O) who take turns marking the spaces in a 3×3 grid.
+# The player who succeeds in placing three respective marks in a horizontal,
+# vertical, or diagonal rows (NW-SE and NE-SW) wins the game.
+#
+# But we will not be playing this game. You will be the referee for
+# this games results. You are given a result of a game and you must determine
+# if the game ends in a win or a draw as well as who will be the winner.
+# Make sure to return "X" if the X-player wins and "O" if the O-player wins.
+# If the game is a draw, return "D".
+#
+# A game's result is presented as a list of strings, where "X" and "O" are players'
+# marks and "." is the empty cell.
+#
+# Input: A game result as a list of strings (unicode).
+# Output: "X", "O" or "D" as a string.
+#
+# Example:
+# checkio([
+#     "X.O",
+#     "XX.",
+#     "XOO"]) == "X"
+# checkio([
+#     "OO.",
+#     "XOX",
+#     "XOX"]) == "O"
+# checkio([
+#     "OOX",
+#     "XXO",
+#     "OXX"]) == "D"
+
+def tic_tac_toe(lst):
+    for x in range(0, len(lst)):
+        if lst[x][0] == lst[x][1] and lst[x][0] == lst[x][2] and lst[x][0] != ".":
+            return lst[x][0]
+
+        if lst[0][x] == lst[1][x] and lst[0][x] == lst[2][x] and lst[0][x] != ".":
+            return lst[0][x]
+
+    if (lst[0][0] == lst[1][1] and lst[1][1] == lst[2][2] and lst[1][1] != ".") or (lst[0][2] == lst[1][1] and lst[1][1] == lst[2][0] and lst[1][1] != "."):
+        return lst[1][1]
+
+    return "D"
+
+print(tic_tac_toe([
+    "X.O",
+    "XX.",
+    "XOO"])) # == "X"
+print(tic_tac_toe([
+    "OO.",
+    "XOX",
+    "XOX"])) # == "O"
+print(tic_tac_toe([
+    "OOX",
+    "XXO",
+    "OXX"])) # == "D"
