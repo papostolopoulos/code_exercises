@@ -40,16 +40,22 @@ def safe_pawns(a_set):
     counter = 0
     for x in a_set:
         try:
+            if columns.find(x[0]) - 1 == -1:
+                continue
             back_left = columns[columns.find(x[0]) - 1] + ranks[ranks.find(x[1]) - 1]
             back_right = columns[columns.find(x[0]) + 1] + ranks[ranks.find(x[1]) - 1]
+            print(x, back_left, back_right)
+            print(columns.find(x[0]), columns.find(x[0]) - 1)
+            if back_left in a_set or back_right in a_set:
+                print("in if")
+                counter += 1
         except IndexError:
             continue;
-        if back_left in a_set or back_right in a_set:
-            counter += 1
 
     return counter
 
 # print(safe_pawns({"b4", "d4", "f4", "c3", "e3", "g5", "d2"})) # == 6
 # print(safe_pawns({"b4", "c4", "d4", "e4", "f4", "g4", "e5"})) # == 1
-print(safe_pawns(["a1","b2","c3","d4","e5","f6","g7","h8"]))
-safe_pawns(["a1","a2","a3","a4","h1","h2","h3","h4"])
+# print(safe_pawns(["a1","b2","c3","d4","e5","f6","g7","h8"]))
+# print(safe_pawns(["a1","a2","a3","a4","h1","h2","h3","h4"])) # == 0
+print(safe_pawns(["a1","b2","c3","d4","e5","f6","g7","h8"])) # == 7
