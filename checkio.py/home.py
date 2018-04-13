@@ -232,7 +232,7 @@ print(tic_tac_toe([
     "OXX"])) # == "D"
 
 
-# 20180410
+# 20180412
 # PAWN BROTHERHOOD https://py.checkio.org/en/mission/pawn-brotherhood/
 # Almost everyone in the world knows about the ancient game Chess and has
 # at least a basic understanding of its rules.
@@ -267,5 +267,45 @@ print(tic_tac_toe([
 # safe_pawns({"b4", "c4", "d4", "e4", "f4", "g4", "e5"}) == 1
 
 
+def safe_pawns(lst):
+    columns = "abcdefgh"
+    ranks = "12345678"
+    counter = 0
+
+    for x in lst:
+        # print(columns.find(x[0]) - 1, ranks.find(x[1]) - 1)
+        if columns.find(x[0]) - 1 == -1 or ranks.find(x[1]) - 1 == -1:
+            back_left = None
+        else:
+            back_left = columns[columns.find(x[0]) - 1] + ranks[ranks.find(x[1]) - 1]
+
+        if columns.find(x[0]) + 1 == len(lst) or ranks.find(x[1]) - 1 == -1:
+            back_right = None
+        else:
+            back_right = columns[columns.find(x[0]) + 1] + ranks[ranks.find(x[1]) - 1]
+
+        # print(x, back_left, back_right)
+
+        if back_left in lst or back_right in lst:
+            counter += 1
+
+    return counter
+
+
+# From the internet
+def safe_pawns(pawns):
+    count=0
+    for j in list(pawns):
+        list1=[chr(ord(j[0])-1)+str(int(j[1])-1),chr(ord(j[0])+1)+str(int(j[1])-1)]   # "b4"=>["c3","d3"]
+        for i in list1:
+            if i in pawns:
+                count=count+1
+                break
+    return count
+
 print(safe_pawns({"b4", "d4", "f4", "c3", "e3", "g5", "d2"})) # == 6
 print(safe_pawns({"b4", "c4", "d4", "e4", "f4", "g4", "e5"})) # == 1
+print(safe_pawns(["a1","a2","a3","a4","h1","h2","h3","h4"])) # == 0
+print(safe_pawns(["a1","b2","c3","d4","e5","f6","g7","h8"])) # == 7
+print(safe_pawns(["a8","b7","c6","d5","e4","f3","g2","h1"])) # == 7
+print(safe_pawns(["a2","b4","c6","d8","e1","f3","g5","h8"])) # == 0
