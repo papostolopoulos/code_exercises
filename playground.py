@@ -36,3 +36,9 @@
 # min("hello") == "e"
 # max(2.2, 5.6, 5.9, key=int) == 5.6
 # min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1]) == [9, 0]
+
+def max(*args, **kwargs):
+    print(kwargs.iteritems())
+
+ # max(2.2, 5.6, 5.9, key=int)
+max([[1,2], [3, 4], [9, 0]], key=lambda x: x[1])
