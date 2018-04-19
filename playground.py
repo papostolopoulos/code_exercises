@@ -38,7 +38,40 @@
 # min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1]) == [9, 0]
 
 def max(*args, **kwargs):
-    print(kwargs.iteritems())
+    if kwargs is None:
+        sort_me = args.sort(key=type(args[0]))
+    else:
+        sort_me = args.sort(kwargs)
 
- # max(2.2, 5.6, 5.9, key=int)
-max([[1,2], [3, 4], [9, 0]], key=lambda x: x[1])
+    print(sort_me)
+    # if type(args[0]) is list or type(args[0]) is dict or type(args[0]) is str:
+    #     iterable = args[0]
+    #     for x in range(0, len(iterable)):
+    #         print(iterable[x])
+
+
+
+    # maxVal = args[0]
+    # for x in range(1, len(args)):
+    #     if maxVal < args[x]: maxVal = args[x]
+    #
+    # return maxVal
+
+def min(*args, **kwargs):
+    if type(args[0]) is list or type(args[0]) is dict or type(args[0]) is str:
+        iterable = args[0]
+        for x in range(0, len(iterable)):
+            print(iterable[x])
+
+    # minVal = args[0]
+    # for x in range(1, len(args)):
+    #     if minVal > args[x]: minVal = args[x]
+    #
+    # return minVal
+
+# print(max(3, 2)) # == 3
+# print(min(3, 2)) # == 2
+print(max([1, 2, 0, 3, 4])) # == 4
+print(min("hello")) # == "e"
+print(max(2.2, 5.6, 5.9, key=int)) # == 5.6
+print(min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1])) # == [9, 0]
