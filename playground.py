@@ -38,11 +38,26 @@
 # min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1]) == [9, 0]
 
 def max(*args, **kwargs):
+    key = kwargs.get("key", None)
+    print("printing", int(5.3))
 
     if len(args) == 1:
-        if type(args[0]) is list or type(args[0]) is dict or type(args[0]) is str: return sorted(args[0])[-1]
+        #while loop to remove last element?
+        return(sorted(args[0], key = key)[-1])
 
-    if type(args[0]) is int or type(args[0]) is float:  return(sorted(args)[-1])
+    return(sorted(args, key = key)[-1])
+
+
+
+
+def min(*args, **kwargs):
+    key = kwargs.get("key", None)
+
+    if len(args) == 1:
+        return(sorted(args[0], reverse = True, key=key)[-1])
+
+    return(sorted(args, reverse = True, key=key)[-1])
+
 
 
 
@@ -68,8 +83,8 @@ def max(*args, **kwargs):
 
 
 print(max(3, 2)) # == 3
-# print(min(3, 2)) # == 2
+print(min(3, 2)) # == 2
 print(max([1, 2, 0, 3, 4])) # == 4
-print(max("hello")) # == "e"
+print(min("hello")) # == "e"
 print(max(2.2, 5.6, 5.9, key=int)) # == 5.6
-# print(min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1])) # == [9, 0]
+print(min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1])) # == [9, 0]
