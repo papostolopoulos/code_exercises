@@ -310,7 +310,8 @@ print(safe_pawns(["a1","b2","c3","d4","e5","f6","g7","h8"])) # == 7
 print(safe_pawns(["a8","b7","c6","d5","e4","f3","g2","h1"])) # == 7
 print(safe_pawns(["a2","b4","c6","d8","e1","f3","g5","h8"])) # == 0
 
-# 20180413
+# 20180421
+# MIN AND MAX https://py.checkio.org/en/mission/min-max/
 # In this mission you should write you own py3 implementation
 # (but you can use py2 for this) of the built-in functions min and max.
 # Some builtin functions are closed here: import, eval, exec, globals.
@@ -346,3 +347,40 @@ print(safe_pawns(["a2","b4","c6","d8","e1","f3","g5","h8"])) # == 0
 # min("hello") == "e"
 # max(2.2, 5.6, 5.9, key=int) == 5.6
 # min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1]) == [9, 0]
+
+def max(*args, **kwargs):
+    key = kwargs.get("key")
+
+    if len(args) == 1: sort_it = sorted(args[0], key = key)
+    else: sort_it = sorted(args, key = key)
+
+    if len(kwargs) >= 1:
+        while key(sort_it[-1]) == key(sort_it[-2]):
+            sort_it.remove(sort_it[-1])
+    return(sort_it[-1])
+
+    return(sort_it[-1])
+
+
+
+
+def min(*args, **kwargs):
+    key = kwargs.get("key")
+
+    if len(args) == 1: sort_it = sorted(args[0], reverse = True, key = key)
+    else: sort_it = sorted(args, reverse = True, key = key)
+
+    if len(kwargs) >= 1:
+        while key(sort_it[-1]) == key(sort_it[-2]):
+            sort_it.remove(sort_it[-1])
+    return(sort_it[-1])
+
+    return(sort_it[-1])
+
+
+print(max(3, 2)) # == 3
+print(min(3, 2)) # == 2
+print(max([1, 2, 0, 3, 4])) # == 4
+print(min("hello")) # == "e"
+print(max(2.2, 5.6, 5.9, key=int)) # == 5.6
+print(min([[1,2], [3, 4], [9, 0]], key=lambda x: x[1])) # == [9, 0]
