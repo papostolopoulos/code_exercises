@@ -1214,41 +1214,68 @@ function inPigLatin(sentence) {
   return newArray.join(" ");
 }
 
-//Older solution with capitalization not resolved
-function inPigLatin(sentence) {
-  var splitSentence = sentence.split(" ");
-  var vowels = ["a", "e", "i", "o", "u"];
-  var newSentence = [];
-  for (var i = 0; i < splitSentence.length; i++) {
-    var word = splitSentence[i].toLowerCase();
-    var counter = 0;
-    for (var k = 0; k < word.length; k++) {
-      if (vowels.indexOf(word[k]) === -1) {
-        counter += 1;
-        if (counter === word.length) {
-          word = word + "ay";
-          newSentence.push(word);
-          break;
-        }
-      }
-      else {
-        word = word.slice(counter) + word.slice(0,counter) + "ay";
-        newSentence.push(word);
-        break;
-      }
-      if (vowels.indexOf(word[0]) !== -1) {
-        word = word + "yay";
-        newSentence.push(word);
+// Solution as of 20180428
+function inPigLatin(str) {
+  var vowels = "aeiou";
+  var firstUpper = false;
+  var strArray = str.split(" ");
+
+  for (let i = 0; i < strArray.length; i++) {
+    var word = strArray[i];
+
+    if (vowels.includes(word[0].toLowerCase())){
+      strArray[i] = word + "yay";
+      continue;
+    }
+
+    firstUpper = word[0] !== word[0].toLowerCase() ? true:false;
+
+    for (let j = 0; j < word.length; j++) {
+      if (vowels.includes(word[j].toLowerCase())){
+        strArray[i] =
+        firstUpper === true ?
+        word.slice(j,j+1).toUpperCase() + word.slice(j+1) + word.slice(0,j).toLowerCase() + "ay" :
+        word.slice(j) + word.slice(0,j).toLowerCase() + "ay";
         break;
       }
     }
   }
-  return newSentence.join(" ")
+  return strArray.join(" ");
 }
 
-inPigLatin("Shmanthony is the best teacher"); //Anthonyshmay isyay ethay estbay eachertay
-inPigLatin("let us Dance"); //etlay usyay Anceday
-inPigLatin("this is the time of my life"); //isthay isyay ethay imetay ofyay myay ifelay
+
+//Second solution
+function inPigLatin(str) {
+  var vowels = "aeiou";
+  var firstLetterUpper, firstLetterVowel, word;
+  var strArray = str.split(" ");
+
+  for (var i = 0; i < strArray.length; i++) {
+    word = strArray[i];
+    firstLetterUpper = word.search(/[A-Z]/) === 0 ? true : false;
+    firstLetterVowel = word.search(/[aeiou]/i) === 0 ? true : false;
+    firstVowelPosition = word.search(/[aeiou]/i);
+    if (firstLetterVowel /*First letter is vowel*/){
+      strArray[i] = word + "yay";
+      continue;
+    }
+
+    strArray[i] = firstLetterUpper ?
+    word.slice(firstVowelPosition, firstVowelPosition + 1).toUpperCase() +
+    word.slice(firstVowelPosition + 1) + word.slice(0, firstVowelPosition).toLowerCase() + "ay" :
+    word.slice(firstVowelPosition) + word.slice(0, firstVowelPosition) + "ay";
+  }
+
+  return strArray.join(" ");
+}
+
+inPigLatin("pig");
+inPigLatin("omelet");
+inPigLatin("Dog");
+inPigLatin("Algae");
+inPigLatin("Shmanthony is the best teacher") //Anthonyshmay isyay ethay estbay eachertay
+inPigLatin("let us Dance") //etlay usyay Anceday
+inPigLatin("this is the time of my life") //isthay isyay ethay imetay ofyay myay ifelay
 
 //------------------------------------//
 //            Week 3 Day 4            //
