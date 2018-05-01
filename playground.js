@@ -32,6 +32,11 @@ At real "00:00:22", fake is "00:00:29.333...".
 At real "00:00:22.5", fake is "00:00:30".
 So answer is "00:00:22.5" after rounding down "00:00:22"
 
+// > 30/8
+// 3.75
+// > 3.75*6
+// 22.5
+
 Input: Three arguments. Correct starting time,
 current wrong time and
 broken clock descriptions as strings.
@@ -49,8 +54,21 @@ brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') ==  '00:00:22'
 function brokenClock(corStartTime, curBrokenTime, clockError) {
   var startTimeArr = corStartTime.split(":");
   var brokenTimeArr = curBrokenTime.split(":");
-  var startTimeSeconds = (Number(startTimeArr[0]) * 60 * 60) + (Number(startTimeArr[1] * 60) + Number(startTimeArr[2]));
-  var brokenTimeSeconds = (Number(brokenTimeArr[0]) * 60 * 60) + (Number(brokenTimeArr[1] * 60) + Number(brokenTimeArr[2]));
+  var errorTime = clockError.split(" ");
+
+  var startTimeSeconds = (Number(startTimeArr[0]) * 3600) + (Number(startTimeArr[1] * 60) + Number(startTimeArr[2]));
+  var brokenTimeSeconds = (Number(brokenTimeArr[0]) * 3600) + (Number(brokenTimeArr[1] * 60) + Number(brokenTimeArr[2]));
+  console.log("startTimeSeconds:", startTimeSeconds, "brokenTimeSeconds:", brokenTimeSeconds);
+  var errorTimeExtraSeconds = errorTime[1].includes("hour") ? errorTime[0] * 3600 :
+                              errorTime[1].includes("minute") ? errorTime[0] * 60 :
+                              Number(errorTime[0]);
+  var realTimeExtraSeconds = errorTime[4].includes("hour") ? errorTime[3] * 3600 :
+                            errorTime[4].includes("minute") ? errorTime[3] * 60 :
+                            Number(errorTime[3]);
+  console.log("errorTimeExtraSeconds:", errorTimeExtraSeconds, "realTimeExtraSeconds:", realTimeExtraSeconds);
+
+  var realTime = ((brokenTimeSeconds / (errorTimeExtraSeconds + realTimeExtraSeconds)) * realTimeExtraSeconds) - startTimeSeconds;
+  console.log(realTime);
   //Add first and second argument of clockError
   //Divide the broken time by sum of the first and the second argument of clockError
   //Multiply the result with the startTime
@@ -60,12 +78,12 @@ function brokenClock(corStartTime, curBrokenTime, clockError) {
   // > 3.75*6
   // 22.5
 
-  return Date(curBrokenTime);
 }
 
 
-brokenClock('00:00:00', '00:00:15', '+5 seconds at 10 seconds') // ==  '00:00:10'
-// brokenClock('06:10:00', '06:10:15', '-5 seconds at 10 seconds') // ==  '06:10:30'
+// brokenClock('00:00:00', '00:00:15', '+5 seconds at 10 seconds') // ==  '00:00:10'
+// brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') // ==  '00:00:30'
+brokenClock('06:10:00', '06:10:15', '-5 seconds at 10 seconds') // ==  '06:10:30'
 // brokenClock('13:00:00', '14:01:00', '+1 second at 1 minute') // ==  '14:00:00'
 // brokenClock('01:05:05', '04:05:05', '-1 hour at 2 hours') // ==  '07:05:05'
 // brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') // ==  '00:00:22'
