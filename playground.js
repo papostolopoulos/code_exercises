@@ -68,22 +68,29 @@ function brokenClock(corStartTime, curBrokenTime, clockError) {
   console.log("errorTimeExtraSeconds:", errorTimeExtraSeconds, "realTimeExtraSeconds:", realTimeExtraSeconds);
 
   var realTime = ((brokenTimeSeconds / (errorTimeExtraSeconds + realTimeExtraSeconds)) * realTimeExtraSeconds) - startTimeSeconds;
-  console.log(realTime);
-  //Add first and second argument of clockError
-  //Divide the broken time by sum of the first and the second argument of clockError
-  //Multiply the result with the startTime
-  //floor the number
-  // > 30/8
-  // 3.75
-  // > 3.75*6
-  // 22.5
 
+  // console.log(realTime);
+  // console.log((brokenTimeSeconds / (errorTimeExtraSeconds + realTimeExtraSeconds)) * realTimeExtraSeconds);
+
+  var finalTime = "";
+  finalTime += realTime / 3600 < 10 ? "0" + Math.floor(realTime / 3600) + ":": Math.floor(realTime / 3600) + ":";
+  finalTime += (realTime % 3600) /60 < 10 ? "0" + Math.floor((realTime % 3600) /60) + ":": Math.floor((realTime % 3600) /60) + ":";
+  finalTime += (realTime % 3600) %60 < 10 ? "0" + Math.floor((realTime % 3600) %60) : Math.floor((realTime % 3600) %60).toString();
+  // console.log(finalTime);
+  return finalTime;
 }
 
+//Add first and second argument of clockError
+//Divide the broken time by sum of the first and the second argument of clockError
+//Multiply the result with the startTime
+//floor the number
+// > 30/8
+// 3.75
+// > 3.75*6
+// 22.5
 
 // brokenClock('00:00:00', '00:00:15', '+5 seconds at 10 seconds') // ==  '00:00:10'
-// brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') // ==  '00:00:30'
-brokenClock('06:10:00', '06:10:15', '-5 seconds at 10 seconds') // ==  '06:10:30'
-// brokenClock('13:00:00', '14:01:00', '+1 second at 1 minute') // ==  '14:00:00'
+// brokenClock('06:10:00', '06:10:15', '-5 seconds at 10 seconds') // ==  '06:10:30'
+brokenClock('13:00:00', '14:01:00', '+1 second at 1 minute') // ==  '14:00:00'
 // brokenClock('01:05:05', '04:05:05', '-1 hour at 2 hours') // ==  '07:05:05'
 // brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') // ==  '00:00:22'
