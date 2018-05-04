@@ -89,6 +89,7 @@ brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') ==  '00:00:22'
 // > 3.75*6
 // 22.5
 
+
 function brokenClock(corStartTime, curBrokenTime, clockError) {
   var startTimeArr = corStartTime.split(":");
   var brokenTimeArr = curBrokenTime.split(":");
@@ -102,32 +103,69 @@ function brokenClock(corStartTime, curBrokenTime, clockError) {
   var realTimeExtraSeconds = errorTime[4].includes("hour") ? errorTime[3] * 3600 :
                             errorTime[4].includes("minute") ? errorTime[3] * 60 :
                             Number(errorTime[3]);
+  var iterator = (errorTimeExtraSeconds + realTimeExtraSeconds)/realTimeExtraSeconds;
+  console.log(iterator);
+  // For every two hours we add two hours and four minutes
+  // got every one second, how many seconds do we add?
 
-  while (falseTime < brokenTimeSeconds) {
-    falseTime += errorTimeExtraSeconds + realTimeExtraSeconds;
-    realTime += realTimeExtraSeconds;
-  }
-
-  // realTime should be -> 36404
-  console.log(realTime, falseTime, brokenTimeSeconds);
-  if (falseTime > brokenTimeSeconds) realTime = (brokenTimeSeconds * realTime) / falseTime
+    while (falseTime < brokenTimeSeconds) {
+      falseTime += iterator;
+      realTime += 1;
+    }
 
 
-  console.log(realTime);
 
+    realTime -= falseTime - brokenTimeSeconds;
+
+
+    // realTime should be -> 36404
+    console.log(realTime, falseTime, brokenTimeSeconds);
     var finalTime = "";
     finalTime += realTime / 3600 < 10 ? "0" + Math.floor(realTime / 3600) + ":": Math.floor(realTime / 3600) + ":";
     finalTime += (realTime % 3600) /60 < 10 ? "0" + Math.floor((realTime % 3600) /60) + ":": Math.floor((realTime % 3600) /60) + ":";
     finalTime += (realTime % 3600) %60 < 10 ? "0" + Math.floor((realTime % 3600) %60) : Math.floor((realTime % 3600) %60).toString();
     console.log(finalTime);
     return finalTime;
-
 }
+
+// function brokenClock(corStartTime, curBrokenTime, clockError) {
+//   var startTimeArr = corStartTime.split(":");
+//   var brokenTimeArr = curBrokenTime.split(":");
+//   var errorTime = clockError.split(" ");
+//   var realTime = (Number(startTimeArr[0]) * 3600) + (Number(startTimeArr[1] * 60) + Number(startTimeArr[2]));
+//   var falseTime = (Number(startTimeArr[0]) * 3600) + (Number(startTimeArr[1] * 60) + Number(startTimeArr[2]));
+//   var brokenTimeSeconds = (Number(brokenTimeArr[0]) * 3600) + (Number(brokenTimeArr[1] * 60) + Number(brokenTimeArr[2]));
+//   var errorTimeExtraSeconds = errorTime[1].includes("hour") ? errorTime[0] * 3600 :
+//                               errorTime[1].includes("minute") ? errorTime[0] * 60 :
+//                               Number(errorTime[0]);
+//   var realTimeExtraSeconds = errorTime[4].includes("hour") ? errorTime[3] * 3600 :
+//                             errorTime[4].includes("minute") ? errorTime[3] * 60 :
+//                             Number(errorTime[3]);
+//
+//   while (falseTime < brokenTimeSeconds) {
+//     falseTime += errorTimeExtraSeconds + realTimeExtraSeconds;
+//     realTime += realTimeExtraSeconds;
+//   }
+//
+//   // realTime should be -> 36404
+//   console.log(realTime, falseTime, brokenTimeSeconds);
+//   if (falseTime > brokenTimeSeconds) realTime = (brokenTimeSeconds * realTime) / falseTime;
+//
+//
+//   console.log(realTime);
+//
+//     var finalTime = "";
+//     finalTime += realTime / 3600 < 10 ? "0" + Math.floor(realTime / 3600) + ":": Math.floor(realTime / 3600) + ":";
+//     finalTime += (realTime % 3600) /60 < 10 ? "0" + Math.floor((realTime % 3600) /60) + ":": Math.floor((realTime % 3600) /60) + ":";
+//     finalTime += (realTime % 3600) %60 < 10 ? "0" + Math.floor((realTime % 3600) %60) : Math.floor((realTime % 3600) %60).toString();
+//     console.log(finalTime);
+//     return finalTime;
+//
+// }
 
 // brokenClock('00:00:00', '00:00:15', '+5 seconds at 10 seconds') // ==  '00:00:10'
 // brokenClock('06:10:00', '06:10:15', '-5 seconds at 10 seconds') // ==  '06:10:30'
-// brokenClock('13:00:00', '14:01:00', '+1 second at 1 minute') // ==  '14:00:00'
+brokenClock('13:00:00', '14:01:00', '+1 second at 1 minute') // ==  '14:00:00'
 // brokenClock('01:05:05', '04:05:05', '-1 hour at 2 hours') // ==  '07:05:05'
 // brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') // ==  '00:00:22'
-brokenClock("03:14:10","10:20:30","+4 minutes at 2 hours") // == "10:06:44" Not Working
-// brokenClock("00:00:00","00:00:15","+5 seconds at 10 seconds") // == "00:00:10"
+// brokenClock("03:14:10","10:20:30","+4 minutes at 2 hours") // == "10:06:44" Not Working
