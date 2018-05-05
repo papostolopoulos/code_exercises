@@ -51,35 +51,6 @@ brokenClock('01:05:05', '04:05:05', '-1 hour at 2 hours') ==  '07:05:05'
 brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') ==  '00:00:22'
 */
 
-// function brokenClock(corStartTime, curBrokenTime, clockError) {
-//   var startTimeArr = corStartTime.split(":");
-//   var brokenTimeArr = curBrokenTime.split(":");
-//   var errorTime = clockError.split(" ");
-//
-//   var startTimeSeconds = (Number(startTimeArr[0]) * 3600) + (Number(startTimeArr[1] * 60) + Number(startTimeArr[2]));
-//   var brokenTimeSeconds = (Number(brokenTimeArr[0]) * 3600) + (Number(brokenTimeArr[1] * 60) + Number(brokenTimeArr[2]));
-//   console.log("startTimeSeconds:", startTimeSeconds, "brokenTimeSeconds:", brokenTimeSeconds);
-//   var errorTimeExtraSeconds = errorTime[1].includes("hour") ? errorTime[0] * 3600 :
-//                               errorTime[1].includes("minute") ? errorTime[0] * 60 :
-//                               Number(errorTime[0]);
-//   var realTimeExtraSeconds = errorTime[4].includes("hour") ? errorTime[3] * 3600 :
-//                             errorTime[4].includes("minute") ? errorTime[3] * 60 :
-//                             Number(errorTime[3]);
-//   console.log("errorTimeExtraSeconds:", errorTimeExtraSeconds, "realTimeExtraSeconds:", realTimeExtraSeconds);
-//
-//   var realTime = ((brokenTimeSeconds / (errorTimeExtraSeconds + realTimeExtraSeconds)) * realTimeExtraSeconds); //- startTimeSeconds;
-//
-//   // console.log(realTime);
-//   // console.log((brokenTimeSeconds / (errorTimeExtraSeconds + realTimeExtraSeconds)) * realTimeExtraSeconds);
-//
-//   var finalTime = "";
-//   finalTime += realTime / 3600 < 10 ? "0" + Math.floor(realTime / 3600) + ":": Math.floor(realTime / 3600) + ":";
-//   finalTime += (realTime % 3600) /60 < 10 ? "0" + Math.floor((realTime % 3600) /60) + ":": Math.floor((realTime % 3600) /60) + ":";
-//   finalTime += (realTime % 3600) %60 < 10 ? "0" + Math.floor((realTime % 3600) %60) : Math.floor((realTime % 3600) %60).toString();
-//   console.log(finalTime);
-//   return finalTime;
-// }
-
 //Add first and second argument of clockError
 //Divide the broken time by sum of the first and the second argument of clockError
 //Multiply the result with the startTime
@@ -105,17 +76,13 @@ function brokenClock(corStartTime, curBrokenTime, clockError) {
                             Number(errorTime[3]);
   var iterator = (errorTimeExtraSeconds + realTimeExtraSeconds)/realTimeExtraSeconds;
   console.log(iterator);
-  // For every two hours we add two hours and four minutes
-  // got every one second, how many seconds do we add?
 
     while (falseTime < brokenTimeSeconds) {
       falseTime += iterator;
       realTime += 1;
     }
 
-
-
-    realTime -= falseTime - brokenTimeSeconds;
+    realTime = (brokenTimeSeconds * realTime)/falseTime;
 
 
     // realTime should be -> 36404
@@ -168,4 +135,4 @@ function brokenClock(corStartTime, curBrokenTime, clockError) {
 brokenClock('13:00:00', '14:01:00', '+1 second at 1 minute') // ==  '14:00:00'
 // brokenClock('01:05:05', '04:05:05', '-1 hour at 2 hours') // ==  '07:05:05'
 // brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') // ==  '00:00:22'
-// brokenClock("03:14:10","10:20:30","+4 minutes at 2 hours") // == "10:06:44" Not Working
+brokenClock("03:14:10","10:20:30","+4 minutes at 2 hours") // == "10:06:44" Not Working
