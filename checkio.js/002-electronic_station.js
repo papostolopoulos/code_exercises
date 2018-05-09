@@ -677,7 +677,7 @@ function doubleSubstring(line) {
     return 0;
 }
 
-/* 20180430
+/* 20180509
 BROKEN CLOCK https://js.checkio.org/en/mission/broken-clock/
 We have a broken clock. We know how quickly it runs or lags over a specific
 period of time. At first, the clock is set to the correct time, but after
@@ -725,9 +725,41 @@ brokenClock('01:05:05', '04:05:05', '-1 hour at 2 hours') ==  '07:05:05'
 brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') ==  '00:00:22'
 */
 
+function brokenClock(corStartTime, curBrokenTime, clockError) {
+  var hoursMs = 60 * 60 * 1000;
+  var minutesMs = 60 * 1000;
+  var secondsMs = 1000;
+  var startTimeArr = corStartTime.split(":");
+  var brokenTimeArr = curBrokenTime.split(":");
+  var errorTime = clockError.split(" ");
+  var realTime = (startTimeArr[0] * hoursMs) + (startTimeArr[1] * minutesMs) + (startTimeArr[2] * secondsMs);
+  var falseTime = (startTimeArr[0] * hoursMs) + (startTimeArr[1] * minutesMs) + (startTimeArr[2] * secondsMs);
+  var brokenTimeSeconds = (brokenTimeArr[0] * hoursMs) + (brokenTimeArr[1] * minutesMs) + (brokenTimeArr[2] * secondsMs);
+  var errorTimeExtraSeconds = errorTime[1].includes("hour") ? errorTime[0] * hoursMs :
+                              errorTime[1].includes("minute") ? errorTime[0] * minutesMs :
+                              errorTime[0] * secondsMs;
+  var realTimeExtraSeconds = errorTime[4].includes("hour") ? errorTime[3] * hoursMs :
+                            errorTime[4].includes("minute") ? errorTime[3] * minutesMs :
+                            errorTime[3] * secondsMs;
+  var iterator = (errorTimeExtraSeconds + realTimeExtraSeconds)/realTimeExtraSeconds;
+  var finalTime = "";
+
+
+    while (falseTime <= brokenTimeSeconds) {
+      falseTime += iterator;
+      realTime += 1;
+    }
+
+
+    finalTime += realTime / hoursMs < 10 ? "0" + Math.floor(realTime / hoursMs) + ":": Math.floor(realTime / hoursMs) + ":";
+    finalTime += (realTime % hoursMs) /minutesMs < 10 ? "0" + Math.floor((realTime % hoursMs) / minutesMs) + ":": Math.floor((realTime % hoursMs) / minutesMs) + ":";
+    finalTime += ((realTime % hoursMs) % minutesMs) / secondsMs < 10 ? "0" + Math.floor(((realTime % hoursMs) % minutesMs) / secondsMs) : Math.floor(((realTime % hoursMs) % minutesMs) / secondsMs).toString();
+    return finalTime;
+}
 
 brokenClock('00:00:00', '00:00:15', '+5 seconds at 10 seconds') // ==  '00:00:10'
 brokenClock('06:10:00', '06:10:15', '-5 seconds at 10 seconds') // ==  '06:10:30'
 brokenClock('13:00:00', '14:01:00', '+1 second at 1 minute') // ==  '14:00:00'
 brokenClock('01:05:05', '04:05:05', '-1 hour at 2 hours') // ==  '07:05:05'
 brokenClock('00:00:00', '00:00:30', '+2 seconds at 6 seconds') // ==  '00:00:22'
+brokenClock("03:14:10","10:20:30","+4 minutes at 2 hours") // == "10:06:44"
