@@ -23,25 +23,35 @@ stepsToConvert('ine', 'line2') == 2
 
 function stepsToConvert(str1, str2) {
   var operations = 0;
-  var str1Arr = str1.split("");
-  var str2Arr = str2.split("");
+  var testStr = "";
 
   if (str1.length < str2.length) {operations = str2.length - str1.length; return operations};
   if (str1.length > str2.length) {operations = str1.length - str2.length; return operations};
 
-  var startIdx = 0;
-  var endIdx = 1;
-
-  while (str2.search(str1.slice(startIdx, endIdx)) === -1) {
-    startIdx += 1;
-    endIdx += 1;
+  for (var i = 0; i < str1.length; i++) {
+    if (str2.indexOf(str1[i]) !== -1) {
+      testStr += str1[i];
+      i++;
+      break;
+    }
   }
 
-  while (str2.search(str1.slice(startIdx, endIdx)) === -1) { //Infinite loop
-    endIdx += 1;
-  }
+  console.log(str2.indexOf(testStr));
 
-  console.log(str1.slice(startIdx, endIdx));
+  while (str2.indexOf(testStr) !== -1) {
+    testStr += str1[i];
+    i++;
+  }
+  testStr = testStr.slice(0, testStr.length - 1);
+  console.log(testStr);
+
+  operations += str1.indexOf(testStr);
+  str1 = str1.slice(str1.indexOf(testStr));
+  console.log(str1);
+
+  //Perhaps a for loop starting from testStr.length and compare letters one by one.
+  // +1 when a letter is replaced
+  // +1 when an extra letter is added
 
   return operations;
 }
