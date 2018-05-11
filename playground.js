@@ -25,8 +25,9 @@ function stepsToConvert(str1, str2) {
   var operations = 0;
   var testStr = "";
 
-  if (str1.length < str2.length) {operations = str2.length - str1.length; return operations};
-  if (str1.length > str2.length) {operations = str1.length - str2.length; return operations};
+  if (str1.length < str2.length) return str2.length - str1.length;
+  if (str1.length > str2.length) return str1.length - str2.length;
+  if (str1 === str2) return 0;
 
   for (var i = 0; i < str1.length; i++) {
     if (str2.indexOf(str1[i]) !== -1) {
@@ -35,8 +36,6 @@ function stepsToConvert(str1, str2) {
       break;
     }
   }
-
-  console.log(str2.indexOf(testStr));
 
   while (str2.indexOf(testStr) !== -1) {
     testStr += str1[i];
@@ -47,11 +46,42 @@ function stepsToConvert(str1, str2) {
 
   operations += str1.indexOf(testStr);
   str1 = str1.slice(str1.indexOf(testStr));
-  console.log(str1);
 
-  //Perhaps a for loop starting from testStr.length and compare letters one by one.
-  // +1 when a letter is replaced
-  // +1 when an extra letter is added
+  for (var i = testStr.length; i < str2.length; i++) {
+    if (str1[i] !== str2[i] || str1[i] === undefined) {
+      str1 = str1.slice(0, i) + str2[i];
+      operations += 1;
+    }
+  }
+
+
+  return operations;
+}
+
+
+
+// Faster solution
+function stepsToConvert(str1, str2) {
+  var operations = 0;
+  var testStr = "";
+
+  if (str1.length < str2.length) return str2.length - str1.length;
+  if (str1.length > str2.length) return str1.length - str2.length;
+  if (str1 === str2) return 0;
+
+  for (var i = 0; i < str1.length; i++) {
+    if (str2.indexOf(testStr + str1[i]) !== -1) testStr += str1[i];
+  }
+
+  operations += str1.indexOf(testStr);
+  str1 = str1.slice(str1.indexOf(testStr));
+
+  for (var i = testStr.length; i < str2.length; i++) {
+    if (str1[i] !== str2[i] || str1[i] === undefined) {
+      str1 = str1.slice(0, i) + str2[i];
+      operations += 1;
+    }
+  }
 
   return operations;
 }
