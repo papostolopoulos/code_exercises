@@ -1,93 +1,48 @@
-/*20180509
-STRING CONVERSION https://js.checkio.org/en/mission/short-string-conversion/
+/*20180511
+PEARLS IN THE BOX https://js.checkio.org/en/mission/box-probability/
 
-You are given two strings, line1 and line2. Answer, what is the smallest number
-of operations you need to transform line1 to line2?
+To start the game, they put several black and white pearls in one of the boxes.
+Each robots have Nth moves, then initial set are restored for a next player.
+For each move, the robot take a pearl out of the box and put one of the
+opposite color back. The winner is the one who pulls the white pearl on the
+Nth step (or +1 point if they play many parties).
 
-Operations are:
-Delete one letter from one of strings
-Insert one letter into one of strings
-Replace one of letters from one of strings with another letter
+Our robots don't like indeterminacy and want to know the probability
+of a white pearl on the Nth step. The probability is a value between 0
+(0% chance or will not happen) and 1 (100% chance or will happen).
+The result is a float from 0 to 1 with two digits precision (±0.01).
 
+You are given a start set of pearls as a string that contains "b"
+(black) and "w" (white) and the number of the step (N).
+The order of the pearls does not matter.
 
-Input: two arguments, two strings.
-
-Output: int, minimum number of operations.
+probability
+Input: The start sequence of the pearls as a string and the step number as an integer.
+Output: The probability for a white pearl as a float.
 
 Example:
-
-stepsToConvert('line1', 'line1') == 0
-stepsToConvert('line1', 'line2') == 1
-stepsToConvert('ine', 'line2') == 2
+boxProbability('bbw', 3) == 0.48
+boxProbability('wwb', 3) == 0.52
+boxProbability('www', 3) == 0.56
+boxProbability('bbbb', 1) == 0
+boxProbability('wwbb', 4) == 0.5
+boxProbability('bwbwbwb', 5) == 0.48
 */
 
-function stepsToConvert(str1, str2) {
-  var operations = 0;
-  var testStr = "";
+function boxProbability(str, moves) {
+  var chances = {
+    currStr: str,
+    prob: 1,
+    movesLeft: moves,
+    nextMove: {}
+  };
 
-  if (str1.length < str2.length) return str2.length - str1.length;
-  if (str1.length > str2.length) return str1.length - str2.length;
-  if (str1 === str2) return 0;
-
-  for (var i = 0; i < str1.length; i++) {
-    if (str2.indexOf(str1[i]) !== -1) {
-      testStr += str1[i];
-      i++;
-      break;
-    }
-  }
-
-  while (str2.indexOf(testStr) !== -1) {
-    testStr += str1[i];
-    i++;
-  }
-  testStr = testStr.slice(0, testStr.length - 1);
-  console.log(testStr);
-
-  operations += str1.indexOf(testStr);
-  str1 = str1.slice(str1.indexOf(testStr));
-
-  for (var i = testStr.length; i < str2.length; i++) {
-    if (str1[i] !== str2[i] || str1[i] === undefined) {
-      str1 = str1.slice(0, i) + str2[i];
-      operations += 1;
-    }
-  }
-
-
-  return operations;
 }
 
 
-
-// Faster solution
-function stepsToConvert(str1, str2) {
-  var operations = 0;
-  var testStr = "";
-
-  if (str1.length < str2.length) return str2.length - str1.length;
-  if (str1.length > str2.length) return str1.length - str2.length;
-  if (str1 === str2) return 0;
-
-  for (var i = 0; i < str1.length; i++) {
-    if (str2.indexOf(testStr + str1[i]) !== -1) testStr += str1[i];
-  }
-
-  operations += str1.indexOf(testStr);
-  str1 = str1.slice(str1.indexOf(testStr));
-
-  for (var i = testStr.length; i < str2.length; i++) {
-    if (str1[i] !== str2[i] || str1[i] === undefined) {
-      str1 = str1.slice(0, i) + str2[i];
-      operations += 1;
-    }
-  }
-
-  return operations;
-}
-
-
-stepsToConvert('line1', 'line1'); // == 0
-stepsToConvert('line1', 'line2'); // == 1
-stepsToConvert('ine', 'line2'); // == 2
-stepsToConvert('pline1', 'line2v'); // == 3
+boxProbability('bbw', 3) // == 0.48
+boxProbability('wwb', 3) // == 0.52
+boxProbability('www', 3) // == 0.56
+boxProbability('bbbb', 1) // == 0
+boxProbability('wwbb', 4) // == 0.5
+boxProbability('bwbwbwb', 5) // == 0.48
