@@ -31,10 +31,32 @@ boxProbability('bwbwbwb', 5) == 0.48
 
 function boxProbability(str, moves) {
   var chances = {
-    currStr: str,
-    prob: 1,
-    movesLeft: moves,
-    nextMove: {}
+    string: "wbb",
+    tries: 3,
+    probability: 1,
+    whiteChance: 1,
+    blackChance: 1,
+    movesLeft: 3,
+    nodes: [],
+    iterate: function() {
+      if (this.tries > 1) {
+        console.log(this.string.match(/w/g));
+        if (this.string.match(/w/g).length > 0) {
+          var newObj = {
+            probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
+            whiteChance: (this.whiteChance*this.string.match(/w/g).length)/ this.string.length,
+            blackChance: this.blackChance,
+            string: this.string.replace(/w/, "b"),
+            tries: this.tries - 1,
+            nodes: [],
+            iterate: this.iterate
+          }
+          this.nodes.push(newObj);
+          newObj.iterate();
+        }
+      }
+      console.log(newObj);
+    }
   };
 
 }
