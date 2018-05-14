@@ -40,20 +40,23 @@ function boxProbability(str, moves) {
     nodes: [],
     iterate: function() {
       if (this.tries > 1) {
-        console.log(this.string.match(/w/g));
-        if (this.string.match(/w/g).length > 0) {
-          var newObj = {
-            probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
-            whiteChance: (this.whiteChance*this.string.match(/w/g).length)/ this.string.length,
-            blackChance: this.blackChance,
-            string: this.string.replace(/w/, "b"),
-            tries: this.tries - 1,
-            nodes: [],
-            iterate: this.iterate
+        if (this.string.includes("w")) {
+          if (this.string.match(/w/g).length > 0) {
+            var newObj = {
+              probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
+              whiteChance: (this.whiteChance*this.string.match(/w/g).length)/ this.string.length,
+              blackChance: this.blackChance,
+              string: this.string.replace(/w/, "b"),
+              tries: this.tries - 1,
+              nodes: [],
+              iterate: this.iterate
+            }
+            this.nodes.push(newObj);
+            newObj.iterate();
           }
-          this.nodes.push(newObj);
-          newObj.iterate();
         }
+
+
       }
       console.log(newObj);
     }
