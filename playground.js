@@ -56,6 +56,22 @@ function boxProbability(str, moves) {
           }
         }
 
+        if (this.string.includes("b")) {
+          if (this.string.match(/b/g).length > 0) {
+            var newObj = {
+              probability: (this.probability*this.string.match(/b/g).length)/ this.string.length,
+              blackChance: (this.blackChance*this.string.match(/b/g).length)/ this.string.length,
+              whiteChance: this.whiteChance,
+              string: this.string.replace(/b/, "a"),
+              tries: this.tries - 1,
+              nodes: [],
+              iterate: this.iterate
+            }
+            this.nodes.push(newObj);
+            newObj.iterate();
+          }
+        }
+
 
       }
       console.log(newObj);
