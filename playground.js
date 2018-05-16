@@ -29,71 +29,69 @@ boxProbability('wwbb', 4) == 0.5
 boxProbability('bwbwbwb', 5) == 0.48
 */
 
-function boxProbability(str, moves) {
-  var chances = {
-    string: "wbb",
-    tries: 3,
-    probability: 1,
-    // whiteChance: 1,
-    // blackChance: 1,
-    movesLeft: 3,
-    nodes: [],
-    iterate: function() {
-      if (this.tries > 0) {
-        if (this.string.includes("w")) {
-          if (this.string.match(/w/g).length > 0) {
-            var newObj = {
-              probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
-              // whiteChance: (this.whiteChance*this.string.match(/w/g).length)/ this.string.length,
-              // blackChance: this.blackChance,
-              string: this.string.replace(/w/, "b"),
-              tries: this.tries - 1,
-              nodes: [],
-              iterate: this.iterate
-            }
-            this.nodes.push(newObj);
-            newObj.iterate();
-            // this.nodes[this.nodes.length - 1].iterate();
-          }
-        }
-
-        if (this.string.includes("b")) {
-          if (this.string.match(/b/g).length > 0) {
-            var newObj = {
-              probability: (this.probability*this.string.match(/b/g).length)/ this.string.length,
-              // blackChance: (this.blackChance*this.string.match(/b/g).length)/ this.string.length,
-              // whiteChance: this.whiteChance,
-              string: this.string.replace(/b/, "w"),
-              tries: this.tries - 1,
-              nodes: [],
-              iterate: this.iterate
-            }
-            this.nodes.push(newObj);
-            newObj.iterate();
-            // this.nodes[this.nodes.length - 1].iterate();
-          }
-        }
-      }
-    }
-  };
-
-}
+// function boxProbability(str, moves) {
+//   var chances = {
+//     string: "wbb",
+//     tries: 3,
+//     probability: 1,
+//     // whiteChance: 1,
+//     // blackChance: 1,
+//     nodes: [],
+//     iterate: function() {
+//       if (this.tries > 0) {
+//         if (this.string.includes("w")) {
+//           if (this.string.match(/w/g).length > 0) {
+//             var newObj = {
+//               probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
+//               // whiteChance: (this.whiteChance*this.string.match(/w/g).length)/ this.string.length,
+//               // blackChance: this.blackChance,
+//               string: this.string.replace(/w/, "b"),
+//               tries: this.tries - 1,
+//               nodes: [],
+//               iterate: this.iterate
+//             }
+//             this.nodes.push(newObj);
+//             newObj.iterate();
+//             // this.nodes[this.nodes.length - 1].iterate();
+//           }
+//         }
+//
+//         if (this.string.includes("b")) {
+//           if (this.string.match(/b/g).length > 0) {
+//             var newObj = {
+//               probability: (this.probability*this.string.match(/b/g).length)/ this.string.length,
+//               // blackChance: (this.blackChance*this.string.match(/b/g).length)/ this.string.length,
+//               // whiteChance: this.whiteChance,
+//               string: this.string.replace(/b/, "w"),
+//               tries: this.tries - 1,
+//               nodes: [],
+//               iterate: this.iterate
+//             }
+//             this.nodes.push(newObj);
+//             newObj.iterate();
+//             // this.nodes[this.nodes.length - 1].iterate();
+//           }
+//         }
+//       }
+//     }
+//   };
+//
+// }
 
 // If the tries are === 1 then do only a white ball pull, not a white and a black ball pull
 
 function boxProbability(str, moves) {
   var chances = {
-    string: "wbb",
-    tries: 3,
+    string: str,
+    movesLeft: moves,
     probability: 1,
-    movesLeft: 3,
     nodes: [],
     iterate: function() {
-      if (this.tries > 0 && this.string.includes("w")) {
+      if (this.movesLeft > 0 && this.string.includes("w")) {
         var newObj = {
           probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
           string: this.string.replace(/w/, "b"),
-          tries: this.tries - 1,
+          movesLeft: this.movesLeft - 1,
           nodes: [],
           iterate: this.iterate
         }
@@ -101,11 +99,11 @@ function boxProbability(str, moves) {
         newObj.iterate();
       }
 
-      if (this.tries > 1 && this.string.includes("b")) {
+      if (this.movesLeft > 1 && this.string.includes("b")) {
           var newObj = {
             probability: (this.probability*this.string.match(/b/g).length)/ this.string.length,
             string: this.string.replace(/b/, "w"),
-            tries: this.tries - 1,
+            movesLeft: this.movesLeft - 1,
             nodes: [],
             iterate: this.iterate
           }
@@ -116,19 +114,33 @@ function boxProbability(str, moves) {
     findProbability: function(){
       var finalProbability = 0;
       this.iterate();
+      var moves = this.moves;
       for (var i = 0; i < this.nodes.length; i++) {
-        array[i]
+        if (this.nodes[i].nodes.length > 0) {
+          this.nodes.push(...this.nodes[i].nodes);
+          if (this.nodes[i].movesLeft > 0) {
+            this.nodes.splice(i, 1);
+            i--;
+          }
+        }
+        else {
+          console.log(this.nodes[i].probability);
+          finalProbability += this.nodes[i].probability;
+        }
       }
+      console.log(this.nodes);
+      return finalProbability.toFixed(2);
     }
-
-
   };
+  return chances.findProbability();
 
 }
 
+var arr = [{one: 1}, {two: 2}, {three: 3}];
+var arr2 = [[{four: 4}, {five: 5}], [{six: 6}, {seven: 7}]];
 
 boxProbability('bbw', 3) // == 0.48
-boxProbability('wwb', 3) // == 0.52
+boxProbability('wwb', 3) // == 0.52 (not working 0.74)
 boxProbability('www', 3) // == 0.56
 boxProbability('bbbb', 1) // == 0
 boxProbability('wwbb', 4) // == 0.5
