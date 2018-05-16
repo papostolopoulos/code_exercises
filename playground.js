@@ -53,6 +53,7 @@ function boxProbability(str, moves) {
             }
             this.nodes.push(newObj);
             newObj.iterate();
+            // this.nodes[this.nodes.length - 1].iterate();
           }
         }
 
@@ -69,9 +70,52 @@ function boxProbability(str, moves) {
             }
             this.nodes.push(newObj);
             newObj.iterate();
+            // this.nodes[this.nodes.length - 1].iterate();
           }
         }
       }
+    }
+  };
+
+}
+
+// If the tries are === 1 then do only a white ball pull, not a white and a black ball pull
+
+function boxProbability(str, moves) {
+  var chances = {
+    string: "wbb",
+    tries: 3,
+    probability: 1,
+    movesLeft: 3,
+    nodes: [],
+    iterate: function() {
+      if (this.tries > 0 && this.string.includes("w")) {
+        var newObj = {
+          probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
+          string: this.string.replace(/w/, "b"),
+          tries: this.tries - 1,
+          nodes: [],
+          iterate: this.iterate
+        }
+        this.nodes.push(newObj);
+        newObj.iterate();
+      }
+
+      if (this.tries > 1 && this.string.includes("b")) {
+          var newObj = {
+            probability: (this.probability*this.string.match(/b/g).length)/ this.string.length,
+            string: this.string.replace(/b/, "w"),
+            tries: this.tries - 1,
+            nodes: [],
+            iterate: this.iterate
+          }
+          this.nodes.push(newObj);
+          newObj.iterate();
+      }
+    },
+    findProbability: function(){
+      this.iterate();
+      console.log(this.nodes);
     }
   };
 
