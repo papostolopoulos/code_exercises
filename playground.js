@@ -114,9 +114,14 @@ function boxProbability(str, moves) {
       }
     },
     findProbability: function(){
+      var finalProbability = 0;
       this.iterate();
-      console.log(this.nodes);
+      for (var i = 0; i < this.nodes.length; i++) {
+        array[i]
+      }
     }
+
+
   };
 
 }
