@@ -944,6 +944,14 @@ function boxProbability(str, moves) {
   return chances.findProbability();
 }
 
+//from the internet
+function boxProbability(marbles, step) {
+    r = marbles.length
+    w = marbles.split("").reduce((prev, curr) => prev + (curr == "w"), 0)
+    p = (0.5 + Math.pow(1 - 2 / r, step - 1) * (w / r - 0.5))
+    return Math.round(p * 100) / 100
+}
+
 boxProbability('bbw', 3); // == 0.48
 boxProbability('wwb', 3); // == 0.52
 boxProbability('www', 3); // == 0.56
