@@ -858,3 +858,95 @@ stepsToConvert('line1', 'line1'); // == 0
 stepsToConvert('line1', 'line2'); // == 1
 stepsToConvert('ine', 'line2'); // == 2
 stepsToConvert('pline1', 'line2v'); // == 3
+
+
+/*20180516
+PEARLS IN THE BOX https://js.checkio.org/en/mission/box-probability/
+
+To start the game, they put several black and white pearls in one of the boxes.
+Each robots have Nth moves, then initial set are restored for a next player.
+For each move, the robot take a pearl out of the box and put one of the
+opposite color back. The winner is the one who pulls the white pearl on the
+Nth step (or +1 point if they play many parties).
+
+Our robots don't like indeterminacy and want to know the probability
+of a white pearl on the Nth step. The probability is a value between 0
+(0% chance or will not happen) and 1 (100% chance or will happen).
+The result is a float from 0 to 1 with two digits precision (±0.01).
+
+You are given a start set of pearls as a string that contains "b"
+(black) and "w" (white) and the number of the step (N).
+The order of the pearls does not matter.
+
+probability
+Input: The start sequence of the pearls as a string and the step number as an integer.
+Output: The probability for a white pearl as a float.
+
+Example:
+boxProbability('bbw', 3) == 0.48
+boxProbability('wwb', 3) == 0.52
+boxProbability('www', 3) == 0.56
+boxProbability('bbbb', 1) == 0
+boxProbability('wwbb', 4) == 0.5
+boxProbability('bwbwbwb', 5) == 0.48
+*/
+
+function boxProbability(str, moves) {
+  var chances = {
+    string: str,
+    movesLeft: moves,
+    probability: 1,
+    nodes: [],
+    iterate: function() {
+      if (this.movesLeft > 0 && this.string.includes("w")) {
+        var newObj = {
+          probability: (this.probability*this.string.match(/w/g).length)/ this.string.length,
+          string: this.string.replace(/w/, "b"),
+          movesLeft: this.movesLeft - 1,
+          nodes: [],
+          iterate: this.iterate
+        }
+        this.nodes.push(newObj);
+        newObj.iterate();
+      }
+
+      if (this.movesLeft > 1 && this.string.includes("b")) {
+          var newObj = {
+            probability: (this.probability*this.string.match(/b/g).length)/ this.string.length,
+            string: this.string.replace(/b/, "w"),
+            movesLeft: this.movesLeft - 1,
+            nodes: [],
+            iterate: this.iterate
+          }
+          this.nodes.push(newObj);
+          newObj.iterate();
+      }
+    },
+    findProbability: function(){
+      var finalProbability = 0;
+      this.iterate();
+      var moves = this.moves;
+      for (var i = 0; i < this.nodes.length; i++) {
+        if (this.nodes[i].nodes.length > 0) {
+          this.nodes.push(...this.nodes[i].nodes);
+          if (this.nodes[i].movesLeft > 0) {
+            this.nodes.splice(i, 1);
+            i--;
+          }
+        }
+        else{
+          if (this.nodes[i].movesLeft === 0) finalProbability += this.nodes[i].probability;
+        }
+      }
+      return Number(finalProbability.toFixed(2));
+    }
+  };
+  return chances.findProbability();
+}
+
+boxProbability('bbw', 3); // == 0.48
+boxProbability('wwb', 3); // == 0.52
+boxProbability('www', 3); // == 0.56
+boxProbability('bbbb', 1); // == 0
+boxProbability('wwbb', 4); // == 0.5
+boxProbability('bwbwbwb', 5); // == 0.48
