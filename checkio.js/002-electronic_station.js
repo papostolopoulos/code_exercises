@@ -952,6 +952,19 @@ function boxProbability(marbles, step) {
     return Math.round(p * 100) / 100
 }
 
+//another one
+function treeProb(black, white, step) {
+  return step == 1 ? white / (black + white) :
+    (black > 0 ? black / (black + white) * treeProb(black - 1, white + 1, step - 1) : 0) +
+    (white > 0 ? white / (black + white) * treeProb(black + 1, white - 1, step - 1) : 0);
+}
+
+function boxProbability(marbles, step) {
+  var counts = { 'b' : 0, 'w' : 0 };
+  for (var marble of marbles) counts[marble]++;
+  return Math.round(treeProb(counts['b'], counts['w'], step) * 100) / 100;
+}
+
 boxProbability('bbw', 3); // == 0.48
 boxProbability('wwb', 3); // == 0.52
 boxProbability('www', 3); // == 0.56
