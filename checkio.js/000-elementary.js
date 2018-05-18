@@ -513,6 +513,7 @@ function firstWord(str){
 
 const firstWord = str => str.match(/\w+'?\w*/)[0];
 
+
 //from the Internet
 function firstWord(a, b) {
     return a.replace(/.*?([a-z']+).*/i, '$1');
@@ -527,9 +528,6 @@ function firstWord(a,b) {
     return word.toString();
 }
 
-function firstWord(str){
-  return str.match(/\w+'?\w+/)[0];
-}
 
 firstWord("Hello world"); // == "Hello"
 firstWord("greetings, friends"); // == "greetings"
@@ -557,6 +555,12 @@ secondIndex("hi", " ")  == undefined
 
 function secondIndex(str, ltr) {
   return str.indexOf(ltr, str.indexOf(ltr) + 1) !== -1 ? str.indexOf(ltr, str.indexOf(ltr) + 1) : null;
+}
+
+//Alternative - SEE https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
+function secondIndex(str, ltr) {
+  var reg = str.match(RegExp(ltr, "g"));
+  return reg !== null && reg.length > 1 ? str.indexOf(ltr, str.indexOf(ltr) + 1) : undefined;
 }
 
 const secondIndex = (str, ltr) => str.indexOf(ltr, str.indexOf(ltr) + 1);
