@@ -506,10 +506,12 @@ function firstWord(str) {
   return str.replace(/[.,]+/, ' ').trim().split(" ")[0];
 }
 
-//Second solution after looking at other people's solutions
+//Second solution after looking at other people's solutions (but .match was my idea)
 function firstWord(str){
   return str.match(/\w+'?\w*/)[0];
 }
+
+const firstWord = str => str.match(/\w+'?\w*/)[0];
 
 //from the Internet
 function firstWord(a, b) {
@@ -531,3 +533,80 @@ function firstWord(str){
 
 firstWord("Hello world"); // == "Hello"
 firstWord("greetings, friends"); // == "greetings"
+
+
+/* 20180517
+SECOND INDEX https://js.checkio.org/en/mission/second-index/
+You are given two strings and you have to find an index of the second
+occurrence of the second string in the first one.
+Let's go through the first example where you need to find the second occurrence
+of "s" in a word "sims". It’s easy to find its first occurrence with a
+function indexOf which will point out that "s" is the first symbol in a word
+"sims" and therefore the index of the first occurrence is 0.
+But we have to find the second "s" which is 4th in a row and that means
+that the index of the second occurrence (and the answer to a question) is 3.
+
+Input: Two strings.
+Output: Int or undefined
+
+Example:
+secondIndex("sims", "s") == 3
+secondIndex("find the river", "e") == 12
+secondIndex("hi", " ")  == undefined
+*/
+
+function secondIndex(str, ltr) {
+  return str.indexOf(ltr, str.indexOf(ltr) + 1) !== -1 ? str.indexOf(ltr, str.indexOf(ltr) + 1) : null;
+}
+
+const secondIndex = (str, ltr) => str.indexOf(ltr, str.indexOf(ltr) + 1);
+
+secondIndex("sims", "s"); // == 3
+secondIndex("find the river", "e"); // == 12
+secondIndex("hi", " "); // == undefined
+
+
+/*20180517
+BETWEEN MARKERS https://js.checkio.org/en/mission/between-markers/
+You are given a string and two markers (the initial and final).
+You have to find a substring enclosed between these two markers.
+But there are a few important conditions:
+
+The initial and final markers are always different.
+- If there is no initial marker then the beginning should
+be considered as the beginning of a string.
+
+- If there is no final marker then the ending should be
+considered as the ending of a string.
+
+- If the initial and final markers are missing
+then simply return the whole string.
+
+- If the final marker is standing in front of the
+initial one then return an empty string.
+
+Input: Three arguments. All of them are strings.
+The second and third arguments are the initial and final markers.
+Output: A string.
+
+Example:
+betweenMarkers('What is >apple<', '>', '<') == 'apple'
+betweenMarkers('No[/b] hi', '[b]', '[/b]') == 'No'
+*/
+
+function betweenMarkers(str, init, final) {
+  if (str.indexOf(init) > str.indexOf(final)) return "";
+  if (str.indexOf(init) === -1 && str.indexOf(final) === -1) return str;
+  if (str.indexOf(final) === -1) return str.slice(str.indexOf(init) + init.length);
+  if (str.indexOf(init) === -1) return str.slice(0, str.indexOf(final));
+
+  return str.slice(str.indexOf(init) + init.length, str.indexOf(final));
+}
+
+
+
+
+betweenMarkers('What is >apple<', '>', '<'); // == 'apple'
+betweenMarkers('No[/b] hi', '[b]', '[/b]'); // == 'No'
+betweenMarkers("<head><title>My new site</title></head>","<title>","</title>"); // == "My new site"
+betweenMarkers("No [b]hi","[b]","[/b]"); // == "Hi"
