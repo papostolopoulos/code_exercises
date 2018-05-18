@@ -401,7 +401,8 @@ function numberRadix(str, num) {
 
 
 /*
-The following solution is working after I added the if statement based on the following paragraph from MDN (for parseInt()):
+The following solution is working after I added the if statement based on the following
+paragraph from MDN (for parseInt()):
 If parseInt encounters a character that is not a numeral in the specified radix,
 it ignores it and all succeeding characters and returns the integer value
 parsed up to that point.
@@ -425,3 +426,108 @@ function numberRadix(str_number, radix){
 ​
     return ps_int && str_number.toLowerCase() === ts_int ? ps_int : -1;
 }
+
+
+/*20180517
+SAY HI https://js.checkio.org/en/mission/say-hi/
+In this mission you should write a function that introduce a person with a
+given parameters in attributes.
+
+Input: Two arguments. String and positive integer.
+Output: String.
+
+Example:
+sayHi("Alex", 32); // == "Hi. My name is Alex and I'm 32 years old"
+sayHi("Frank", 68); // == "Hi. My name is Frank and I'm 68 years old"*/
+
+function sayHi(name, age){
+    return `Hi. My name is ${name} and I'm ${age} years old`;
+    }
+
+sayHi("Alex", 32); // == "Hi. My name is Alex and I'm 32 years old"
+sayHi("Frank", 68); // == "Hi. My name is Frank and I'm 68 years old"
+
+
+/*20180517
+CORRECT SENTENCE https://js.checkio.org/en/mission/correct-sentence/
+For the input of your function will be given one sentence. You have to return
+its fixed copy in a way so it’s always starts with a capital letter
+and ends with a dot.
+
+Pay attention to the fact that not all of the fixes is necessary.
+If a sentence already ends with a dot then adding another one
+will be a mistake.
+Input: A string.
+Output: A string.
+
+Example:
+correctSentence("greetings, friends") == "Greetings, friends."
+correctSentence("Greetings, friends") == "Greetings, friends."
+correctSentence("Greetings, friends.") == "Greetings, friends."
+*/
+
+function correctSentence(str) {
+  return str[str.length - 1] === "." ?
+  str.substring(0, 1).toUpperCase() + str.substring(1) :
+  str.substring(0, 1).toUpperCase() + str.substring(1) + ".";
+}
+
+correctSentence("greetings, friends"); // == "Greetings, friends."
+correctSentence("Greetings, friends"); // == "Greetings, friends."
+correctSentence("Greetings, friends."); // == "Greetings, friends."
+
+
+// from the Internet
+function correctSentence(text) {
+    return text[0].toUpperCase() + (text.replace(/\.?$/, '.')).substr(1)  ;
+}
+
+
+/*20180517
+FIRST WORD https://js.checkio.org/en/mission/first-word/
+You are given a string where you have to find its first word.
+
+When solving a task pay attention to the following points:
+There can be dots and commas in a string.
+A string can start with a letter or, for example, a dot or space.
+A word can contain an apostrophe and it's a part of a word.
+The whole text can be represented with one word and that's it.
+Input: A string.
+
+Output: A string.
+
+Example:
+
+firstWord("Hello world") == "Hello"
+firstWord("greetings, friends") == "greetings"
+*/
+
+function firstWord(str) {
+  return str.replace(/[.,]+/, ' ').trim().split(" ")[0];
+}
+
+//Second solution after looking at other people's solutions
+function firstWord(str){
+  return str.match(/\w+'?\w*/)[0];
+}
+
+//from the Internet
+function firstWord(a, b) {
+    return a.replace(/.*?([a-z']+).*/i, '$1');
+}
+
+function firstWord(a,b) {
+    //using regular expressions, single out the first word and store it as 'word'
+    let word = /\w+'?[\w+]?/.exec(a);
+    //log 'word' to console as a string
+    console.log(word.toString());
+    //return 'word' as a string
+    return word.toString();
+}
+
+function firstWord(str){
+  return str.match(/\w+'?\w+/)[0];
+}
+
+firstWord("Hello world"); // == "Hello"
+firstWord("greetings, friends"); // == "greetings"
