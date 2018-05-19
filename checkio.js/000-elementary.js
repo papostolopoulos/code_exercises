@@ -24,6 +24,8 @@ function fizzBuzz(num) {
   return result;
 }
 
+
+
 /*20170731
 EVEN THE LAST https://js.checkio.org/mission/even-last/
 You are given an array of integers. You should find the sum of the elements with even indexes
@@ -57,6 +59,8 @@ function evenLast(array) {
 function evenLast(data) {
     return data.filter((item, i) => i % 2 == 0).reduce((prev, cur) => prev + cur, 0) * data[data.length - 1] || 0;
 }
+
+
 
 /*20170731
 SECRET MESSAGE https://js.checkio.org/mission/secret-message/
@@ -100,6 +104,8 @@ function findMessage(data) {
     return data.replace(/[^A-Z]/g, '');
 }
 
+
+
 /*20170801
 THREE WORDS https://js.checkio.org/mission/three-words/
 
@@ -140,6 +146,8 @@ function threeWords(data) {
     return /\D+\s\D+\s\D+/.test(data);
 }
 
+
+
 /* 20170801
 INDEX POWER https://js.checkio.org/mission/index-power/
 You are given an array with positive numbers and a number N.
@@ -176,6 +184,8 @@ function indexPower(arr, num) {
 function indexPower(array, n){
     return Math.pow(array[n],n) || -1;
 }
+
+
 
 /*20170802
 THE MOST NUMBERS https://js.checkio.org/mission/most-numbers/
@@ -217,6 +227,8 @@ function mostNumbers(args) {
   return arguments.length === 0 ? 0 : Math.max(...arguments) - Math.min(...arguments);
 }
 
+
+
 /*20170803
 DIGITS MULTIPLICATION https://js.checkio.org/mission/digits-multiplication/
 You are given a positive integer. Your function should calculate the product of the digits excluding any zeroes.
@@ -255,6 +267,7 @@ function digitsMultip(num) {
 }
 
 
+
 /*20170803
 COUNT INVERSION https://js.checkio.org/mission/count-inversions/
 In computer science and discrete mathematics, an inversion is a pair of places in a sequence where the elements in these places are out of their natural order. So, if we use ascending order for a group of numbers, then an inversion is when larger numbers appear before lower number in a sequence.
@@ -284,6 +297,8 @@ function countInversion(array) {
   }
   return counter;
 }
+
+
 
 /*20170803
 COMMON WORDS https://js.checkio.org/mission/common-words/
@@ -332,6 +347,7 @@ function commonWords(first, second) {
 }
 
 
+
 /*20170807
 ABSOLUTE SORTING https://js.checkio.org/mission/absolute-sorting/
 Let's try some sorting. Here is an array with the specific rules.
@@ -362,6 +378,8 @@ absoluteSorting((-1, -2, -3, 0)) == [0, -1, -2, -3]
 function absoluteSorting(array) {
   return array.sort((a, b) =>  Math.abs(a) - Math.abs(b));
 }
+
+
 
 /*20170807
 NUMBER BASE https://js.checkio.org/mission/number-radix/
@@ -428,6 +446,7 @@ function numberRadix(str_number, radix){
 }
 
 
+
 /*20180517
 SAY HI https://js.checkio.org/en/mission/say-hi/
 In this mission you should write a function that introduce a person with a
@@ -446,6 +465,7 @@ function sayHi(name, age){
 
 sayHi("Alex", 32); // == "Hi. My name is Alex and I'm 32 years old"
 sayHi("Frank", 68); // == "Hi. My name is Frank and I'm 68 years old"
+
 
 
 /*20180517
@@ -481,6 +501,7 @@ correctSentence("Greetings, friends."); // == "Greetings, friends."
 function correctSentence(text) {
     return text[0].toUpperCase() + (text.replace(/\.?$/, '.')).substr(1)  ;
 }
+
 
 
 /*20180517
@@ -533,6 +554,7 @@ firstWord("Hello world"); // == "Hello"
 firstWord("greetings, friends"); // == "greetings"
 
 
+
 /* 20180517
 SECOND INDEX https://js.checkio.org/en/mission/second-index/
 You are given two strings and you have to find an index of the second
@@ -568,6 +590,7 @@ const secondIndex = (str, ltr) => str.indexOf(ltr, str.indexOf(ltr) + 1);
 secondIndex("sims", "s"); // == 3
 secondIndex("find the river", "e"); // == 12
 secondIndex("hi", " "); // == undefined
+
 
 
 /*20180517
@@ -607,10 +630,13 @@ function betweenMarkers(str, init, final) {
   return str.slice(str.indexOf(init) + init.length, str.indexOf(final));
 }
 
-
-
-
 betweenMarkers('What is >apple<', '>', '<'); // == 'apple'
 betweenMarkers('No[/b] hi', '[b]', '[/b]'); // == 'No'
 betweenMarkers("<head><title>My new site</title></head>","<title>","</title>"); // == "My new site"
 betweenMarkers("No [b]hi","[b]","[/b]"); // == "Hi"
+
+
+
+/*20180518
+
+*/
