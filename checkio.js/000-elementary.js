@@ -24,8 +24,6 @@ function fizzBuzz(num) {
   return result;
 }
 
-
-
 /*20170731
 EVEN THE LAST https://js.checkio.org/mission/even-last/
 You are given an array of integers. You should find the sum of the elements with even indexes
@@ -59,8 +57,6 @@ function evenLast(array) {
 function evenLast(data) {
     return data.filter((item, i) => i % 2 == 0).reduce((prev, cur) => prev + cur, 0) * data[data.length - 1] || 0;
 }
-
-
 
 /*20170731
 SECRET MESSAGE https://js.checkio.org/mission/secret-message/
@@ -104,8 +100,6 @@ function findMessage(data) {
     return data.replace(/[^A-Z]/g, '');
 }
 
-
-
 /*20170801
 THREE WORDS https://js.checkio.org/mission/three-words/
 
@@ -146,8 +140,6 @@ function threeWords(data) {
     return /\D+\s\D+\s\D+/.test(data);
 }
 
-
-
 /* 20170801
 INDEX POWER https://js.checkio.org/mission/index-power/
 You are given an array with positive numbers and a number N.
@@ -184,8 +176,6 @@ function indexPower(arr, num) {
 function indexPower(array, n){
     return Math.pow(array[n],n) || -1;
 }
-
-
 
 /*20170802
 THE MOST NUMBERS https://js.checkio.org/mission/most-numbers/
@@ -227,8 +217,6 @@ function mostNumbers(args) {
   return arguments.length === 0 ? 0 : Math.max(...arguments) - Math.min(...arguments);
 }
 
-
-
 /*20170803
 DIGITS MULTIPLICATION https://js.checkio.org/mission/digits-multiplication/
 You are given a positive integer. Your function should calculate the product of the digits excluding any zeroes.
@@ -267,7 +255,6 @@ function digitsMultip(num) {
 }
 
 
-
 /*20170803
 COUNT INVERSION https://js.checkio.org/mission/count-inversions/
 In computer science and discrete mathematics, an inversion is a pair of places in a sequence where the elements in these places are out of their natural order. So, if we use ascending order for a group of numbers, then an inversion is when larger numbers appear before lower number in a sequence.
@@ -297,8 +284,6 @@ function countInversion(array) {
   }
   return counter;
 }
-
-
 
 /*20170803
 COMMON WORDS https://js.checkio.org/mission/common-words/
@@ -347,7 +332,6 @@ function commonWords(first, second) {
 }
 
 
-
 /*20170807
 ABSOLUTE SORTING https://js.checkio.org/mission/absolute-sorting/
 Let's try some sorting. Here is an array with the specific rules.
@@ -378,8 +362,6 @@ absoluteSorting((-1, -2, -3, 0)) == [0, -1, -2, -3]
 function absoluteSorting(array) {
   return array.sort((a, b) =>  Math.abs(a) - Math.abs(b));
 }
-
-
 
 /*20170807
 NUMBER BASE https://js.checkio.org/mission/number-radix/
@@ -446,7 +428,6 @@ function numberRadix(str_number, radix){
 }
 
 
-
 /*20180517
 SAY HI https://js.checkio.org/en/mission/say-hi/
 In this mission you should write a function that introduce a person with a
@@ -465,7 +446,6 @@ function sayHi(name, age){
 
 sayHi("Alex", 32); // == "Hi. My name is Alex and I'm 32 years old"
 sayHi("Frank", 68); // == "Hi. My name is Frank and I'm 68 years old"
-
 
 
 /*20180517
@@ -503,7 +483,6 @@ function correctSentence(text) {
 }
 
 
-
 /*20180517
 FIRST WORD https://js.checkio.org/en/mission/first-word/
 You are given a string where you have to find its first word.
@@ -534,7 +513,6 @@ function firstWord(str){
 
 const firstWord = str => str.match(/\w+'?\w*/)[0];
 
-
 //from the Internet
 function firstWord(a, b) {
     return a.replace(/.*?([a-z']+).*/i, '$1');
@@ -549,10 +527,12 @@ function firstWord(a,b) {
     return word.toString();
 }
 
+function firstWord(str){
+  return str.match(/\w+'?\w+/)[0];
+}
 
 firstWord("Hello world"); // == "Hello"
 firstWord("greetings, friends"); // == "greetings"
-
 
 
 /* 20180517
@@ -579,18 +559,11 @@ function secondIndex(str, ltr) {
   return str.indexOf(ltr, str.indexOf(ltr) + 1) !== -1 ? str.indexOf(ltr, str.indexOf(ltr) + 1) : null;
 }
 
-//Alternative - SEE https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
-function secondIndex(str, ltr) {
-  var reg = str.match(RegExp(ltr, "g"));
-  return reg !== null && reg.length > 1 ? str.indexOf(ltr, str.indexOf(ltr) + 1) : undefined;
-}
-
 const secondIndex = (str, ltr) => str.indexOf(ltr, str.indexOf(ltr) + 1);
 
 secondIndex("sims", "s"); // == 3
 secondIndex("find the river", "e"); // == 12
 secondIndex("hi", " "); // == undefined
-
 
 
 /*20180517
@@ -622,7 +595,7 @@ betweenMarkers('No[/b] hi', '[b]', '[/b]') == 'No'
 */
 
 function betweenMarkers(str, init, final) {
-  if (str.indexOf(init) > str.indexOf(final)) return "";
+  if (str.indexOf(init) > str.indexOf(final) && str.indexOf(final) !== -1) return "";
   if (str.indexOf(init) === -1 && str.indexOf(final) === -1) return str;
   if (str.indexOf(final) === -1) return str.slice(str.indexOf(init) + init.length);
   if (str.indexOf(init) === -1) return str.slice(0, str.indexOf(final));
@@ -638,5 +611,67 @@ betweenMarkers("No [b]hi","[b]","[/b]"); // == "Hi"
 
 
 /*20180518
+THE MOST FREQUENT https://js.checkio.org/en/mission/the-most-frequent/
+You have a sequence of strings, and you’d like to determine the most frequently
+occurring string in the sequence.
 
+Input: a Array of strings.
+Output: a string.
+
+Example:
+mostFrequent([
+    'a', 'b', 'c',
+    'a', 'b',
+    'a'
+]) == 'a'
+mostFrequent(['a', 'a', 'bi', 'bi', 'bi']) == 'bi'
+*/
+
+function mostFrequent(array) {
+  let elObj = {}, counter = 0, frequent = "";
+  for(let el of array) elObj[el] === undefined ? elObj[el] = 1 : elObj[el] += 1;
+  for(let key in elObj) if(elObj[key] > counter) (counter = elObj[key], frequent = key);
+  return frequent;
+}
+
+// from the Internet
+function mostFrequent(d) {
+    let cs = d.map((e,i,arr)=>arr.filter(x=>x==e).length);
+    return d[cs.indexOf(Math.max(...cs))];
+}
+
+
+mostFrequent(['a','b','c','a','b','a']); // == 'a'
+mostFrequent(['a', 'a', 'bi', 'bi', 'bi']); // == 'bi'
+
+
+
+/*20180518
+BIGGER PRICE https://js.checkio.org/en/mission/bigger-price/
+You have a table with all available goods in the store.
+The data is represented as a list of objects
+
+Your mission here is to find the TOP most expensive goods.
+The amount we are looking for will be given as a first argument and
+the whole data as the second one
+
+Input: Integer and array of objects.
+Each objects has two attributes "name" and "price"
+Output: the same as the second Input argument.
+
+Example:
+biggerPrice(2, [
+    {"name": "bread", "price": 100},
+    {"name": "wine", "price": 138},
+    {"name": "meat", "price": 15},
+    {"name": "water", "price": 1}
+]) == [
+    {"name": "wine", "price": 138},
+    {"name": "bread", "price": 100}
+]
+
+biggerPrice(1, [
+    {"name": "pen", "price": 5},
+    {"name": "whiteboard", "price": 170}
+]) == [{"name": "whiteboard", "price": 170}]
 */
