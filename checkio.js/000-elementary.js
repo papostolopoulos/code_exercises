@@ -677,8 +677,7 @@ biggerPrice(1, [
 */
 
 function biggerPrice(num, arr) {
-  arr.sort((a, b)=> a.price - b.price).reverse().slice(0,num);
-  console.log(arr);
+  return arr.sort((a, b)=> a.price - b.price).reverse().slice(0,num);
 }
 
 biggerPrice(2, [

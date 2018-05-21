@@ -971,3 +971,86 @@ boxProbability('www', 3); // == 0.56
 boxProbability('bbbb', 1); // == 0
 boxProbability('wwbb', 4); // == 0.5
 boxProbability('bwbwbwb', 5); // == 0.48
+
+
+
+/* 20180520
+Xs AND Os REFEREE https://js.checkio.org/en/mission/x-o-referee/
+Tic-Tac-Toe, sometimes also known as Xs and Os, is a game for two players
+(X and O) who take turns marking the spaces in a 3Ă3 grid.
+The player who succeeds in placing three respective marks in a horizontal,
+vertical, or diagonal rows (NW-SE and NE-SW) wins the game.
+
+But we will not be playing this game. You will be the referee for this games
+results. You are given a result of a game and you must determine if the game
+ends in a win or a draw as well as who will be the winner. Make sure to
+return "X" if the X-player wins and "O" if the O-player wins.
+If the game is a draw, return "D".
+
+x-o-referee
+A game's result is presented as a list of strings,
+where "X" and "O" are players' marks and "." is the empty cell.
+
+Input: A game result as a list of strings (unicode).
+Output: "X", "O" or "D" as a string.
+
+Example:
+xoReferee([
+    "X.O",
+    "XX.",
+    "XOO"]) == "X"
+xoReferee([
+    "OO.",
+    "XOX",
+    "XOX"]) == "O"
+xoReferee([
+    "OOX",
+    "XXO",
+    "OXX"]) == "D"
+*/
+
+function xoReferee(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i][0] === arr[i][1] && arr[i][1] === arr[i][2] && arr[i][0] !== ".") return arr[i][0];
+    if (arr[0][i] === arr[1][i] && arr[1][i] === arr[2][i] && arr[0][i] !== ".") return arr[0][i];
+  }
+
+  if(((arr[0][0] === arr[1][1] && arr[1][1] === arr[2][2]) ||
+  (arr[0][2] === arr[1][1] && arr[1][1] === arr[2][0])) && arr[1][1] !== ".") return arr[1][1];
+
+  return "D"
+}
+
+
+// from the Internet
+function checkio(data) {
+    var chars = data.map(function (a) {return a.split('')});
+    for(var i=0; i<3; i++){
+        data.push(chars[0][i] + chars[1][i] + chars[2][i]);
+    }
+    data.push(chars[0][0] + chars[1][1] + chars[2][2]);
+    data.push(chars[2][0] + chars[1][1] + chars[0][2]);
+
+    if (data.indexOf("XXX") + 1) {
+        return "X"
+    }
+    if (data.indexOf("OOO") + 1) {
+        return "O"
+    }
+    return "D"
+
+}
+
+xoReferee([
+    "X.O",
+    "XX.",
+    "XOO"]); // == "X"
+xoReferee([
+    "OO.",
+    "XOX",
+    "XOX"]); // == "O"
+xoReferee([
+    "OOX",
+    "XXO",
+    "OXX"]); // == "D"
+xoReferee([".O.","...","..."]); // "D"
