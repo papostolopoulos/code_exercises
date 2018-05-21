@@ -675,3 +675,23 @@ biggerPrice(1, [
     {"name": "whiteboard", "price": 170}
 ]) == [{"name": "whiteboard", "price": 170}]
 */
+
+function biggerPrice(num, arr) {
+  arr.sort((a, b)=> a.price - b.price).reverse().slice(0,num);
+  console.log(arr);
+}
+
+biggerPrice(2, [
+    {"name": "bread", "price": 100},
+    {"name": "wine", "price": 138},
+    {"name": "meat", "price": 15},
+    {"name": "water", "price": 1}
+]); /* == [
+    {"name": "wine", "price": 138},
+    {"name": "bread", "price": 100}
+] */
+
+biggerPrice(1, [
+    {"name": "pen", "price": 5},
+    {"name": "whiteboard", "price": 170}
+]); // == [{"name": "whiteboard", "price": 170}]
