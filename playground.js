@@ -37,24 +37,13 @@ function mergeIntervals(arr) {
   let finalArr = [];
   for (let i = 0; i < arr.length; i++) arr2.push(...arr[i]);
   console.log("arr2 before loop:",  arr2);
-  for (let j = 2; j < arr2.length; j++) {
-    console.log("j is", j);
-    if (arr2[j] <= arr2[j-1]) {
-      arr2.splice(j, 1);
-      j--;
-      console.log("arr2 in first if:", arr2, "and j is:", j);
-    }
-    else if(arr2[j] > arr2[j-1] && arr2[j] - arr2[j-1] === 1) {
-      arr2.splice(j-1, 1);
-      j--;
-    }
-    else {
-      finalArr.push([arr2[j-2], arr2[j-1]]);
-      arr2.splice(0, 2);
-      console.log("finalArr:", finalArr);
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][1] - arr[i+1][0] >= -1) {
+      
     }
   }
-  console.log(finalArr);
+
   return finalArr;
 }
 
