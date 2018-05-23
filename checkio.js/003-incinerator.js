@@ -1,6 +1,6 @@
 "use strict"
 
-/*20180521
+/*20180523
 MERGE INTERVALS https://js.checkio.org/station/incinerator/
 You are given a sequence of intervals, as tuples of ints where
 the tuples are sorted by their first element in ascending order.
@@ -34,24 +34,57 @@ mergeIntervals([[1, 5], [6, 10], [10, 15], [17, 20]]) == [[1, 15], [17, 20]]
 */
 
 function mergeIntervals(arr) {
-  let arr2 = [];
-  let finalArr = [];
-  for (let i = 0; i < arr.length; i++) arr2.push(...arr[i]);
-  for (let j = 2; j < arr2.length; j++) {
-    if (arr2[j] <= arr2[j-1]) {
-      arr2.splice(j, 1);
-      j--;
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i-1][1] - arr[i][0] >= -1) {
+      arr[i-1].push(...arr[i]);
+      arr[i-1] = arr[i-1].sort((a,b) => a-b)
+      .filter((el, idx, ary) => el === ary[0] && idx === 0 || el === ary[ary.length-1] && idx === ary.length-1);
+      arr.splice(i,1);
+      i--;
     }
-    else if(arr2[j] > arr2[j-1] && arr2[j] - arr2[j-1] === 1) {
-      arr2.splice(j-1, 1);
-      j--;
-    }
-    else {
-      finalArr.push([arr[j-1], arr[j]]);
-      j = 2;
-    }
-    //After that use "array from"? or just push the first two elements to a new
-    //array and remove them from arr2
   }
-  return finalArr;
+  return arr;
 }
+
+//Better solution after looking at other people's solutions (forgot about min, max)
+function mergeIntervals(arr) {
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i-1][1] - arr[i][0] >= -1) {
+      arr[i-1].push(...arr[i]);
+      arr[i-1] = [Math.min(...arr[i-1]), Math.max(...arr[i-1])];
+      arr.splice(i,1);
+      i--;
+    }
+  }
+  return arr;
+}
+
+
+mergeIntervals([[1, 4], [2, 6], [8, 10], [12, 19]]); // == [[1, 6], [8, 10], [12, 19]]
+mergeIntervals([[1, 12], [2, 3], [4, 7]]); // == [[1, 12]]
+mergeIntervals([[1, 5], [6, 10], [10, 15], [17, 20]]); // == [[1, 15], [17, 20]]
+
+
+/*20180523
+BIGGER TOGETHER https://js.checkio.org/en/mission/bigger-together/
+Your mission here is to find a difference between the maximally positive
+and maximally negative numbers. Those numbers can be found by concatenating
+the given array of numbers.
+
+Let’s check an example. If you have numbers 1,2,3, then 321 is the maximum number,
+and 123 - is the minimum.
+The difference between those numbers is 198. But if you have numbers 4, 3 and 12
+then 4312 is the maximum number, and 1234 - is the minimum.
+As you can see, a simple order is not what we are looking for here.
+
+Input: List of positive integers.
+Output: Integer.
+
+Example:
+biggerTogether([1,2,3,4]) == 3087 // 4321 - 1234
+biggerTogether([1,2,3,4, 11, 12]) == 32099877 // 43212111 - 11112234
+biggerTogether([0, 1]) == 9 // 10 - 01
+biggerTogether([100]) == 0 // 100 - 100
+*/
