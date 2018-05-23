@@ -1,4 +1,5 @@
 "use strict"
+
 /*20180521
 MERGE INTERVALS https://js.checkio.org/station/incinerator/
 You are given a sequence of intervals, as tuples of ints where
@@ -36,30 +37,21 @@ function mergeIntervals(arr) {
   let arr2 = [];
   let finalArr = [];
   for (let i = 0; i < arr.length; i++) arr2.push(...arr[i]);
-  console.log("arr2 before loop:",  arr2);
   for (let j = 2; j < arr2.length; j++) {
-    console.log("j is", j);
     if (arr2[j] <= arr2[j-1]) {
       arr2.splice(j, 1);
       j--;
-      console.log("arr2 in first if:", arr2, "and j is:", j);
     }
     else if(arr2[j] > arr2[j-1] && arr2[j] - arr2[j-1] === 1) {
       arr2.splice(j-1, 1);
       j--;
     }
     else {
-      finalArr.push([arr2[j-2], arr2[j-1]]);
-      arr2.splice(0, 2);
-      console.log("finalArr:", finalArr);
+      finalArr.push([arr[j-1], arr[j]]);
+      j = 2;
     }
+    //After that use "array from"? or just push the first two elements to a new
+    //array and remove them from arr2
   }
-  console.log(finalArr);
   return finalArr;
 }
-
-
-
-mergeIntervals([[1, 4], [2, 6], [8, 10], [12, 19]]); // == [[1, 6], [8, 10], [12, 19]]
-// mergeIntervals([[1, 12], [2, 3], [4, 7]]); // == [[1, 12]]
-// mergeIntervals([[1, 5], [6, 10], [10, 15], [17, 20]]); // == [[1, 15], [17, 20]]
