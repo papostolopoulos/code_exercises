@@ -83,8 +83,61 @@ function biggerTogether(arr) {
 // if two digit number is larger than one digit number and num[0] === num[0]
 // then switch them
 
+
+function biggerTogether(arr) {
+  if (arr.length === 1) return 0;
+
+  let smallNum = arr.sort()
+  .sort((a,b)=>{
+    if (a.toString()[0] === b.toString()[0]
+    && a < b
+    && a.toString()[0] < b.toString()[b.toString().length - 1]) return a-b;
+    else if (a.toString()[0] === b.toString()[0]
+    && a < b
+    && a.toString()[0] > b.toString()[b.toString().length - 1]) return b-a;
+  })
+  .slice()
+  .join("");
+
+  let bigNum = arr.sort()
+  .reverse()
+  .sort((a,b)=>{
+    if (a.toString()[0] === b.toString()[0]
+    && a > b
+    && a.toString()[1] < b.toString()[b.toString().length - 1]) return a-b;
+    else if (a.toString()[0] === b.toString()[0]
+    && a > b
+    && a.toString()[0] > b.toString()[b.toString().length - 1]) return b-a;
+  })
+  .slice()
+  .join("");
+
+  return bigNum - smallNum;
+}
+
+
+
+var arr = [1,2,3,4, 11, 12];
+// after sort --> [1, 11, 12, 2, 3, 4]
+var arr2 = [3,12,22,32];
+// after sort --> [12, 22, 3, 32]
+
+arr2.sort().reverse().sort(function(a,b) {
+  console.log("before if", a, b);
+  if (a.toString()[0] === b.toString()[0] && a > b && a.toString()[1] < b.toString()[b.toString().length - 1]) {
+    console.log("In if for a", a, "and b", b);
+    return a-b;
+  }
+  else if (a.toString()[0] === b.toString()[0] && a > b && a.toString()[0] > b.toString()[b.toString().length - 1]) {
+    return b-a;
+  }
+
+});
+
+
 biggerTogether([1,2,3,4]); // == 3087 // 4321 - 1234
 biggerTogether([1,2,3,4, 11, 12]); // == 32099877 // 43212111 - 11112234
 biggerTogether([0, 1]); // == 9 // 10 - 01
 biggerTogether([100]); // == 0 // 100 - 100
 biggerTogether([3,12,22,32]); // == 2099889 // 3 32 22 12 - 12 22 32 3
+biggerTogether([420,42,423]); // == 381078 // 42423420 - 42042342
