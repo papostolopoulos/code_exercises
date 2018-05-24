@@ -22,17 +22,69 @@ biggerTogether([0, 1]) == 9 // 10 - 01
 biggerTogether([100]) == 0 // 100 - 100
 */
 
-function biggerTogether(array) {
-  if (array.length === 1) return 0;
-  // first sort the Array 
-  // while the last element of the array does not have a length of 1 (to string)
-  // unshift the last element after spliting it AND
-  // pop out the last elements
-  //
-  // then sort, convert to numbers, merge and do the substraction
+
+//Initial submition that does not work for last problem
+function biggerTogether(arr) {
+  if (arr.length === 1) return 0;
+  return arr.sort().reverse().join('') - arr.sort().join('');
 }
+
+
+
+
+
+
+
+function biggerTogether(arr) {
+  if (arr.length === 1) return 0;
+
+  arr.sort((a,b) => a-b);
+  while (arr[arr.length-1].toString().length > 1) {
+    arr.unshift(...arr[arr.length-1].toString().split(""));
+    arr.pop();
+  }
+  let smallNum = Number(arr.sort((a,b) => a-b).join(""));
+  let bigNum = Number(arr.sort((a,b) => b-a).join(""));
+  console.log("smallNum:", smallNum);
+  console.log("bigNum:",bigNum);
+
+  return bigNum - smallNum;
+}
+
+
+
+
+
+function biggerTogether(arr) {
+  if (arr.length === 1) return 0;
+
+  let smallNum = arr.sort().slice();
+  let bigNum = arr.sort().reverse().slice();
+  console.log("smallNum:", smallNum);
+  console.log("bigNum:",bigNum);
+  smallNum.sort((a,b)=>{
+    console.log(a, b);
+    if (a.toString() < b.toString() && a.toString()[0] === b.toString()[b.toString().length - 1]) {
+      console.log("in if");
+      return b-a;
+    }
+  });
+  bigNum.sort((c,d)=>{
+    if (c.toString() > d.toString() && c.toString()[0] === d.toString()[d.toString().length - 1]) {
+      console.log("in if for big");
+      return c-d;
+    }
+  });
+  console.log("smallNum after second sorting:", smallNum);
+  console.log("bigNum after second sorting:",bigNum);
+  return bigNum.join("") - smallNum.join("");
+}
+
+// if two digit number is larger than one digit number and num[0] === num[0]
+// then switch them
 
 biggerTogether([1,2,3,4]); // == 3087 // 4321 - 1234
 biggerTogether([1,2,3,4, 11, 12]); // == 32099877 // 43212111 - 11112234
 biggerTogether([0, 1]); // == 9 // 10 - 01
 biggerTogether([100]); // == 0 // 100 - 100
+biggerTogether([3,12,22,32]); // == 2099889 // 3 32 22 12 - 12 22 32 3
