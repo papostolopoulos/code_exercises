@@ -116,26 +116,6 @@ function biggerTogether(arr) {
 }
 
 
-
-var arr = [1,2,3,4, 11, 12];
-// after sort --> [1, 11, 12, 2, 3, 4]
-var arr2 = [3,12,22,32];
-// after sort --> [12, 22, 3, 32]
-var arr3 = [420,42,423];
-// after sort --> [420,42,423];
-
-arr2.sort().reverse().sort(function(a,b) {
-  console.log("before if", a, b);
-  if (a.toString()[0] === b.toString()[0] && a > b && a.toString()[a.toString().length - 1] < b.toString()[b.toString().length - 1]) {
-    console.log("In if for a", a, "and b", b);
-    return a-b;
-  }
-  else if (a.toString()[0] === b.toString()[0] && a > b && a.toString()[a.toString().length - 1] > b.toString()[b.toString().length - 1]) {
-    return b-a;
-  }
-
-});
-
 arr2.sort().reverse().sort(function(a,b) {
   console.log("before if", a, b);
   if (a.toString()[0] === b.toString()[0] && a > b && a.toString()[1] < b.toString()[b.toString().length - 1]) {
@@ -149,9 +129,82 @@ arr2.sort().reverse().sort(function(a,b) {
 });
 
 
+
+
+
+var arr = [1,2,3,4, 11, 12];
+// after sort --> [1, 11, 12, 2, 3, 4]
+var arr2 = [3,12,22,32];
+// after sort --> [12, 22, 3, 32]
+var arr3 = [420,42,423];
+// after sort --> [42,420,423];
+
+arr2.sort().reverse().sort((a,b)=>{
+  console.log("before if", a, b);
+  if (a < b) {
+    if (a.toString().length < b.toString().length) {
+      if (a.toString() > b.toString().slice(b.toString().length - a.toString().length)) {
+        return b - a;
+      }
+      else if (a.toString() < b.toString().slice(b.toString().length - a.toString().length)) {
+        return a - b;
+      }
+    }
+    else {
+      if (a+b < b+a) return a-b;
+      else return b-a;
+    }
+  }
+
+
+  else if (a > b) {
+    if (a.toString().length > b.toString().length){
+      if (a.toString().slice(a.toString().length - b.toString().length) < b.toString()) {
+        return a - b;
+      }
+      else if (a.toString().slice(a.toString().length - b.toString().length) > b.toString()) {
+
+      }
+    }
+    else {
+      if (a+b > b+a) return a - b;
+      else return b - a;
+    }
+  }
+});
+
+
+
+
+arr2.sort().reverse().sort((a,b)=>{
+  console.log("before if", a, b);
+  if (a < b && a.toString() === b.toString().slice(0, a.toString().length)) {
+    if (a.toString()[a.toString().length - 1] < b.toString()[b.toString().length - 1]) {
+      console.log("In if for a", a, "and b", b);
+      return a-b;
+    }
+    else if (a.toString()[a.toString().length - 1] > b.toString()[b.toString().length - 1]) {
+      console.log("In else if for a", a, "and b", b);
+      return b-a;
+    }
+  }
+  else if (a > b && a.toString().slice(0, b.toString().length) === b.toString()) {
+    if (a.toString()[a.toString().length - 1] < b.toString()[b.toString().length - 1]) {
+      console.log("In second if for a", a, "and b", b);
+      return b - a;
+    }
+    else if (a.toString()[a.toString().length - 1] > b.toString()[b.toString().length - 1]) {
+      console.log("In second else if for a", a, "and b", b);
+      return a - b;
+    }
+  }
+
+});
+
+
 biggerTogether([1,2,3,4]); // == 3087 // 4321 - 1234
 biggerTogether([1,2,3,4, 11, 12]); // == 32099877 // 43212111 - 11112234
 biggerTogether([0, 1]); // == 9 // 10 - 01
 biggerTogether([100]); // == 0 // 100 - 100
 biggerTogether([3,12,22,32]); // == 2099889 // 3 32 22 12 - 12 22 32 3
-biggerTogether([420,42,423]); // == 381078 // 42 423 420 - 420 42 342
+biggerTogether([420,42,423]); // == 381078 // 42 423 420 - 420 423 42
