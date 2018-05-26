@@ -142,32 +142,43 @@ var arr3 = [420,42,423];
 arr2.sort().reverse().sort((a,b)=>{
   console.log("before if", a, b);
   if (a < b) {
+    console.log("a<b");
     if (a.toString().length < b.toString().length) {
-      if (a.toString() > b.toString().slice(b.toString().length - a.toString().length)) {
-        return b - a;
-      }
-      else if (a.toString() < b.toString().slice(b.toString().length - a.toString().length)) {
+      console.log("a.length < b.length");
+      if (a.toString() + b.toString().slice(0,b.toString().length - a.toString().length) < b.toString()) {
+        console.log("a.toString + b.slice < b.toString");
         return a - b;
+      }
+      else if (a.toString() + b.toString().slice(0,b.toString().length - a.toString().length) > b.toString()) {
+        console.log("a.toString + b.slice > b.toString");
+        return b - a;
       }
     }
     else {
-      if (a+b < b+a) return a-b;
-      else return b-a;
+      console.log("Else of elses");
+      if (a.toString()+b.toString() < b.toString()+a.toString()) {
+        console.log("The if of elses");
+        return a-b;
+      }
+      else {
+        console.log("The else of elses");
+        return b-a;
+      }
     }
   }
 
 
   else if (a > b) {
     if (a.toString().length > b.toString().length){
-      if (a.toString().slice(a.toString().length - b.toString().length) < b.toString()) {
+      if (a.toString() > b.toString() + a.toString().slice(0,a.toString().length - b.toString().length)) {
         return a - b;
       }
-      else if (a.toString().slice(a.toString().length - b.toString().length) > b.toString()) {
-
+      else if (a.toString() < b.toString() + a.toString().slice(0,a.toString().length - b.toString().length)) {
+        return b - a;
       }
     }
     else {
-      if (a+b > b+a) return a - b;
+      if (a.toString()+b.toString() > b.toString()+a.toString()) return a - b;
       else return b - a;
     }
   }
