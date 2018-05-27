@@ -87,46 +87,26 @@ function biggerTogether(arr) {
 function biggerTogether(arr) {
   if (arr.length === 1) return 0;
 
-  let smallNum = arr.sort()
-  .sort((a,b)=>{
-    if (a.toString()[0] === b.toString()[0]
-    && a < b
-    && a.toString()[0] < b.toString()[b.toString().length - 1]) return a-b;
-    else if (a.toString()[0] === b.toString()[0]
-    && a < b
-    && a.toString()[0] > b.toString()[b.toString().length - 1]) return b-a;
-  })
-  .slice()
-  .join("");
+  let sorting = arr.sort((a,b)=>{
+    let aToS = a.toString(), bToS = b.toString();
+    if (a < b) {
+      if (aToS.length < bToS.length) {
+        if (aToS + bToS.slice(0,bToS.length - aToS.length) < bToS) return a - b;
+        else if (aToS + bToS.slice(0,bToS.length - aToS.length) > bToS) return b - a;
+      }
+      else return aToS+bToS < bToS+aToS ? a-b : b-a;
+    }
+  });
 
-  let bigNum = arr.sort()
-  .reverse()
-  .sort((a,b)=>{
-    if (a.toString()[0] === b.toString()[0]
-    && a > b
-    && a.toString()[1] < b.toString()[b.toString().length - 1]) return a-b;
-    else if (a.toString()[0] === b.toString()[0]
-    && a > b
-    && a.toString()[0] > b.toString()[b.toString().length - 1]) return b-a;
-  })
-  .slice()
-  .join("");
-
+  let smallNum = sorting.slice().join('');
+  let bigNum = sorting.slice().reverse().join('');
   return bigNum - smallNum;
 }
 
 
-arr2.sort().reverse().sort(function(a,b) {
-  console.log("before if", a, b);
-  if (a.toString()[0] === b.toString()[0] && a > b && a.toString()[1] < b.toString()[b.toString().length - 1]) {
-    console.log("In if for a", a, "and b", b);
-    return a-b;
-  }
-  else if (a.toString()[0] === b.toString()[0] && a > b && a.toString()[0] > b.toString()[b.toString().length - 1]) {
-    return b-a;
-  }
 
-});
+
+
 
 
 
@@ -166,25 +146,36 @@ arr2.sort().reverse().sort((a,b)=>{
       }
     }
   }
+});
 
-
-  else if (a > b) {
-    if (a.toString().length > b.toString().length){
-      if (a.toString() > b.toString() + a.toString().slice(0,a.toString().length - b.toString().length)) {
+arr2.sort().reverse().sort((a,b)=>{
+  console.log("before if", a, b);
+  if (a < b) {
+    console.log("a<b");
+    if (a.toString().length < b.toString().length) {
+      console.log("a.length < b.length");
+      if (a.toString() + b.toString().slice(0,b.toString().length - a.toString().length) < b.toString()) {
+        console.log("a.toString + b.slice < b.toString");
         return a - b;
       }
-      else if (a.toString() < b.toString() + a.toString().slice(0,a.toString().length - b.toString().length)) {
+      else if (a.toString() + b.toString().slice(0,b.toString().length - a.toString().length) > b.toString()) {
+        console.log("a.toString + b.slice > b.toString");
         return b - a;
       }
     }
     else {
-      if (a.toString()+b.toString() > b.toString()+a.toString()) return a - b;
-      else return b - a;
+      console.log("Else of elses");
+      if (a.toString()+b.toString() < b.toString()+a.toString()) {
+        console.log("The if of elses");
+        return a-b;
+      }
+      else {
+        console.log("The else of elses");
+        return b-a;
+      }
     }
   }
 });
-
-
 
 
 arr2.sort().reverse().sort((a,b)=>{
