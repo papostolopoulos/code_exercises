@@ -96,7 +96,8 @@ function biggerTogether(arr) {
   return arr.sort().reverse().join('') - arr.sort().join('');
 }
 
-//This one works (check the one from the internet so you can cry - you need to study parseInt)
+//This one works
+//(check the one from the internet so you can cry - In sort: (a+b)-(b+a))
 function biggerTogether(arr) {
   if (arr.length === 1) return 0;
   let zeroArr = [];
