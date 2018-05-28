@@ -67,7 +67,7 @@ mergeIntervals([[1, 12], [2, 3], [4, 7]]); // == [[1, 12]]
 mergeIntervals([[1, 5], [6, 10], [10, 15], [17, 20]]); // == [[1, 15], [17, 20]]
 
 
-/*20180523
+/*20180527
 BIGGER TOGETHER https://js.checkio.org/en/mission/bigger-together/
 Your mission here is to find a difference between the maximally positive
 and maximally negative numbers. Those numbers can be found by concatenating
@@ -88,3 +88,64 @@ biggerTogether([1,2,3,4, 11, 12]) == 32099877 // 43212111 - 11112234
 biggerTogether([0, 1]) == 9 // 10 - 01
 biggerTogether([100]) == 0 // 100 - 100
 */
+
+
+//Initial submition that does not work for last problem
+function biggerTogether(arr) {
+  if (arr.length === 1) return 0;
+  return arr.sort().reverse().join('') - arr.sort().join('');
+}
+
+//This one works (check the one from the internet so you can cry - you need to study parseInt)
+function biggerTogether(arr) {
+  if (arr.length === 1) return 0;
+  let zeroArr = [];
+  while(arr.indexOf(0) !== -1) (zeroArr.push(arr.indexOf(0)), arr.splice(arr.indexOf(0),1))
+
+  let sorting = arr.sort((a,b)=>{
+    let aToS = a.toString(), bToS = b.toString();
+    if (a < b) {
+      if (aToS.length < bToS.length) {
+        if (aToS + bToS.slice(0,bToS.length - aToS.length) < bToS) return a - b;
+        else if (aToS + bToS.slice(0,bToS.length - aToS.length) > bToS) return b - a;
+      }
+      else return aToS+bToS < bToS+aToS ? a-b : b-a;
+    }
+  });
+
+  let zeroes = zeroArr.join('');
+  let smallNum = sorting.slice().join('');
+  let bigNum = sorting.slice().reverse().join('') + zeroes;
+  return bigNum - smallNum;
+}
+
+
+//From the Internet
+function biggerTogether(ints) {
+  let ns = ints.map(i => i.toString());
+  ns.sort((x, y) => parseInt(x + y) - parseInt(y + x));
+  return parseInt(ns.slice().reverse().join('')) - parseInt(ns.join(''));
+}
+
+// And another one
+function biggerTogether(ints) {
+
+    const strs = ints.map((x)=>x.toString());
+
+    strs.sort((a, b)=>parseInt(a+b, 10)-parseInt(b+a, 10));
+
+    const small = parseInt(strs.join(''), 10);
+    const big = parseInt(strs.reverse().join(''), 10);
+
+    return big - small;
+}
+
+
+
+biggerTogether([1,2,3,4]); // == 3087 // 4321 - 1234
+biggerTogether([1,2,3,4, 11, 12]); // == 32099877 // 43212111 - 11112234
+biggerTogether([0, 1]); // == 9 // 10 - 01
+biggerTogether([100]); // == 0 // 100 - 100
+biggerTogether([3,12,22,32]); // == 2099889 // 3 32 22 12 - 12 22 32 3
+biggerTogether([420,42,423]); // == 381078 // 42 423 420 - 420 423 42
+biggerTogether([0,1,2,3,4,5,6,7,8,9,10]); // == 977530864311 // 9 8 7 6 5 4 3 2 1 10 0 - 0 10 1 2 3 4 5 6 7 8 9
